@@ -3,8 +3,8 @@ package com.musclebeach.product.controller;
 import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.product.model.entity.Product;
 import com.musclebeach.product.model.entity.ProductType;
-import com.musclebeach.product.model.service.ProductServiceBack;
-import com.musclebeach.product.model.service.ProductTypeServiceBack;
+import com.musclebeach.product.model.service.ProductService;
+import com.musclebeach.product.model.service.ProductTypeService;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
@@ -29,8 +29,8 @@ import java.util.List;
 public class ProductServletBack extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();
-    private final ProductServiceBack prodSvc = context.getBean(ProductServiceBack.class);
-    private final ProductTypeServiceBack productTypeServiceBack = context.getBean(ProductTypeServiceBack.class);
+    private final ProductService prodSvc = context.getBean(ProductService.class);
+    private final ProductTypeService productTypeServiceBack = context.getBean(ProductTypeService.class);
 
     public static byte[] getPictureByteArray(String path) throws IOException {
         FileInputStream fis = new FileInputStream(path);
@@ -58,7 +58,7 @@ public class ProductServletBack extends HttpServlet {
             request.setAttribute("errorMsgs", errorMsgs);
 
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-            String str = request.getParameter("prodID");
+            String str = request.getParameter("proID");
             if (str == null || (str.trim()).length() == 0) {
                 errorMsgs.add("請輸入商品編號");
             }
@@ -70,9 +70,9 @@ public class ProductServletBack extends HttpServlet {
                 return;// 程式中斷
             }
 
-            Integer prodID = null;
+            Integer proID = null;
             try {
-                prodID = Integer.valueOf(str);
+                proID = Integer.valueOf(str);
             } catch (Exception e) {
                 errorMsgs.add("商品編號格式不正確");
             }
@@ -86,7 +86,7 @@ public class ProductServletBack extends HttpServlet {
 
             /*************************** 2.開始查詢資料 *****************************************/
 
-            Product prodVO = prodSvc.getOneProd(prodID);
+            Product prodVO = prodSvc.getOneProd(proID);
             if (prodVO == null) {
                 errorMsgs.add("查無資料");
             }
@@ -227,11 +227,11 @@ public class ProductServletBack extends HttpServlet {
             request.setAttribute("errorMsgs", errorMsgs);
 
             /*************************** 1.接收請求參數 ***************************************/
-            Integer prodID = Integer.valueOf(request.getParameter("prodID"));
+            Integer proID = Integer.valueOf(request.getParameter("proID"));
 
             /*************************** 2.開始刪除資料 ***************************************/
 
-            prodSvc.deleteProd(prodID);
+            prodSvc.deleteProd(proID);
 
             /*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
             String url = "/back-end/product/listAllProd.jsp";
@@ -247,11 +247,11 @@ public class ProductServletBack extends HttpServlet {
 
             try {
                 /*************************** 1.接收請求參數 ****************************************/
-                Integer prodID = Integer.valueOf(request.getParameter("prodID"));
+                Integer proID = Integer.valueOf(request.getParameter("proID"));
 
                 /*************************** 2.開始查詢資料 ****************************************/
 
-                Product prodVO = prodSvc.getOneProd(prodID);
+                Product prodVO = prodSvc.getOneProd(proID);
 
                 /*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
                 request.setAttribute("prodVO", prodVO); // 資料庫取出的ProdVO物件,存入req
@@ -274,12 +274,12 @@ public class ProductServletBack extends HttpServlet {
             // Store this set in the request scope, in case we need to
             // send the ErrorPage view.
             request.setAttribute("errorMsgs", errorMsgs);
-            System.out.println(request.getParameter("prodID"));
+            System.out.println(request.getParameter("proID"));
             System.out.println(request.getParameter("typeID"));
             System.out.println(request.getParameter("proPrice"));
 
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-            Integer prodID = Integer.valueOf(request.getParameter("prodID"));
+            Integer proID = Integer.valueOf(request.getParameter("proID"));
             System.out.println("test2");
             String proName = request.getParameter("proName");
             String proNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -334,7 +334,7 @@ public class ProductServletBack extends HttpServlet {
             System.out.println("test3");
             Product prodVO = new Product();
 
-            prodVO.setProID(prodID);
+            prodVO.setProID(proID);
             prodVO.setProName(proName);
             prodVO.setTypeID(typeID);
             prodVO.setProQty(proQty);
@@ -352,7 +352,7 @@ public class ProductServletBack extends HttpServlet {
             InputStream in = part.getInputStream();
             byte[] proImg = new byte[in.available()];
             if (proImg.length == 0) {
-                proImg = prodSvc.getOneProdIMG(prodID).getProImg();
+                proImg = prodSvc.getOneProdIMG(proID).getProImg();
             }
 
             in.read(proImg);
@@ -370,7 +370,7 @@ public class ProductServletBack extends HttpServlet {
             /*************************** 2.開始修改資料 *****************************************/
 
 
-            prodVO = prodSvc.updateProd(prodID, proName, typeID, proQty, proPrice, proContent, proStatus, updateTime, createTime, proImg);
+            prodVO = prodSvc.updateProd(proID, proName, typeID, proQty, proPrice, proContent, proStatus, updateTime, createTime, proImg);
 
 
             /*************************** 3.修改完成,準備轉交(Send the Success view) *************/

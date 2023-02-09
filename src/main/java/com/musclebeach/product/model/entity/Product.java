@@ -1,5 +1,7 @@
 package com.musclebeach.product.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @Table(name = "product") // 設定映射資料表
 @Data
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(value = {"productType", "productImgs"})
 public class Product implements Serializable {
     @Id // 設定識別屬性 ->⼀定要設定此Annotation
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 設定識別值產⽣⽅式

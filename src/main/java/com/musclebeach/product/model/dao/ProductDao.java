@@ -20,7 +20,7 @@ public interface ProductDao {
 
     void update(Product product);
 
-    void delete(Integer prodID);
+    void delete(Integer proID);
 
     //同時新增圖片ID與商品 (但可用在訂單主檔與明細檔一次新增成功)
     void insertWithProd_IMG(Product product, List<ProductImg> list);

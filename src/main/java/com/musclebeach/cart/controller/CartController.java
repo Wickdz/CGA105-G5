@@ -5,6 +5,7 @@ import com.musclebeach.cart.entity.CartItem;
 import com.musclebeach.cart.service.CartService;
 import com.musclebeach.common.controller.Code;
 import com.musclebeach.common.controller.Result;
+import com.musclebeach.product.model.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,6 +16,8 @@ import java.util.List;
 public class CartController {
     @Resource
     private CartService cartService;
+    @Resource
+    private ProductService productService;
 
     @GetMapping
     public Result getAll() {

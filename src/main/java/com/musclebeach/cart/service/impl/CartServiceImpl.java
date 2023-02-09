@@ -4,6 +4,7 @@ import com.musclebeach.backstage.entity.Member;
 import com.musclebeach.cart.entity.CartItem;
 import com.musclebeach.cart.mapper.CartMapper;
 import com.musclebeach.cart.service.CartService;
+import com.musclebeach.product.model.entity.Product;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,26 +20,26 @@ public class CartServiceImpl implements CartService {
     @Override
     public void changeInCart(Member member, CartItem cartItem) {
         Integer memID = member.getMemID();
-        Integer proID = cartItem.getProID();
+        Product product = cartItem.getProduct();
         Integer count = cartItem.getCount();
-        cartMapper.change(memID, proID, count);
+        cartMapper.change(memID, product, count);
     }
 
     @Override
     public void deleteInCart(Member member, CartItem cartItem) {
         Integer memID = member.getMemID();
-        Integer proID = cartItem.getProID();
-        cartMapper.delete(memID, proID);
+        Product product = cartItem.getProduct();
+        cartMapper.delete(memID, product);
     }
 
     @Override
     public List<CartItem> getAllInCartByMemID(Member member) {
         Integer memID = member.getMemID();
-        Map<Integer, Integer> map = cartMapper.selectAllByID(memID);
+        Map<Product, Integer> map = cartMapper.selectAllByID(memID);
         List<CartItem> list = new ArrayList<>();
         map.forEach((k, v) -> {
             CartItem cartItem = new CartItem();
-            cartItem.setProID(k);
+            cartItem.setProduct(k);
             cartItem.setCount(v);
             list.add(cartItem);
         });

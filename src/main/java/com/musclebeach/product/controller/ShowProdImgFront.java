@@ -1,7 +1,7 @@
 package com.musclebeach.product.controller;
 
 import com.musclebeach.common.util.ApplicationContextUtil;
-import com.musclebeach.product.model.service.ProductServiceBack;
+import com.musclebeach.product.model.service.ProductService;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -12,33 +12,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebServlet("/back-end/product/ShowProdImgFront")
+@WebServlet({"/back-end/product/ShowProdImgFront", "/front-end/product/ShowProdImgFront"})
 public class ShowProdImgFront extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private final ProductServiceBack prodSvc = ApplicationContextUtil.getContext().getBean(ProductServiceBack.class);
+    private final ProductService prodSvc = ApplicationContextUtil.getContext().getBean(ProductService.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         response.setContentType("image/gif");
         ServletOutputStream out = response.getOutputStream();
 
-        Integer prodID = Integer.valueOf(request.getParameter("prodID"));
+        Integer proID = Integer.valueOf(request.getParameter("proID"));
 
-        if (prodID <= 9) {
+        if (proID <= 9) {
             try {
-                out.write(prodSvc.getOneProdIMG(prodID).getProImg());
+                out.write(prodSvc.getOneProdIMG(proID).getProImg());
             } catch (Exception e) {
 
                 InputStream in = getServletContext()
-                        .getResourceAsStream("/back-end/product/images/product" + prodID + ".jpg");
+                        .getResourceAsStream("/back-end/product/images/product" + proID + ".jpg");
                 byte[] buf = new byte[in.available()];
                 in.read(buf);
                 out.write(buf);
                 in.close();
-                prodSvc.upload(buf, prodID);
+                prodSvc.upload(buf, proID);
             }
         } else {
-            out.write(prodSvc.getOneProdIMG(prodID).getProImg());
+            out.write(prodSvc.getOneProdIMG(proID).getProImg());
         }
 
     }

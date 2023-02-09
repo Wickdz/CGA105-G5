@@ -9,15 +9,15 @@ public interface ProductImgDao {
 
     void update(ProductImg prod_IMGVO);
 
-    ProductImg findByProdID(Integer prodID);
+    ProductImg findByproID(Integer proID);
 
     List<ProductImg> getAll();
 
-    ProductImg getByProdID(Integer prodID);
+    ProductImg getByproID(Integer proID);
 
     void insert2(ProductImg prod_IMGVO, java.sql.Connection conn);
 
-    void delete(Integer prodid);
+    void delete(Integer proID);
 
     ProductImg getById(Integer ID);
 

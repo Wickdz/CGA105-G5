@@ -1,6 +1,8 @@
 package com.musclebeach.product.controller;
 
-import com.musclebeach.product.model.service.ProductServiceBack;
+import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.product.model.service.ProductService;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -15,6 +17,8 @@ import java.io.InputStream;
 public class ShowProdImg extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private final ApplicationContext context = ApplicationContextUtil.getContext();
+    ProductService productService = context.getBean(ProductService.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -23,10 +27,9 @@ public class ShowProdImg extends HttpServlet {
 
 
         try {
-            Integer prodID = Integer.valueOf(request.getParameter("prodID"));
-            ProductServiceBack prodSvc = new ProductServiceBack();
+            Integer proID = Integer.valueOf(request.getParameter("proID"));
 
-            out.write(prodSvc.getOneProdIMG(prodID).getProImg());
+            out.write(productService.getOneProdIMG(proID).getProImg());
 
         } catch (Exception e) {
             e.printStackTrace();

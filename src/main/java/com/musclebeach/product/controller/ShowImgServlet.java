@@ -1,7 +1,7 @@
 package com.musclebeach.product.controller;
 
 import com.musclebeach.common.util.ApplicationContextUtil;
-import com.musclebeach.product.model.service.ProductServiceFront;
+import com.musclebeach.product.model.service.ProductService;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.ServletException;
@@ -17,16 +17,16 @@ import java.io.IOException;
 public class ShowImgServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();
-    private final ProductServiceFront productServiceFront = context.getBean(ProductServiceFront.class);
+    private final ProductService productServiceFront = context.getBean(ProductService.class);
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        Integer prodID = Integer.parseInt(req.getParameter("prodID"));
+        Integer proID = Integer.parseInt(req.getParameter("proID"));
         ServletOutputStream out = res.getOutputStream();
         res.setContentType("image/jpg");
-        res.setContentLength(productServiceFront.findProductImg(prodID).length);
-        out.write(productServiceFront.findProductImg(prodID));
+        res.setContentLength(productServiceFront.findProductImg(proID).length);
+        out.write(productServiceFront.findProductImg(proID));
         out.close();
     }
 }

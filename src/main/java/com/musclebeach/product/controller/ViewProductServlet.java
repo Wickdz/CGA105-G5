@@ -3,7 +3,7 @@ package com.musclebeach.product.controller;
 
 import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.product.model.entity.Product;
-import com.musclebeach.product.model.service.ProductServiceFront;
+import com.musclebeach.product.model.service.ProductService;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
@@ -20,7 +20,7 @@ public class ViewProductServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();
-    private final ProductServiceFront productServiceFront = context.getBean(ProductServiceFront.class);
+    private final ProductService productServiceFront = context.getBean(ProductService.class);
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -50,10 +50,10 @@ public class ViewProductServlet extends HttpServlet {
         }
 
 //		view product detail
-        if (req.getParameter("prodID") != null) {
+        if (req.getParameter("proID") != null) {
 
-            Integer prodID = Integer.parseInt(req.getParameter("prodID"));
-            Product product = productServiceFront.getSpecifiedProduct(prodID);
+            Integer proID = Integer.parseInt(req.getParameter("proID"));
+            Product product = productServiceFront.getSpecifiedProduct(proID);
             req.setAttribute("product", product);
             RequestDispatcher successView = req.getRequestDispatcher("/front-end/shop/productDetail.jsp");
             successView.forward(req, res);

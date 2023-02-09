@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource({"classpath:jdbc.properties", "classpath:redis.properties"})
-@ComponentScan(value = {"com.musclebeach.*.service", "com.musclebeach.product.model.service", "com.musclebeach.*.mapper", "com.musclebeach.*.model", "com.musclebeach.common.util"})
+@ComponentScan(value = {"com.musclebeach.*.service", "com.musclebeach.*.mapper", "com.musclebeach.product.model", "com.musclebeach.*.model", "com.musclebeach.common.util"})
 @Import({JdbcConfig.class, MybatisConfig.class, RedisConfig.class, HibernateConfig.class})
 @EnableTransactionManagement
 public class SpringConfig {
