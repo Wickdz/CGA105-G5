@@ -1,9 +1,6 @@
 package com.musclebeach.mem.controller;
 
-
-import com.musclebeach.common.util.ApplicationContextUtil;
-import com.musclebeach.mem.model.MemService;
-import org.springframework.context.ApplicationContext;
+import com.mem.model.MemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +11,9 @@ import java.io.IOException;
 
 @WebServlet("/spanMember")
 public class SpanMemberServlet extends HttpServlet {
-    private final ApplicationContext ctx = ApplicationContextUtil.getContext();
-    private final MemService memService = ctx.getBean(MemService.class);
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer memberId = Integer.valueOf(request.getParameter("memberId"));
+        MemService memService = new MemService();
         memService.updateMemStatus(memberId);
 
         response.setContentType("text/plain");

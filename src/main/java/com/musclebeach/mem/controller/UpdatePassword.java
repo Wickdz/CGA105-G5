@@ -1,9 +1,6 @@
 package com.musclebeach.mem.controller;
 
-
-import com.musclebeach.common.util.ApplicationContextUtil;
-import com.musclebeach.mem.model.MemService;
-import org.springframework.context.ApplicationContext;
+import com.mem.model.MemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,19 +12,19 @@ import java.io.PrintWriter;
 
 @WebServlet("/updatePassword")
 public class UpdatePassword extends HttpServlet {
-    private final ApplicationContext ctx = ApplicationContextUtil.getContext();
-    private final MemService memService = ctx.getBean(MemService.class);
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer memberId = Integer.valueOf(request.getParameter("memberId"));
         String newPassword = request.getParameter("newPassword");
+        MemService memService = new MemService();
         Boolean updatePassword = memService.updatePassWord(memberId, newPassword);
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         if (updatePassword) {
+            System.out.println(updatePassword);
             writer.println("密碼變更成功！");
         } else {
+            System.out.println(updatePassword);
             writer.println("密碼變更失敗");
         }
     }
