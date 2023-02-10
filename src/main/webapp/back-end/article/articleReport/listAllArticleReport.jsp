@@ -1,9 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.musclebeach.article.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.musclebeach.articleReport.model.*"%>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 
 <%
-ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); 
+	ApplicationContext	ctx = ApplicationContextUtil.getContext();
+	assert ctx !=null;
+	ArticleReportService articleReportSvc = ctx.getBean(ArticleReportService.class);
+	List<ArticleReportVO> list = articleReportSvc.getAll();
+	pageContext.setAttribute("list",list);
 %>
 
 <!DOCTYPE html>
@@ -38,7 +45,29 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script
 	src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<title>所有課程資料</title>
+<title>所有文章檢舉</title>
+<style>
+
+
+td {
+	max-width: 250px;
+	/* 設置最大寬度 */
+	overflow: hidden;
+	/* 隱藏超出部分 */
+	text-overflow: ellipsis;
+	/* 添加省略號 */
+	white-space: nowrap;
+	/* 不換行 */
+	color: maroon;
+}
+
+.showTd {
+	max-width: none;
+	overflow: visible;
+	white-space: normal;
+	/* 換行 */
+}
+</style>
 <style>
         div#v-pills-article {
             width: 100%;
@@ -48,38 +77,64 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
             align-items: center;
             flex-wrap: wrap;
         }
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
 
-<style>
-  table {
-	width: 800px;
-	background-color: white;
-	margin-top: 5px;
-	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 5px;
-    text-align: center;
-  }
-</style>
+        table#table-2 {
+            width: 100%;
+            border: 2px solid black;
+            text-align: center;
+        }
 
+        table {
+            background-color: white;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        th {
+            background-color: #9D7553;
+            color: #DABEA7;
+
+        }
+
+        #table-2 td {
+            background-color: azure;
+            color: silver;
+            text-align: center;
+            transition: all 0.5s ease-in-out;
+        }
+
+        #table-2 tr:hover td {
+            background-color: lightblue;
+            transition: all 0.5s ease-in-out;
+        }
+
+        #table-2 tr td {
+            color: maroon;
+
+            transition: all 0.5s ease-in-out;
+        }
+
+        #table-2 tr:hover td {
+            color: blue;
+            border-left: 5px solid rgba(79, 192, 210, 0.6);
+            transition: all 0.5s ease-in-out;
+        }
+
+
+
+         #table-2 tr { 
+             border-bottom: 1px solid #2a2a2a; 
+         } 
+
+         #table-2 tr:last-of-type { 
+             border-bottom: none; 
+        } 
+
+
+        #show {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body bgcolor='white'>
 	<!-- ======================================== header 開始 ======================================== -->
@@ -143,7 +198,7 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 					id="v-pills-class-tab" data-bs-toggle="pill"
 					data-bs-target="#v-pills-class" type="button" role="tab"
 					aria-controls="v-pills-class" aria-selected="false"
-					onclick="location.href='<%=request.getContextPath()%>/back-end/course/classSchedule/select_page.jsp';">
+					>
 						<i class="bi bi-calendar2-week" style="color: white; margin: 5px"></i>
 						課程管理
 				</a></li>
@@ -159,8 +214,7 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 					aria-selected="false"
 					onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
 					> <i
-						class="bi bi-chat-right-text" style="color: white; margin: 5px"
-						></i>
+						class="bi bi-chat-right-text" style="color: white; margin: 5px"></i>
 						論壇管理
 				</a></li>
 				<li><a class="nav-link text-white" id="v-pills-service-tab"
@@ -191,60 +245,89 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
         >
 
 
-
-				<table>
+				<table id="table-2">
 					<thead>
 						<tr>
+							<th>檢舉編號</th>
 							<th>文章編號</th>
 							<th>會員編號</th>
-							<th>文章類別編號</th>
-							<th>文章標題</th>
-							<th>文章內容</th>
-							<th>發表時間</th>
-							<th>最後編輯時間</th>
-							<th>文章狀態</th>
-							
+							<th>檢舉內容</th>
+							<th>檢舉時間</th>
+							<th>檢舉處理狀態</th>
+							<th>文章詳情</th>
+						
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="articleReportVO" items="${list}">
 							<tr>
-							<td>${articleVO.artID}</td>
-							<td>${articleVO.memID}</td>
-							<td>${articleVO.typeID}</td>
-							<td>${articleVO.artTitle}</td>
-							<td>${articleVO.artContent}</td>
-							<td>${articleVO.artStime}</td> 
-							<td>${articleVO.artLtime}</td>
-							<td>
-							<FORM METHOD="post" ACTION="article.do" name="form1"
+								<td>${articleReportVO.reportID}</td>
+								<td>${articleReportVO.memID}</td>
+								<td>${articleReportVO.artID}</td>
+								<td>${articleReportVO.reportContent}</td>		
+								<td>${articleReportVO.reportStime}</td>
+								<td>
+							<FORM METHOD="post"
+                                  ACTION="<%=request.getContextPath()%>/back-end/article/articleReport.do"
                                   style="margin-bottom: 0px;"> 
-							<select name="artStatus">	
-        					<option value="1"${(articleVO.artStatus==1)?'selected':'' }>顯示</option>
-        					<option value="0"${(articleVO.artStatus==0)?'selected':'' }>隱藏</option>
-    						</select>
-    						</td>
-								 
-							<td>
+							<select name="reportStatus">	
+        					<option value="0"${(articleReportVO.reportStatus==0)?'selected':'' }>待審核</option>
+        					<option value="1"${(articleReportVO.reportStatus==1)?'selected':'' }>已通過</option>
+        					<option value="2"${(articleReportVO.reportStatus==2)?'selected':'' }>未通過</option>
+        					</select>
+        					<input type="hidden" name="reportID" value="${articleReportVO.reportID}">
+        					<input type="hidden" name="action" value="update">
+        					<input  type="submit" value="確定修改">
+        					</FORM>
+    							</td>
+								<td class="show">
+								 <FORM METHOD="post"
+                                  ACTION="<%=request.getContextPath()%>/back-end/article/articleReport.do"
+                                  style="margin-bottom: 0px;"> 
+                                <input type="hidden" name="artID" value="${articleReportVO.artID}">
+                                <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
+                              	<input type="hidden" name="action" value="getOneArticle_For_Display">
+                              	<input  type="submit" value="文章詳情">
+                              	</FORM>
 
-							<input type="hidden" name="action" value="updateStatus">
-							<input type="hidden" name="artID" value="<%=articleVO.getArtID()%>">
-							<input type="hidden" name="memID" value="<%=articleVO.getMemID()%>">
-							<input type="hidden" name="typeID" value="<%=articleVO.getTypeID()%>">
-							<input type="hidden" name="artTitle" value="<%=articleVO.getArtTitle()%>">
-							<input type="hidden" name="artContent" value="<%=articleVO.getArtContent()%>">
-							<input type="hidden" name="artStime" value="<%=articleVO.getArtStime()%>">
-							<input type="hidden" name="artLtime" value="<%=articleVO.getArtLtime()%>">
-							<input type="submit" value="送出修改">
-                             </FORM>
-								</td>
-								
 
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-
+				<script>
+					$(document).ready(function() {
+						$('#table-2').DataTable({
+							"searching" : true,
+							"ordering" : true,
+							language : {
+								"lengthMenu" : "顯示 _MENU_ 筆資料",
+								"sProcessing" : "處理中...",
+								"sZeroRecords" : "没有查詢到结果",
+								"sInfo" : "目前有 _MAX_ 筆資料",
+								"sInfoEmpty" : "目前共有 0 筆紀錄",
+								"sInfoFiltered" : " ",
+								"sInfoPostFix" : "",
+								"sSearch" : "搜尋:",
+								"sUrl" : "",
+								"sEmptyTable" : "尚未有資料紀錄存在",
+								"sLoadingRecords" : "載入資料中...",
+								"sInfoThousands" : ",",
+								"oPaginate" : {
+									"sFirst" : "首頁",
+									"sPrevious" : "上一頁",
+									"sNext" : "下一頁",
+									"sLast" : "末頁"
+								},
+								"order" : [ [ 0, "desc" ] ],
+								"oAria" : {
+									"sSortAscending" : ": 以升序排列此列",
+									"sSortDescending" : ": 以降序排列此列"
+								}
+							},
+						});
+					});
+				</script>
 			</div>
 	</main>
 	<script
@@ -255,10 +338,6 @@ ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 		src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
-
-
-
-
 
 
 </body>

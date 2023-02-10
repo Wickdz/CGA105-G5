@@ -56,6 +56,69 @@ public class ArticleReportServlet extends HttpServlet {
 //				successView.forward(req, res);
 //		}
 
+        if ("getOneArticle_For_Display".equals(action)) { // 來自檢舉列表 list.jsp的請求
+
+            List<String> errorMsgs = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorMsgs", errorMsgs);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            Integer artID = Integer.valueOf(req.getParameter("artID").trim());
+            /*************************** 2.開始查詢資料 *****************************************/
+
+            ArticleVO articleVO = articleService.getOneArticleVO(artID);
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            req.setAttribute("articleVO", articleVO);
+            String url = "/back-end/article/listOneArticle.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneArticle.jsp
+            successView.forward(req, res);
+        }
+
+        if ("audit_report".equals(action)) { // 來自檢舉列表 list.jsp的請求
+
+            List<String> errorMsgs = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorMsgs", errorMsgs);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            Integer artID = Integer.valueOf(req.getParameter("artID").trim());
+
+            /*************************** 2.開始查詢資料 *****************************************/
+
+            ArticleVO articleVO = articleService.getOneArticleVO(artID);
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            req.setAttribute("articleVO", articleVO);
+            String url = "/back-end/article/listOneArticle.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneArticle.jsp
+            successView.forward(req, res);
+        }
+
+        if ("update".equals(action)) {
+
+            List<String> errorMsgs = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorMsgs", errorMsgs);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            Integer reportID = Integer.valueOf(req.getParameter("reportID").trim());
+
+            Integer reportStatus = Integer.valueOf(req.getParameter("reportStatus").trim());
+
+            /*************************** 2.開始修改資料 *****************************************/
+
+            articleReportService.updateArticleReport(reportID,reportStatus);
+
+
+            /*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+
+            String url = "/back-end/article/articleReport/listAllArticleReport.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneArticle.jsp
+            successView.forward(req, res);
+        }
+
 
         if ("insert".equals(action)) { // 來自listOneArticle.jsp的請求 新增檢舉
 

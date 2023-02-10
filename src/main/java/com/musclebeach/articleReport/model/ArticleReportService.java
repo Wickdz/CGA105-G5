@@ -23,9 +23,11 @@ public class ArticleReportService {
         return articleReportVO;
     }
 
-    public ArticleReportVO updateArticleReport(Integer reportStatus) {
+    public ArticleReportVO updateArticleReport(Integer reportID,Integer reportStatus) {
 
         ArticleReportVO articleReportVO = new ArticleReportVO();
+
+        articleReportVO.setReportID(reportID);
 
         articleReportVO.setReportStatus(reportStatus);
 
