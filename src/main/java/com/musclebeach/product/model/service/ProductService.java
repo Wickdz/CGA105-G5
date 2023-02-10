@@ -3,7 +3,6 @@ package com.musclebeach.product.model.service;
 import com.musclebeach.product.model.entity.Product;
 import com.musclebeach.product.model.entity.ProductImg;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface ProductService {
@@ -19,7 +18,7 @@ public interface ProductService {
     void deleteProd(Integer proID);
 
     Product updateProd(Integer proID, String proName, Integer typeID, Integer proQty, Integer proPrice,
-                       String proContent, Integer proStatus, Timestamp updateTime, Timestamp createTime, byte[] proImg);
+                       String proContent, Integer proStatus, byte[] proImg);
 
     ProductImg upload(byte[] proImg, Integer proID);
 

@@ -44,6 +44,8 @@
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
     <link href="<%=request.getContextPath()%>/back-end/resources/css/listAll_dataTable.css" rel="stylesheet">
+    <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
+
 </head>
 <body>
 <!-- ======================================== header 開始 ======================================== -->
@@ -254,7 +256,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-shop-tab"
                 tabindex="0"
-                style="border: 2px solid brown"
+                style="border: 2px solid white"
         >
 
             <div class="main-panel">
@@ -263,16 +265,15 @@
                         <div class="col-sm-6">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="listAllProd.jsp" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>商品管理</p>
+                                    <a href="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp"
+                                       class="nav-link">
+                                        <p><i class="fa-sharp fa-solid fa-dumbbell"></i>商品管理</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="${pageContext.request.contextPath}/back-end/order/listAllOrder.jsp"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>訂單管理</p>
+                                        <p><i class="fa-solid fa-truck"></i>訂單管理</p>
                                     </a>
                                 </li>
                             </ul>
@@ -282,13 +283,16 @@
                                 <div class="mb-3 mb-xl-0 pr-1">
                                     <div class="dropdown">
                                         <button style="margin-right:10px;">
-                                            <a href='addProd.jsp'><img src="./images/plus.png" title="新增商品"
-                                                                       width="30px" height="30px"></a>
+                                            <a href='addProd.jsp'><img
+                                                    src="<%=request.getContextPath()%>/back-end/product/images/plus.png"
+                                                    title="新增商品"
+                                                    width="30px" height="30px"></a>
                                         </button>
                                         <button style="margin-right:10px;">
-                                            <a href="listAllProdType.jsp"><img src="./images/plusType.png"
-                                                                               title="新增商品種類" width="30px"
-                                                                               height="30px"></a>
+                                            <a href="listAllProdType.jsp"><img
+                                                    src="<%=request.getContextPath()%>/back-end/product/images/plusType.png"
+                                                    title="新增商品種類" width="30px"
+                                                    height="30px"></a>
                                         </button>
                                     </div>
                                 </div>
@@ -336,7 +340,7 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <img src="<%=request.getContextPath()%>/back-end/product/ShowProdImgFront?proID=${prodVO.proID}"
+                                                        <img src="<%=request.getContextPath()%>/back-end/product/ShowProdImg?proID=${prodVO.proID}"
                                                              width="100px">
                                                     </td>
                                                     <td>
@@ -621,6 +625,29 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+<script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
+<!-- 預覽圖 -->
+<script>
+    window.addEventListener("load", function (e) {
+        var preview_el = document.getElementById("preview");
+        var p_file_el = document.getElementById("p_file");
+        var preview_img = function (file) {
+            var reader = new FileReader(); // 用來讀取檔案
+            reader.readAsDataURL(file); // 讀取檔案
+            reader.addEventListener("load", function () {
+                var img_str = '<img src="' + reader.result + '" class="preview_img">';
+                preview_el.innerHTML = img_str;
 
+            });
+        };
+        p_file_el.addEventListener("change", function (e) {
+            if (this.files.length > 0) {
+                preview_img(this.files[0]);
+            } else {
+                preview_el.innerHTML = '<span class="text">預覽圖</span>';
+            }
+        });
+    });
+</script>
 </body>
 </html>

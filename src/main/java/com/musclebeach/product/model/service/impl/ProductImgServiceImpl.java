@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 @Service
-@Transactional
+@Transactional("hibernate")
 public class ProductImgServiceImpl implements ProductImgService {
     @Resource
     private ProductImgDao productImgDao;

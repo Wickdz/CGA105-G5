@@ -9,8 +9,8 @@
 
 <%
     ApplicationContext context = ApplicationContextUtil.getContext();
-    ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
-    List<ProductType> list = productTypeService.getAll();
+    ProductTypeService prodTypeSvc = context.getBean(ProductTypeService.class);
+    List<ProductType> list = prodTypeSvc.getAll();
     pageContext.setAttribute("list", list);
     Product prodVO = (Product) request.getAttribute("prodVO");
     pageContext.setAttribute("prodVO", prodVO);
@@ -253,7 +253,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-shop-tab"
                 tabindex="0"
-                style="border: 2px solid brown"
+                style="border: 2px solid white"
         >
 
             <div class="main-panel">
@@ -270,8 +270,11 @@
                                 <div class="mb-3 mb-xl-0 pr-1">
                                     <div class="dropdown">
                                         <button style="margin-right:10px;">
-                                            <a href="/listAllProd.jsp"><img src="./images/home.png" title="返回所有商品"
-                                                                            width="30px" height="30px"></a>
+                                            <a href="<%=request.getContextPath()%>/back-end/product//listAllProd.jsp">
+                                                <img
+                                                        src="<%=request.getContextPath()%>/back-end/product/images/home.png"
+                                                        title="返回所有商品"
+                                                        width="30px" height="30px"></a>
                                         </button>
                                     </div>
                                 </div>
@@ -298,7 +301,7 @@
                                         </c:if>
                                         <FORM METHOD="post"
                                               ACTION="<%=request.getContextPath() %>/back-end/product/updateProdInput"
-                                              name="form1">
+                                              enctype="multipart/form-data" name="form1">
                                             <table>
                                                 <tr>
                                                     <td>編號:<font color=red><b>*</b></font></td>
@@ -307,7 +310,7 @@
                                                 <tr>
                                                     <td>名稱:</td>
                                                     <td><input type="TEXT" name="proName" size="45"
-                                                               value="<%=prodVO.getProName()%>"/></td>
+                                                               value="${prodVO.proName}"/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>類別:<font color=red><b>*</b></font></td>
@@ -316,57 +319,60 @@
                                                         <option value="${prodTypeVO.typeID}"
                                                             ${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
                                                             </c:forEach>
-                                                    </select></td>
+                                                    </select>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>數量:</td>
                                                     <td><input type="TEXT" name="proQty" size="45"
-                                                               value="<%=prodVO.getProQty()%>"/></td>
+                                                               value="${prodVO.proQty}"/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>價錢:</td>
                                                     <td><input type="TEXT" name="proPrice" size="45"
-                                                               value="<%=prodVO.getProPrice()%>"/></td>
+                                                               value="${prodVO.proPrice}"/></td>
                                                 </tr>
                                                 <tr>
                                                     <td>內容:</td>
-                                                    <td><textarea name="proContent" cols="46"
-                                                                  rows="10"><%=(prodVO == null) ? "" : prodVO.getProContent()%></textarea>
-                                                    </td>
+                                                    <td><textarea name="proContent" cols="45"
+                                                                  rows="10">${prodVO.proContent}</textarea></td>
                                                 </tr>
                                                 <tr>
                                                     <td>狀態:</td>
                                                     <td>
-                                                        <input type="radio" name="proStatus" size="45" id="on"
-                                                               value=1 checked/>
+                                                        <input type="radio" name="proStatus" size="45" id="status1"
+                                                               value="1" checked/>
                                                         <label for="on">已上架</label>
                                                         <br>
-                                                        <input type="radio" name="proStatus" size="45" id="off"
-                                                               value=0/>
+                                                        <input type="radio" name="proStatus" size="45" id="status0"
+                                                               value="0"/>
                                                         <label for="off" style="color: red;">已下架</label>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td>上次修改時間:<font color=red><b>*</b></font></td>
-                                                    <td><%=prodVO.getUpdateTime()%>
+                                                    <td>原圖:</td>
+                                                    <td><img
+                                                            src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}"
+                                                            width=150px height=150px>
                                                     </td>
+                                                    <td>
                                                 </tr>
                                                 <tr>
-                                                    <td>上架時間:<font color=red><b>*</b></font></td>
-                                                    <td><%=prodVO.getCreateTime()%>
-                                                    </td>
+                                                    <td>更改為:</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="file" name="proImg"
-                                                               value=<%=prodVO.getUpdateImg()%> size="45"/></td>
+                                                    <td><input type="file" name="proImg" value="${prodVO.updateImg}"
+                                                               size="45" id="p_file" accept="image/*"/></td>
+                                                    <td>
+                                                        <div id="preview">
+                                                            <span class="text"></span>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             </table>
                                             <br>
                                             <input type="hidden" name="action" value="update">
                                             <input type="hidden" name="proID" value="${prodVO.proID}">
-                                            <input type="hidden" name="updateTime" value="${prodVO.UpdateTime}">
-                                            <input type="hidden" name="createTime" value="${prodVO.CreateTime}">
-                                            <input type="hidden" name="proImg" value="${prodVO.UpdateImg}">
                                             <input type="submit" value="送出修改">
                                         </FORM>
 
@@ -375,7 +381,6 @@
                             </div>
                         </div>
                     </div>   <!-- row -->
-
 
                 </div>  <!-- content wraper -->
             </div>   <!-- main -->
@@ -386,5 +391,33 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+<!-- 預覽圖 -->
+<script>
+    window.addEventListener("load", function (e) {
+        var preview_el = document.getElementById("preview");
+        var p_file_el = document.getElementById("p_file");
+        var preview_img = function (file) {
+            var reader = new FileReader(); // 用來讀取檔案
+            reader.readAsDataURL(file); // 讀取檔案
+            reader.addEventListener("load", function () {
+                var img_str = '<img src="' + reader.result + '" class="preview_img">';
+                preview_el.innerHTML = img_str;
+
+            });
+        };
+        p_file_el.addEventListener("change", function (e) {
+            if (this.files.length > 0) {
+                preview_img(this.files[0]);
+            } else {
+                preview_el.innerHTML = '<span class="text">預覽圖</span>';
+            }
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $("#status${prodVO.proStatus}").attr("checked", true);
+    });
+</script>
 </body>
 </html>

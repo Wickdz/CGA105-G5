@@ -1,13 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.*" %>
 <%@ page import="com.musclebeach.product.model.entity.ProductType" %>
 <%@ page import="com.musclebeach.product.model.service.ProductTypeService" %>
-
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="java.util.List" %>
 
 <%
-    ProductTypeService prodSvc = new ProductTypeService();
-    List<ProductType> list = prodSvc.getAll();
+    ApplicationContext context = ApplicationContextUtil.getContext();
+    ProductTypeService prodTypeSvc = context.getBean(ProductTypeService.class);
+    List<ProductType> list = prodTypeSvc.getAll();
     pageContext.setAttribute("list", list);
 %>
 
@@ -246,7 +248,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-shop-tab"
                 tabindex="0"
-                style="border: 2px solid brown"
+                style="border: 2px solid white"
         >
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -254,13 +256,15 @@
                         <div class="col-sm-6">
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="listAllProd.jsp" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp"
+                                       class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>商品管理</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="listAllOrder.jsp" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/back-end/order/listAllOrder.jsp"
+                                       class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>訂單管理</p>
                                     </a>
@@ -272,8 +276,10 @@
                                 <div class="mb-3 mb-xl-0 pr-1">
                                     <div class="dropdown">
                                         <button style="margin-right:10px;">
-                                            <a href='addProdType.jsp'><img src="./images/plus.png" title="新增商品種類"
-                                                                           width="30px" height="30px"></a>
+                                            <a href='<%=request.getContextPath()%>/back-end/product/addProdType.jsp'><img
+                                                    src="<%=request.getContextPath()%>/back-end/product/images/plus.png"
+                                                    title="新增商品種類"
+                                                    width="30px" height="30px"></a>
                                         </button>
                                     </div>
                                 </div>

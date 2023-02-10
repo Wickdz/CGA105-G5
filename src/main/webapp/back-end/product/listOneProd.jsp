@@ -279,7 +279,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-shop-tab"
                 tabindex="0"
-                style="border: 2px solid brown"
+                style="border: 2px solid white"
         >
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -292,8 +292,10 @@
                                 <div class="mb-3 mb-xl-0 pr-1">
                                     <div class="dropdown">
                                         <button style="margin-right:10px;">
-                                            <a href="listAllProd.jsp"><img src="./images/home.png" title="返回所有商品"
-                                                                           width="30px" height="30px"></a>
+                                            src="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp<img
+                                                src="<%=request.getContextPath()%>/back-end/product/images/home.png"
+                                                title="返回所有商品"
+                                                width="30px" height="30px"></a>
                                         </button>
                                     </div>
                                 </div>

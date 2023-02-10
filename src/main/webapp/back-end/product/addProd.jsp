@@ -10,8 +10,8 @@
 <%
     Product prodVO = (Product) request.getAttribute("prodVO");
     ApplicationContext context = ApplicationContextUtil.getContext();
-    ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
-    List<ProductType> list = productTypeService.getAll();
+    ProductTypeService prodTypeSvc = context.getBean(ProductTypeService.class);
+    List<ProductType> list = prodTypeSvc.getAll();
     pageContext.setAttribute("list", list);
 %>
 
@@ -250,7 +250,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-shop-tab"
                 tabindex="0"
-                style="border: 2px solid brown"
+                style="border: 2px solid white"
         >
             <div class="main-panel">
                 <div class="content-wrapper">
@@ -263,8 +263,11 @@
                                 <div class="mb-3 mb-xl-0 pr-1">
                                     <div class="dropdown">
                                         <button style="margin-right:10px;">
-                                            <a href="listAllProd.jsp"><img src="./images/home.png" title="返回所有商品"
-                                                                           width="30px" height="30px"></a>
+                                            <a href="<%=request.getContextPath()%>/back-end/product//listAllProd.jsp">
+                                                <img
+                                                        src="<%=request.getContextPath()%>/back-end/product/images/home.png"
+                                                        title="返回所有商品"
+                                                        width="30px" height="30px"></a>
                                         </button>
                                     </div>
                                 </div>
@@ -293,22 +296,24 @@
                                                 <tr>
                                                     <td>名稱:</td>
                                                     <td><input type="TEXT" name="proName" size="45"
-                                                               value="<%= (prodVO==null)? "new1" : prodVO.getProName()%>"/>
+                                                               value="<%= (prodVO==null)? "瘦身果汁" : prodVO.getProName()%>"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>類別:<font color=red><b>*</b></font></td>
-                                                    <td><select size="1" name="typeID">
-                                                        <c:forEach var="prodTypeVO" items="${list}">
-                                                        <option value="${prodTypeVO.typeID}"
-                                                            ${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
-                                                            </c:forEach>
-                                                    </select></td>
+                                                    <td>
+                                                        <select size="1" name="typeID">
+                                                            <c:forEach var="prodTypeVO" items="${list}">
+                                                            <option value="${prodTypeVO.typeID}"
+                                                                ${(prodVO.typeID==prodTypeVO.typeID)? 'selected':'' }>${prodTypeVO.typeName}
+                                                                </c:forEach>
+                                                        </select>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>數量:</td>
                                                     <td><input type="TEXT" name="proQty" size="45"
-                                                               value="<%= (prodVO==null)? "100" : prodVO.getProQty()%>"/>
+                                                               value="<%= (prodVO==null)? "10" : prodVO.getProQty()%>"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -320,21 +325,21 @@
                                                 <tr>
                                                     <td>內容:</td>
                                                     <td><input type="TEXT" name="proContent" size="45"
-                                                               value="<%= (prodVO==null)? "非常讚" : prodVO.getProContent()%>"/>
+                                                               value="<%= (prodVO==null)? "喝完立馬瘦，非常讚!" : prodVO.getProContent()%>"/>
                                                     </td>
                                                 </tr>
-
+                                                <tr>
+                                                    <td><input type="file" name="proImg" value="上傳圖片" size="45"
+                                                               id="p_file" accept="image/*"/></td>
+                                                    <td>
+                                                        <div id="preview">
+                                                            <span class="text"></span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             </table>
-                                            <td><input type="file" name="proImg" value="上傳圖片" size="45" id="p_file"
-                                                       accept="image/*"/></td>
-                                            <br>
-                                            <td>預覽圖:
-                                                <div id="preview">
-                                                    <span class="text"></span>
-                                                </div>
-                                            </td>
+
                                             <input type="hidden" name="action" value="insert">
-                                            <input type="hidden" name="proStatus" value="${prodVO.proStatus}">
                                             <br><br>
                                             <input type="submit" value="送出新增">
                                         </FORM>

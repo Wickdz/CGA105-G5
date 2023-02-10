@@ -3,7 +3,7 @@ package com.musclebeach.backstage.service;
 import com.musclebeach.backstage.entity.Member;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+@Transactional("mybatis")
 public interface MemberService {
     Member getMemberInfo(Integer memID);
 

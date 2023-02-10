@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional("hibernate")
 public class ProductTypeServiceImpl implements ProductTypeService {
     @Resource
     private ProductTypeDao productTypeDao;

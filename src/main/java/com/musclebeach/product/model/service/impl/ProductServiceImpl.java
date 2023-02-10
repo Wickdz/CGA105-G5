@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional("hibernate")
 public class ProductServiceImpl implements ProductService {
     @Resource
     private ProductDao productDao;
@@ -65,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProd(Integer proID, String proName, Integer typeID, Integer proQty, Integer proPrice,
-                              String proContent, Integer proStatus, Timestamp updateTime, Timestamp createTime, byte[] proImg) {
+                              String proContent, Integer proStatus, byte[] proImg) {
 
         Product product = new Product();
 
@@ -76,8 +75,6 @@ public class ProductServiceImpl implements ProductService {
         product.setProPrice(proPrice);
         product.setProContent(proContent);
         product.setProStatus(proStatus);
-        product.setUpdateTime(updateTime);
-        product.setCreateTime(createTime);
 
         ProductImg productImg = new ProductImg();
 //		prodIMG.setproID(product.getproID());

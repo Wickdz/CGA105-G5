@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+@Transactional("mybatis")
 public interface TeamClassService {
     List<TeamClass> selectAll();
 
@@ -19,6 +19,6 @@ public interface TeamClassService {
     Boolean insert(TeamClass teamClass);
 
     Boolean update(TeamClass teamClass);
-    
+
     Boolean deleteByID(Integer classID);
 }

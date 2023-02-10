@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+@Transactional("mybatis")
 public interface ClassOrderService {
     List<ClassOrder> selectAll();
 
