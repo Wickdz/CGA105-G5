@@ -16,9 +16,8 @@ public class AbsentMemberDao implements AbsentMemberIDao {
 
     public final static String CLASSNAME = "com.mysql.cj.jdbc.Driver";
     private static final String INSERT = "INSERT INTO absent_member (time_id, mem_id) VALUE (?, ?)";
-    private static final String UPDATE = "UPDATE absent_member SET  WHERE time_id = ?, mem_id = ?";
-    private static final String DELETE = "DELETE FROM absent_member WHERE time_id = ?, mem_id = ?";
-    private static final String GET = "SELECT * FROM absent_member WHERE time_id = ?, mem_id = ?";
+    private static final String DELETE = "DELETE FROM absent_member WHERE time_id = ?and  mem_id = ?";
+    private static final String GET = "SELECT * FROM absent_member WHERE time_id = ? and mem_id = ?";
     private static final String GETALL = "SELECT * FROM absent_member order by time_id";
     private static final String GET_ABSENT_COUNT = "SELECT count(a.class_id),a.class_id,b.mem_id from  class_schedule AS a JOIN absent_member AS b on a.time_id=b.time_id \r\n"
             + "where a.class_id=? and b.mem_id=?;";
@@ -75,7 +74,7 @@ public class AbsentMemberDao implements AbsentMemberIDao {
             e1.printStackTrace();
         }
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT)) {
             preparedStatement.setInt(1, obj.getTimeID());
             preparedStatement.setInt(2, obj.getMemID());
             int rowCount = preparedStatement.executeUpdate();
@@ -87,20 +86,20 @@ public class AbsentMemberDao implements AbsentMemberIDao {
 
     @Override
     public void update(AbsentMemberVO obj) {
-        try {
-            Class.forName(CLASSNAME);
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);) {
-            preparedStatement.setInt(1, obj.getTimeID());
-            preparedStatement.setInt(2, obj.getMemID());
-            int rowCount = preparedStatement.executeUpdate();
-            System.out.println("修改 " + rowCount + " 筆資料");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class.forName(CLASSNAME);
+//        } catch (ClassNotFoundException e1) {
+//            e1.printStackTrace();
+//        }
+//        try (Connection connection = dataSource.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);) {
+//            preparedStatement.setInt(1, obj.getTimeID());
+//            preparedStatement.setInt(2, obj.getMemID());
+//            int rowCount = preparedStatement.executeUpdate();
+//            System.out.println("修改 " + rowCount + " 筆資料");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
@@ -111,7 +110,7 @@ public class AbsentMemberDao implements AbsentMemberIDao {
             e1.printStackTrace();
         }
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE)) {
             preparedStatement.setInt(1, obj.getTimeID());
             preparedStatement.setInt(2, obj.getMemID());
             int rowCount = preparedStatement.executeUpdate();
@@ -129,7 +128,7 @@ public class AbsentMemberDao implements AbsentMemberIDao {
             e1.printStackTrace();
         }
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET)) {
             preparedStatement.setInt(1, obj.getTimeID());
             preparedStatement.setInt(2, obj.getMemID());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -176,7 +175,7 @@ public class AbsentMemberDao implements AbsentMemberIDao {
             e1.printStackTrace();
         }
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GETALL);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GETALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<AbsentMemberVO> list = new ArrayList<>();
             while (resultSet.next()) {
@@ -201,7 +200,7 @@ public class AbsentMemberDao implements AbsentMemberIDao {
             e1.printStackTrace();
         }
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_ABSENT_COUNT);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ABSENT_COUNT)) {
             preparedStatement.setInt(1, classID);
             preparedStatement.setInt(2, memID);
             ResultSet resultSet = preparedStatement.executeQuery();

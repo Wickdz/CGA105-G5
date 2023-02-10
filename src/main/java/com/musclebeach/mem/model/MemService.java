@@ -1,15 +1,15 @@
 package com.musclebeach.mem.model;
 
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
 
+@Service
 public class MemService {
-
-    private final MemDAO_interface dao;
-
-    public MemService() {
-        dao = new MemJDBCDAO();
-    }
+    @Resource
+    private MemDAO_interface dao;
 
     public MemVO addMem(String memName, String account, String password, String memPhone, Date memBirthday,
                         String memAddress, String memMail, Integer memStatus, Integer memAccess) {

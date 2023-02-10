@@ -1,7 +1,10 @@
 package com.musclebeach.mem.controller;
 
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
+
+import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.mem.model.MemService;
+import com.musclebeach.mem.model.MemVO;
+import org.springframework.context.ApplicationContext;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -18,6 +21,8 @@ import java.util.*;
 
 @WebServlet("/back-end/member/mem.do")
 public class MemServlet extends HttpServlet {
+    private final ApplicationContext context = ApplicationContextUtil.getContext();
+    private final MemService memService = context.getBean(MemService.class);
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doPost(req, res);
@@ -47,7 +52,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-            MemService memService = new MemService();
+
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -122,7 +127,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-            MemService memService = new MemService();
+
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -204,7 +209,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-            MemService memService = new MemService();
+
             memVO = memService.getAccount(account);
             if (memVO != null) {
                 errorMsgs.add("帳號已被註冊");
@@ -267,7 +272,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-            MemService memService = new MemService();
+
             memVO = memService.getAccount(account);
             if (!password.equals(memVO.getPassword())) {
                 errorMsgs.add("密碼輸入錯誤");
@@ -302,7 +307,7 @@ public class MemServlet extends HttpServlet {
             Integer memID = Integer.valueOf(req.getParameter("memID"));
 
             /*************************** 2.開始新增資料 ***************************************/
-            MemService memService = new MemService();
+
             memService.deleteMem(memID);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -330,7 +335,7 @@ public class MemServlet extends HttpServlet {
 
             /*************************** 2.開始查詢資料 ***************************************/
             Integer memID = Integer.valueOf(str);
-            MemService memService = new MemService();
+
             MemVO MemVO = memService.getOneMem(memID);
             if (MemVO == null) {
                 errorID.add("查無此會員");
@@ -368,7 +373,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-            MemService memService = new MemService();
+
             List<MemVO> MemVO = memService.getByName(memName);
             for (MemVO aMem : MemVO) {
 //				System.out.println(aMem.getPassword());
@@ -407,7 +412,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
-            MemService memService = new MemService();
+
             MemVO MemVO = memService.getByPhone(memPhone);
             if (MemVO == null) {
                 errorPhone.add("查無會員資料");
@@ -446,7 +451,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
-            MemService memService = new MemService();
+
             MemVO MemVO = memService.getByBirth(memBirth);
             if (MemVO == null) {
                 errorBirth.add("查無會員資料");
