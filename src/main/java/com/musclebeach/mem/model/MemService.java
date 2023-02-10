@@ -11,8 +11,7 @@ public class MemService {
     @Resource
     private MemDAO_interface dao;
 
-
-    public MemVO addMem(String memName, String account, String password, String memPhone, java.sql.Date memBirthday,
+    public MemVO addMem(String memName, String account, String password, String memPhone, Date memBirthday,
                         String memAddress, String memMail, Integer memStatus, Integer memAccess) {
 
         MemVO memVO = new MemVO();
@@ -31,22 +30,17 @@ public class MemService {
         return memVO;
     }
 
-    public MemVO updateMem(Integer memID, String memName, String account, String password, String memPhone,
-                           Date memBirthday, String memAddress, String memMail, Integer memStatus, Integer memAccess, Date membership) {
+    public MemVO updateMem(Integer memID, String memName, String account,
+                           String memPhone, String memAddress, String memMail) {
 
         MemVO memVO = new MemVO();
 
         memVO.setMemID(memID);
         memVO.setMemName(memName);
         memVO.setAccount(account);
-        memVO.setPassword(password);
         memVO.setMemPhone(memPhone);
-        memVO.setMemBirthday(memBirthday);
         memVO.setMemAddress(memAddress);
         memVO.setMemMail(memMail);
-        memVO.setMemStatus(memStatus);
-        memVO.setMemAccess(memAccess);
-        memVO.setMembership(membership);
         dao.update(memVO);
 
         return memVO;

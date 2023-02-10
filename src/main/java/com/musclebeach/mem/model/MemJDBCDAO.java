@@ -27,7 +27,7 @@ public class MemJDBCDAO implements MemDAO_interface {
     private static final String DELETE =
             "DELETE FROM member where mem_id = ?";
     private static final String UPDATE =
-            "UPDATE member set mem_name=?, mem_account=?, mem_password=?, mem_phone=?, mem_birthday=?, mem_address=?, mem_email=?, mem_status=?, mem_access=?, membership=? where mem_id = ?";
+            "UPDATE member set mem_name=?, mem_account=?, mem_phone=?, mem_address=?, mem_email=? where mem_id = ?";
     private static final String UPDATE_PASSWORD =
             "UPDATE member set mem_password=? where mem_id = ?";
     private static final String UPDATE_MEMBERSHIP =
@@ -104,15 +104,10 @@ public class MemJDBCDAO implements MemDAO_interface {
 
             pstmt.setString(1, memVO.getMemName());
             pstmt.setString(2, memVO.getAccount());
-            pstmt.setString(3, memVO.getPassword());
-            pstmt.setString(4, memVO.getMemPhone());
-            pstmt.setDate(5, memVO.getMemBirthday());
-            pstmt.setString(6, memVO.getMemAddress());
-            pstmt.setString(7, memVO.getMemMail());
-            pstmt.setInt(8, memVO.getMemStatus());
-            pstmt.setInt(9, memVO.getMemAccess());
-            pstmt.setDate(10, memVO.getMembership());
-            pstmt.setInt(11, memVO.getMemID());
+            pstmt.setString(3, memVO.getMemPhone());
+            pstmt.setString(4, memVO.getMemAddress());
+            pstmt.setString(5, memVO.getMemMail());
+            pstmt.setInt(6, memVO.getMemID());
 
             pstmt.executeUpdate();
 
@@ -376,7 +371,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
@@ -443,7 +438,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
@@ -511,7 +506,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
@@ -578,7 +573,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
@@ -644,7 +639,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
@@ -709,7 +704,7 @@ public class MemJDBCDAO implements MemDAO_interface {
                 memVO.setMemPhone(rs.getString("mem_phone"));
                 memVO.setMemBirthday(rs.getDate("mem_birthday"));
                 memVO.setMemAddress(rs.getString("mem_address"));
-                memVO.setMemMail(rs.getString("mem_mail"));
+                memVO.setMemMail(rs.getString("mem_email"));
                 memVO.setMemStatus(rs.getInt("mem_status"));
                 memVO.setMemAccess(rs.getInt("mem_access"));
                 memVO.setMembership(rs.getDate("membership"));
