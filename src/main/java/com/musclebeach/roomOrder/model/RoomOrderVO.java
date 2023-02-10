@@ -1,14 +1,22 @@
 package com.musclebeach.roomOrder.model;
 
+import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.room.model.RoomService;
+import com.musclebeach.room.model.RoomVO;
+import org.springframework.context.ApplicationContext;
+
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class RoomOrderVO implements java.io.Serializable {
+    private final ApplicationContext context = ApplicationContextUtil.getContext();
+    private final RoomService roomService = context.getBean(RoomService.class);
     private Integer orderID;
     private Integer memID;
     private Integer empID;
     private Integer roomID;
-    private Date creatTime;
-    private Date updateTime;
+    private Timestamp createTime;
+    private Timestamp updateTime;
     private Date borrowDate;
     private Integer borrowTime;
     private Integer orderStatus;
@@ -45,19 +53,19 @@ public class RoomOrderVO implements java.io.Serializable {
         this.roomID = roomID;
     }
 
-    public Date getCreatTime() {
-        return creatTime;
+    public Timestamp getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Timestamp date) {
+        this.createTime = date;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -83,6 +91,18 @@ public class RoomOrderVO implements java.io.Serializable {
 
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
+    }
+
+    // for join empName from empID
+//    public com.emp.model.EmpVO getEmpVO() {
+//    	com.emp.model.EmployeeService employeeService = new com.emp.model.EmployeeService();
+//    	com.emp.model.EmpVO empVO = employeeService.getOneEmp(empID);
+//	    return empVO;
+//    }
+
+    // for join roomName from roomID
+    public RoomVO getRoomVO() {
+        return roomService.getOneRoom(roomID);
     }
 
 }
