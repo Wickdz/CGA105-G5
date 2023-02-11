@@ -18,6 +18,7 @@ public class TeamClassDao implements TeamClassIDao {
     private static final String DELETE = "DELETE FROM `gym`.`team_class` WHERE `class_id` = ?";
     private static final String GET = "SELECT * FROM `gym`.`team_class` WHERE `class_id` = ?";
     private static final String GETALL = "SELECT * FROM `gym`.`team_class`";
+    private static final String GETONETYPE = "SELECT * FROM `gym`.`team_class` WHERE `type_id` = ?";
     @Resource
     private DataSource dataSource;
 
@@ -136,5 +137,33 @@ public class TeamClassDao implements TeamClassIDao {
         }
         return null;
     }
-
+    @Override
+    public List<TeamClassVO> getClass(Integer typeID) {
+        try {
+            Class.forName(CLASSNAME);
+        } catch (ClassNotFoundException e1) {
+            e1.printStackTrace();
+        }
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GETONETYPE);) {
+            preparedStatement.setInt(1, typeID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<TeamClassVO> list = new ArrayList<>();
+            while (resultSet.next()) {
+                TeamClassVO teamClassVO = new TeamClassVO();
+                teamClassVO.setClassID(resultSet.getInt(1));
+                teamClassVO.setEmpID(resultSet.getInt(2));
+                teamClassVO.setTypeID(resultSet.getInt(3));
+                teamClassVO.setClassName(resultSet.getString(4));
+                teamClassVO.setPeopleMax(resultSet.getInt(5));
+                teamClassVO.setClassContent(resultSet.getString(6));
+                teamClassVO.setClassStatus(resultSet.getInt(7));
+                list.add(teamClassVO);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

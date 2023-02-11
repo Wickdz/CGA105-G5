@@ -154,7 +154,7 @@
 <main class="d-flex flex-nowrap">
     <div
             class="d-flex flex-column flex-shrink-0 p-3"
-            style="width: 280px; background-color: rgb(110, 109, 109)"
+            style="width: 220px; background-color: rgb(110, 109, 109)"
     >
         <ul
                 class="nav nav-pills flex-column mb-auto"
@@ -366,7 +366,7 @@
                                    value="<%= (classScheduleVO==null)? "1" : classScheduleVO.getClassID()%>"/></td>
                     </tr>
                     <tr>
-                        <
+
                         <td>開始時間:</td>
                         <td><input type="TEXT" name="startTime" size="50"
                                    value="<%= (classScheduleVO==null)? "2023-01-12 09:00:00" : classScheduleVO.getStartTime()%>"/>

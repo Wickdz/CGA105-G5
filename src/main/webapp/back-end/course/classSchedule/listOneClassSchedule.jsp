@@ -154,7 +154,7 @@
 <main class="d-flex flex-nowrap">
     <div
             class="d-flex flex-column flex-shrink-0 p-3"
-            style="width: 280px; background-color: rgb(110, 109, 109)"
+            style="width: 220px; background-color: rgb(110, 109, 109)"
     >
         <ul
                 class="nav nav-pills flex-column mb-auto"

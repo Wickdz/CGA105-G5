@@ -1,8 +1,8 @@
-<%@ page import="com.musclebeach.teamClass.model.TeamClassVO" %>
+<%@ page import="com.musclebeach.course.entity.ClassType" %>
 <%@ page import="java.util.List" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
-<%@ page import="com.musclebeach.teamClass.model.TeamClassService" %>
+<%@ page import="com.musclebeach.course.service.ClassTypeService" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -330,7 +330,7 @@
 
             <table id="table-1">
                 <tr>
-                    <td><h3>GYM Course</h3></td>
+                    <td><h3>MuscleBeach團體課程</h3></td>
                 </tr>
             </table>
 
@@ -361,20 +361,20 @@
                 <%
                     ApplicationContext ctx = ApplicationContextUtil.getContext();
                     assert ctx != null;
-                    TeamClassService teamClassSvc = ctx.getBean(TeamClassService.class);
-                    List<TeamClassVO> list = teamClassSvc.getAll();
+                    ClassTypeService classTypeService= ctx.getBean(ClassTypeService.class);
+                    List<ClassType> list = classTypeService.selectAll();
                     pageContext.setAttribute("list", list);
                 %>
 
                 <li>
                     <FORM METHOD="post" ACTION="teamClass.do">
                         <b>選擇課程類別:</b>
-                        <select size="1" name="classID">
-                            <c:forEach var="teamClassVO" items="${list}">
-                            <option value="${teamClassVO.classID}">${teamClassVO.typeID}
+                        <select size="1" name="typeID">
+                            <c:forEach var="classTypeService" items="${list}">
+                            <option value="${classTypeService.typeID}">${classTypeService.typeName}
                                 </c:forEach>
                         </select>
-                        <input type="hidden" name="action" value="getOne_For_Display">
+                        <input type="hidden" name="action" value="getAllClass_For_OneType">
                         <input type="submit" value="送出">
                     </FORM>
                 </li>

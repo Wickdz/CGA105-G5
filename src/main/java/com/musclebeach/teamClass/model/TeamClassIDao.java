@@ -11,5 +11,7 @@ public interface TeamClassIDao {
 
     TeamClassVO get(Integer pk);
 
+    List<TeamClassVO> getClass(Integer typeID);
+
     List<TeamClassVO> getAll();
 }

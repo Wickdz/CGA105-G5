@@ -1,9 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.*" %>
-<%@ page import="com.musclebeach.classSchedule.model.*" %>
-<%@ page import="org.springframework.context.ApplicationContext" %>
-<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.musclebeach.classSchedule.model.*"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil"%>
+
 <%
     ApplicationContext ctx = ApplicationContextUtil.getContext();
     assert ctx != null;
@@ -11,56 +12,63 @@
     List<ClassScheduleVO> list = classScheduleService.getAll();
     request.setAttribute("classSchedulelist", list);
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Muscle Beach «á¥x­º­¶</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Muscle Beach å¾Œå°é¦–é </title>
+    <link rel="canonical"
+          href="https://getbootstrap.com/docs/5.3/examples/headers/" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+    <link rel="canonical"
+          href="https://getbootstrap.com/docs/5.3/examples/sidebars/" />
     <link
-            rel="canonical"
-            href="https://getbootstrap.com/docs/5.3/examples/headers/"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-    />
-    <link
-            rel="canonical"
-            href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
-    />
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
-          rel="stylesheet"/>
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
     <style type="text/css"></style>
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/index.css"
-          rel="stylesheet"/>
+    <link
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/index.css"
+            rel="stylesheet" />
     <!-- Flaticon Font -->
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
-          rel="stylesheet"/>
-    <title>©Ò¦³½Òµ{®É¶¡ªí</title>
+    <link
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
+            rel="stylesheet" />
+    <!-- DataTables  -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
+
+    <!-- jq DataTables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <title>æ‰€æœ‰èª²ç¨‹è³‡æ–™</title>
     <style>
-        table#table-1 {
-            width: 95%;
-            background-color: #CDA581;
-            border: 2px solid black;
-            text-align: center;
+
+
+        td {
+            max-width: 250px;
+            /* è¨­ç½®æœ€å¤§å¯¬åº¦ */
+            overflow: hidden;
+            /* éš±è—è¶…å‡ºéƒ¨åˆ† */
+            text-overflow: ellipsis;
+            /* æ·»åŠ çœç•¥è™Ÿ */
+            white-space: nowrap;
+            /* ä¸æ›è¡Œ */
+            color: maroon;
         }
 
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-
-        h4 {
-            color: blue;
-            display: inline;
+        .showTd {
+            max-width: none;
+            overflow: visible;
+            white-space: normal;
+            /* æ›è¡Œ */
         }
     </style>
-
     <style>
-
         div#v-pills-class {
             width: 100%;
             height: 100%;
@@ -71,13 +79,12 @@
         }
 
         table#table-2 {
-            width: 95%;
+            width: 100%;
             border: 2px solid black;
             text-align: center;
         }
 
         table {
-
             background-color: white;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -109,20 +116,11 @@
 
         #table-2 tr:hover td {
             color: blue;
-            height: 35px;
             border-left: 5px solid rgba(79, 192, 210, 0.6);
             transition: all 0.5s ease-in-out;
         }
 
-        #table-2 tr:hover .show {
-            display: block;
 
-        }
-
-        #table-2:hover .showth {
-            display: block;
-
-        }
 
         #table-2 tr {
             border-bottom: 1px solid #2a2a2a;
@@ -132,301 +130,204 @@
             border-bottom: none;
         }
 
-        .show {
-            display: none;
-        }
-
-        .showth {
-            display: none;
-        }
 
         #show {
             cursor: pointer;
         }
     </style>
-
 </head>
 <body bgcolor='white'>
-<!-- ======================================== header ¶}©l ======================================== -->
+<!-- ======================================== header é–‹å§‹ ======================================== -->
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div
-                class="d-flex flex-wrap align-items-center justify-content-between"
-        >
+                class="d-flex flex-wrap align-items-center justify-content-between">
             <div class="header_1">
-                <i class="flaticon-barbell"></i>
-                <span>Muscle Beach</span>
+                <i class="flaticon-barbell"></i> <span>Muscle Beach</span>
             </div>
             <div class="header_2">
                 <span style="margin-right: 50px">Welcome, user !</span>
-                <button
-                        type="button"
-                        class="btn btn-outline-light"
-                        style="margin-right: 5px"
-                >
-                    ­×§ï±K½X
-                </button>
-                <button type="button" class="btn btn-outline-light">µn¥X</button>
+                <button type="button" class="btn btn-outline-light"
+                        style="margin-right: 5px">ä¿®æ”¹å¯†ç¢¼</button>
+                <button type="button" class="btn btn-outline-light">ç™»å‡º</button>
             </div>
         </div>
     </div>
 </header>
-<!-- ======================================== sidebar ¶}©l ======================================== -->
+<!-- ======================================== sidebar é–‹å§‹ ======================================== -->
 <main class="d-flex flex-nowrap">
-    <div
-            class="d-flex flex-column flex-shrink-0 p-3"
-            style="width: 280px; background-color: rgb(110, 109, 109)"
-    >
-        <ul
-                class="nav nav-pills flex-column mb-auto"
-                id="v-pills-tab"
-                role="tablist"
-                aria-orientation="vertical"
-                style="text-align: center"
-        >
-            <li class="nav-item">
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-home-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-home"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-home"
-                        aria-selected="true"
-                        aria-current="page"
-                        style="font-size: 1.5rem"
-                >
-                    <i class="bi bi-house-door" style="margin-right: 8px"></i>
-                    ­º­¶
-                </a>
-            </li>
-            <hr/>
-            <li class="nav-item">
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-employee-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-employee"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-employee"
-                        aria-selected="false"
-                >
-                    <i class="bi bi-person" style="color: white; margin: 5px"></i>
-                    ­û¤uºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-member-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-member"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-member"
-                        aria-selected="false"
-                >
-                    <i
-                            class="bi bi-person-circle"
-                            style="color: white; margin: 5px"
-                    ></i>
-                    ·|­ûºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-shop-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-shop"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-shop"
-                        aria-selected="false"
-                >
-                    <i class="bi bi-shop" style="color: white; margin: 5px"></i>
-                    °Ó«°ºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-coach-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-coach"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-coach"
-                        aria-selected="false"
-                >
-                    <i
-                            class="bi bi-universal-access"
-                            style="color: white; margin: 5px"
-                    ></i>
-                    ±Ğ½mºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link active text-white"
-                        id="v-pills-class-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-class"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-class"
-                        aria-selected="false"
-                        onclick="location.href='<%=request.getContextPath()%>/back-end/course/classSchedule/select_page.jsp';"
-
-                >
-                    <i
-                            class="bi bi-calendar2-week"
-                            style="color: white; margin: 5px"
-                    ></i>
-                    ½Òµ{ºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-room-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-room"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-room"
-                        aria-selected="false"
-                >
-                    <i class="bi bi-building" style="color: white; margin: 5px"></i>
-                    ³õ¦aºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-article-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-article"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-article"
-                        aria-selected="false"
-                >
-                    <i
-                            class="bi bi-chat-right-text"
-                            style="color: white; margin: 5px"
-                    ></i>
-                    ½×¾ÂºŞ²z
-                </a>
-            </li>
-            <li>
-                <a
-                        class="nav-link text-white"
-                        id="v-pills-service-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#v-pills-service"
-                        type="button"
-                        role="tab"
-                        aria-controls="v-pills-service"
-                        aria-selected="false"
-                >
-                    <i class="bi bi-envelope" style="color: white; margin: 5px"></i>
-                    «ÈªAºŞ²z
-                </a>
-            </li>
+    <div class="d-flex flex-column flex-shrink-0 p-3"
+         style="width: 220px; background-color: rgb(110, 109, 109)">
+        <ul class="nav nav-pills flex-column mb-auto" id="v-pills-tab"
+            role="tablist" aria-orientation="vertical"
+            style="text-align: center">
+            <li class="nav-item"><a class="nav-link text-white"
+                                    id="v-pills-home-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-home" type="button" role="tab"
+                                    aria-controls="v-pills-home" aria-selected="true"
+                                    aria-current="page" style="font-size: 1.5rem">
+                <i class="bi bi-house-door" style="margin-right: 8px"></i> é¦–é 
+            </a></li>
+            <hr />
+            <li class="nav-item"><a class="nav-link text-white"
+                                    id="v-pills-employee-tab" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-employee" type="button" role="tab"
+                                    aria-controls="v-pills-employee" aria-selected="false">
+                <i class="bi bi-person" style="color: white; margin: 5px"></i>
+                å“¡å·¥ç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-member-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-member"
+                   type="button" role="tab" aria-controls="v-pills-member"
+                   aria-selected="false"> <i
+                    class="bi bi-person-circle" style="color: white; margin: 5px"></i>
+                æœƒå“¡ç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-shop-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-shop" type="button"
+                   role="tab" aria-controls="v-pills-shop" aria-selected="false">
+                <i class="bi bi-shop" style="color: white; margin: 5px"></i> å•†åŸç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-coach-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-coach" type="button"
+                   role="tab" aria-controls="v-pills-coach" aria-selected="false">
+                <i class="bi bi-universal-access"
+                   style="color: white; margin: 5px"></i> æ•™ç·´ç®¡ç†
+            </a></li>
+            <li><a class="nav-link active text-white"
+                   id="v-pills-class-tab" data-bs-toggle="pill"
+                   data-bs-target="#v-pills-class" type="button" role="tab"
+                   aria-controls="v-pills-class" aria-selected="false"
+                   onclick="location.href='<%=request.getContextPath()%>/back-end/course/classSchedule/select_page.jsp';">
+                <i class="bi bi-calendar2-week" style="color: white; margin: 5px"></i>
+                èª²ç¨‹ç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-room-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-room" type="button"
+                   role="tab" aria-controls="v-pills-room" aria-selected="false">
+                <i class="bi bi-building" style="color: white; margin: 5px"></i>
+                å ´åœ°ç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-article-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-article"
+                   type="button" role="tab" aria-controls="v-pills-article"
+                   aria-selected="false"> <i
+                    class="bi bi-chat-right-text" style="color: white; margin: 5px"></i>
+                è«–å£‡ç®¡ç†
+            </a></li>
+            <li><a class="nav-link text-white" id="v-pills-service-tab"
+                   data-bs-toggle="pill" data-bs-target="#v-pills-service"
+                   type="button" role="tab" aria-controls="v-pills-service"
+                   aria-selected="false"> <i
+                    class="bi bi-envelope" style="color: white; margin: 5px"></i> å®¢æœç®¡ç†
+            </a></li>
         </ul>
-        <hr/>
+        <hr />
         <div class="mx-auto d-flex mt-3 mb-3 text-muted">&copy; 2022</div>
     </div>
     <div class="tab-content" id="v-pills-tabContent">
-        <!-- ============================================ ­º­¶ ============================================ -->
-        <div
-                class="tab-pane fade"
-                id="v-pills-home"
-                role="tabpanel"
-                aria-labelledby="v-pills-home-tab"
-                tabindex="0"
-        >
-            <img src="/image/welcome.gif" style="width: 96%" alt=""/>
+        <!-- ============================================ é¦–é  ============================================ -->
+        <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
+             aria-labelledby="v-pills-home-tab" tabindex="0">
+            <img src="/image/welcome.gif" style="width: 96%" alt="" />
         </div>
 
-        <!-- ========================================= ½Òµ{ºŞ²z ========================================= -->
-        <div
-                class="tab-pane fade show active"
-                id="v-pills-class"
-                role="tabpanel"
-                aria-labelledby="v-pills-class-tab"
-                tabindex="0"
-                style="border: 2px solid purple "
-        >
+        <!-- ========================================= èª²ç¨‹ç®¡ç† ========================================= -->
+        <div class="tab-pane fade show active" id="v-pills-class"
+             role="tabpanel" aria-labelledby="v-pills-class-tab" tabindex="0"
+             style="border: 2px solid purple">
 
-
-            <table id="table-1">
-                <tr>
-                    <td>
-                        <h3>©Ò¦³½Òµ{®É¶¡ªí</h3>
-
-                    </td>
-                </tr>
-            </table>
 
             <table id="table-2">
+                <thead>
                 <tr>
-                    <th>®É¶¡½s¸¹</th>
-                    <th>½Òµ{½s¸¹</th>
-                    <th>¶}©l®É¶¡</th>
-                    <th>µ²§ô®É¶¡</th>
-                    <th class="showth">½ÒªíºŞ²z</th>
-
+                    <th>æ™‚é–“ç·¨è™Ÿ</th>
+                    <th>èª²ç¨‹ç·¨è™Ÿ</th>
+                    <th>é–‹å§‹æ™‚é–“</th>
+                    <th>çµæŸæ™‚é–“</th>
+                    <th>ä¿®æ”¹</th>
+                    <th>å–®ç­†èª²ç¨‹</th>
                 </tr>
-                <%@ include file="page1.file" %>
-                <c:forEach var="classScheduleVO" items="${classSchedulelist}" begin="<%=pageIndex%>"
-                           end="<%=pageIndex+rowsPerPage-1%>">
-
+                </thead>
+                <tbody>
+                <c:forEach var="classScheduleVO" items="${classSchedulelist}">
                     <tr>
-                        <td>${classScheduleVO.getTimeID()}</td>
-                        <td>${classScheduleVO.getTeamClassVO().getClassName()}</td>
-                        <td>${classScheduleVO.getStartTime()}</td>
-                        <td>${classScheduleVO.getEndTime()}</td>
-
+                        <td>${classScheduleVO.timeID}</td>
+                        <td>${classScheduleVO.teamClassVO.className }</td>
+                        <td>${classScheduleVO.startTime}</td>
+                        <td>${classScheduleVO.endTime}</td>
                         <td class="show">
                             <FORM METHOD="post"
                                   ACTION="classSchedule.do"
                                   style="margin-bottom: 0px;">
-                                <input id="show" type="submit" value="­×§ï">
+                                <input id="show" type="submit" value="ä¿®æ”¹">
                                 <input type="hidden" name="timeID" value="${classScheduleVO.timeID}">
                                 <input type="hidden" name="classID" value="${classScheduleVO.classID}">
                                 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                <!--°e¥X¥»ºô­¶ªº¸ô®|µ¹Controller-->
-                                <input type="hidden" name="whichPage" value="<%=whichPage%>">
-                                <!--°e¥X·í«e¬O²Ä´X­¶µ¹Controller-->
+                                <!--é€å‡ºæœ¬ç¶²é çš„è·¯å¾‘çµ¦Controller-->
+
                                 <input type="hidden" name="action" value="getOne_For_Update"></FORM>
+                            </FORM>
                         </td>
                         <td class="show">
                             <FORM METHOD="post"
                                   ACTION="classSchedule.do"
                                   style="margin-bottom: 0px;">
-                                <input id="show2" type="submit" value="³æµ§½Òµ{®É¶¡ªí">
+                                <input id="show2" type="submit" value="å–®ç­†èª²ç¨‹æ™‚é–“è¡¨">
                                 <input type="hidden" name="timeID" value="${classScheduleVO.timeID}">
                                 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                <!--°e¥X¥»ºô­¶ªº¸ô®|µ¹Controller-->
-                                <input type="hidden" name="whichPage" value="<%=whichPage%>">
-                                <!--°e¥X·í«e¬O²Ä´X­¶µ¹Controller-->
+                                <!--é€å‡ºæœ¬ç¶²é çš„è·¯å¾‘çµ¦Controller-->
+
                                 <input type="hidden" name="action" value="getOne_For_Display"></FORM>
+                            </FORM>
                         </td>
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
-            <%@ include file="page2.file" %>
+            <script>
+                $(document).ready(function() {
+                    $('#table-2').DataTable({
+                        "searching" : true,
+                        "ordering" : true,
+                        language : {
+                            "lengthMenu" : "é¡¯ç¤º _MENU_ ç­†è³‡æ–™",
+                            "sProcessing" : "è™•ç†ä¸­...",
+                            "sZeroRecords" : "æ²¡æœ‰æŸ¥è©¢åˆ°ç»“æœ",
+                            "sInfo" : "ç›®å‰æœ‰ _MAX_ ç­†è³‡æ–™",
+                            "sInfoEmpty" : "ç›®å‰å…±æœ‰ 0 ç­†ç´€éŒ„",
+                            "sInfoFiltered" : " ",
+                            "sInfoPostFix" : "",
+                            "sSearch" : "æœå°‹:",
+                            "sUrl" : "",
+                            "sEmptyTable" : "å°šæœªæœ‰è³‡æ–™ç´€éŒ„å­˜åœ¨",
+                            "sLoadingRecords" : "è¼‰å…¥è³‡æ–™ä¸­...",
+                            "sInfoThousands" : ",",
+                            "oPaginate" : {
+                                "sFirst" : "é¦–é ",
+                                "sPrevious" : "ä¸Šä¸€é ",
+                                "sNext" : "ä¸‹ä¸€é ",
+                                "sLast" : "æœ«é "
+                            },
+                            "order" : [ [ 0, "desc" ] ],
+                            "oAria" : {
+                                "sSortAscending" : ": ä»¥å‡åºæ’åˆ—æ­¤åˆ—",
+                                "sSortDescending" : ": ä»¥é™åºæ’åˆ—æ­¤åˆ—"
+                            }
+                        },
+                    });
+                });
+            </script>
         </div>
-
 </main>
-<script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/sidebars.js"></script>
+<script
+        src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/popper.min.js"></script>
+<script
+        src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/bootstrap.min.js"></script>
+<script
+        src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/js/bootstrap.bundle.min.js"></script>
+<script
+        src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/sidebars.js"></script>
 
 
 </body>

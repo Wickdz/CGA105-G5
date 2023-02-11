@@ -44,8 +44,16 @@ public class TeamClassService {
         return dao.get(classID);
     }
 
+    public TeamClassVO getType(Integer typeID) {
+        return dao.get(typeID);
+    }
+
     public List<TeamClassVO> getAll() {
         return dao.getAll();
 
+    }
+
+    public List<TeamClassVO> getAllClassForOneType(Integer typeID){
+        return dao.getClass(typeID);
     }
 }

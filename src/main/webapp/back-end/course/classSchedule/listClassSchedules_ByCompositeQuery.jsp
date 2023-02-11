@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.musclebeach.classSchedule.model.*" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
@@ -13,49 +13,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Muscle Beach «á¥x­º­¶</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Muscle Beach å¾Œå°é¦–é </title>
+    <link rel="canonical"
+          href="https://getbootstrap.com/docs/5.3/examples/headers/" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" />
+    <link rel="canonical"
+          href="https://getbootstrap.com/docs/5.3/examples/sidebars/" />
     <link
-            rel="canonical"
-            href="https://getbootstrap.com/docs/5.3/examples/headers/"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
-    />
-    <link
-            rel="canonical"
-            href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
-    />
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
-          rel="stylesheet"/>
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
+            rel="stylesheet" />
     <style type="text/css"></style>
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/index.css"
-          rel="stylesheet"/>
+    <link
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/index.css"
+            rel="stylesheet" />
     <!-- Flaticon Font -->
-    <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
-          rel="stylesheet"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link
+            href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
+            rel="stylesheet" />
+    <!-- DataTables  -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+
+    <!-- jq DataTables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <title>æ‰€æœ‰èª²ç¨‹è³‡æ–™</title>
     <style>
-        table#table-1 {
-            width: 95%;
-            background-color: #CDA581;
-            border: 2px solid black;
-            text-align: center;
+
+
+        td {
+            max-width: 250px;
+            /* è¨­ç½®æœ€å¤§å¯¬åº¦ */
+            overflow: hidden;
+            /* éš±è—è¶…å‡ºéƒ¨åˆ† */
+            text-overflow: ellipsis;
+            /* æ·»åŠ çœç•¥è™Ÿ */
+            white-space: nowrap;
+            /* ä¸æ›è¡Œ */
+            color: maroon;
         }
 
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
+        .showTd {
+            max-width: none;
+            overflow: visible;
+            white-space: normal;
+            /* æ›è¡Œ */
         }
-
-        h4 {
-            color: blue;
-            display: inline;
-        }
-
+    </style>
+    <style>
         div#v-pills-class {
             width: 100%;
             height: 100%;
@@ -66,9 +76,21 @@
         }
 
         table#table-2 {
-            width: 95%;
+            width: 100%;
             border: 2px solid black;
             text-align: center;
+        }
+
+        table {
+            background-color: white;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        th {
+            background-color: #9D7553;
+            color: #DABEA7;
+
         }
 
         #table-2 td {
@@ -91,15 +113,11 @@
 
         #table-2 tr:hover td {
             color: blue;
-            height: 35px;
             border-left: 5px solid rgba(79, 192, 210, 0.6);
             transition: all 0.5s ease-in-out;
         }
 
-        #table-2 tr:hover .show {
-            display: block;
 
-        }
 
         #table-2 tr {
             border-bottom: 1px solid #2a2a2a;
@@ -109,29 +127,15 @@
             border-bottom: none;
         }
 
-    </style>
 
-    <style>
-        table {
-            width: 800px;
-            background-color: white;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        table, th, td {
-            border: 1px solid #CCCCFF;
-        }
-
-        th, td {
-            padding: 5px;
-            text-align: center;
+        #show {
+            cursor: pointer;
         }
     </style>
 
 </head>
 <body bgcolor='white'>
-<!-- ======================================== header ¶}©l ======================================== -->
+<!-- ======================================== header é–‹å§‹ ======================================== -->
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div
@@ -148,18 +152,18 @@
                         class="btn btn-outline-light"
                         style="margin-right: 5px"
                 >
-                    ­×§ï±K½X
+                    ä¿®æ”¹å¯†ç¢¼
                 </button>
-                <button type="button" class="btn btn-outline-light">µn¥X</button>
+                <button type="button" class="btn btn-outline-light">ç™»å‡º</button>
             </div>
         </div>
     </div>
 </header>
-<!-- ======================================== sidebar ¶}©l ======================================== -->
+<!-- ======================================== sidebar é–‹å§‹ ======================================== -->
 <main class="d-flex flex-nowrap">
     <div
             class="d-flex flex-column flex-shrink-0 p-3"
-            style="width: 280px; background-color: rgb(110, 109, 109)"
+            style="width: 220px; background-color: rgb(110, 109, 109)"
     >
         <ul
                 class="nav nav-pills flex-column mb-auto"
@@ -182,7 +186,7 @@
                         style="font-size: 1.5rem"
                 >
                     <i class="bi bi-house-door" style="margin-right: 8px"></i>
-                    ­º­¶
+                    é¦–é 
                 </a>
             </li>
             <hr/>
@@ -198,7 +202,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-person" style="color: white; margin: 5px"></i>
-                    ­û¤uºŞ²z
+                    å“¡å·¥ç®¡ç†
                 </a>
             </li>
             <li>
@@ -216,7 +220,7 @@
                             class="bi bi-person-circle"
                             style="color: white; margin: 5px"
                     ></i>
-                    ·|­ûºŞ²z
+                    æœƒå“¡ç®¡ç†
                 </a>
             </li>
             <li>
@@ -231,7 +235,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-shop" style="color: white; margin: 5px"></i>
-                    °Ó«°ºŞ²z
+                    å•†åŸç®¡ç†
                 </a>
             </li>
             <li>
@@ -249,7 +253,7 @@
                             class="bi bi-universal-access"
                             style="color: white; margin: 5px"
                     ></i>
-                    ±Ğ½mºŞ²z
+                    æ•™ç·´ç®¡ç†
                 </a>
             </li>
             <li>
@@ -268,7 +272,7 @@
                             class="bi bi-calendar2-week"
                             style="color: white; margin: 5px"
                     ></i>
-                    ½Òµ{ºŞ²z
+                    èª²ç¨‹ç®¡ç†
                 </a>
             </li>
             <li>
@@ -283,7 +287,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-building" style="color: white; margin: 5px"></i>
-                    ³õ¦aºŞ²z
+                    å ´åœ°ç®¡ç†
                 </a>
             </li>
             <li>
@@ -301,7 +305,7 @@
                             class="bi bi-chat-right-text"
                             style="color: white; margin: 5px"
                     ></i>
-                    ½×¾ÂºŞ²z
+                    è«–å£‡ç®¡ç†
                 </a>
             </li>
             <li>
@@ -316,7 +320,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-envelope" style="color: white; margin: 5px"></i>
-                    «ÈªAºŞ²z
+                    å®¢æœç®¡ç†
                 </a>
             </li>
         </ul>
@@ -324,7 +328,7 @@
         <div class="mx-auto d-flex mt-3 mb-3 text-muted">&copy; 2022</div>
     </div>
     <div class="tab-content" id="v-pills-tabContent">
-        <!-- ============================================ ­º­¶ ============================================ -->
+        <!-- ============================================ é¦–é  ============================================ -->
         <div
                 class="tab-pane fade "
                 id="v-pills-home"
@@ -335,7 +339,7 @@
             <img src="/image/welcome.gif" style="width: 96%" alt=""/>
         </div>
 
-        <!-- ========================================= ½Òµ{ºŞ²z ========================================= -->
+        <!-- ========================================= èª²ç¨‹ç®¡ç† ========================================= -->
         <div
                 class="tab-pane fade show active"
                 id="v-pills-class"
@@ -346,32 +350,27 @@
         >
 
 
-            <table id="table-1">
-                <tr>
-                    <td>
-                        <h3>³æµ§½Òµ{ÂI¦Wªí</h3>
 
-                    </td>
-                </tr>
-            </table>
 
 
             <table id="table-2">
+                <thead>
                 <tr>
-                    <th>®É¶¡½s¸¹</th>
-                    <th>½Òµ{½s¸¹</th>
-                    <th>¶}©l®É¶¡</th>
-                    <th>µ²§ô®É¶¡</th>
-                    <th>·|­û½s¸¹</th>
-                    <th>¹Î½ÒÂI¦W</th>
-
+                    <th>æ™‚é–“ç·¨è™Ÿ</th>
+                    <th>èª²ç¨‹ç·¨è™Ÿ</th>
+                    <th>é–‹å§‹æ™‚é–“</th>
+                    <th>çµæŸæ™‚é–“</th>
+                    <th>æœƒå“¡ç·¨è™Ÿ</th>
+                    <th>åœ˜èª²é»å</th>
                 </tr>
-                <%@ include file="page1_ByCompositeQuery.file" %>
-                <c:forEach var="classScheduleVO" items="${listClassSchedules_ByCompositeQuery}" begin="<%=pageIndex%>"
-                           end="<%=pageIndex+rowsPerPage-1%>">
+                </thead>
+                <%--                 <%@ include file="page1_ByCompositeQuery.file" %> --%>
+                <tbody>
+                <c:forEach var="classScheduleVO" items="${listClassSchedules_ByCompositeQuery}">
+                    <%--                 begin="<%=pageIndex%>"  end="<%=pageIndex+rowsPerPage-1%>"> --%>
                     <tr>
                         <td>${classScheduleVO.timeID}</td>
-                        <td>${classScheduleVO.classID}</td>
+                        <td>${classScheduleVO.teamClassVO.className}</td>
                         <td>${classScheduleVO.startTime}</td>
                         <td>${classScheduleVO.endTime}</td>
                         <td>${classScheduleVO.memID}</td>
@@ -380,43 +379,76 @@
                             <FORM METHOD="post"
                                   ACTION="<%=request.getContextPath()%>/back-end/absentMember/absentMember.do"
                                   style="margin-bottom: 0px;">
-                                <input type="submit" value="¯Ê®u">
+                                <input type="submit" value="ç¼ºå¸­">
                                 <input type="hidden" name="classID" value="${classScheduleVO.classID}">
                                 <input type="hidden" name="timeID" value="${classScheduleVO.timeID}">
                                 <input type="hidden" name="memID" value="${classScheduleVO.memID}">
                                 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                <!--°e¥X¥»ºô­¶ªº¸ô®|µ¹Controller-->
-                                <input type="hidden" name="whichPage" value="<%=whichPage%>">
-                                <!--°e¥X·í«e¬O²Ä´X­¶µ¹Controller-->
+                                <!--é€å‡ºæœ¬ç¶²é çš„è·¯å¾‘çµ¦Controller-->
+                                    <%--                                 <input type="hidden" name="whichPage" value="<%=whichPage%>"> --%>
+                                <!--é€å‡ºç•¶å‰æ˜¯ç¬¬å¹¾é çµ¦Controller-->
                                 <input type="hidden" name="action" value="insertandgetCount">
                             </FORM>
                         </td>
                         <!-- 			<td> -->
                             <%-- 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/emp/emp.do" style="margin-bottom: 0px;"> --%>
-                        <!-- 			     <input type="submit" value="§R°£"> -->
+                        <!-- 			     <input type="submit" value="åˆªé™¤"> -->
                             <%-- 			     <input type="hidden" name="empno"      value="${empVO.empno}"> --%>
-                            <%-- 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--°e¥X¥»ºô­¶ªº¸ô®|µ¹Controller--> --%>
-                            <%-- 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--°e¥X·í«e¬O²Ä´X­¶µ¹Controller--> --%>
+                            <%-- 			     <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--é€å‡ºæœ¬ç¶²é çš„è·¯å¾‘çµ¦Controller--> --%>
+                            <%-- 			     <input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--é€å‡ºç•¶å‰æ˜¯ç¬¬å¹¾é çµ¦Controller--> --%>
                         <!-- 			     <input type="hidden" name="action"     value="delete"></FORM> -->
                         <!-- 			</td> -->
                     </tr>
                 </c:forEach>
+                </tbody>
             </table>
-            <%@ include file="page2_ByCompositeQuery.file" %>
+            <%--             <%@ include file="page2_ByCompositeQuery.file" %> --%>
         </div>
 </main>
 <script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/index/sidebars.js"></script>
-
+<script>
+    $(document).ready(function() {
+        $('#table-2').DataTable({
+            "searching" : true,
+            "ordering" : true,
+            language : {
+                "lengthMenu" : "é¡¯ç¤º _MENU_ ç­†è³‡æ–™",
+                "sProcessing" : "è™•ç†ä¸­...",
+                "sZeroRecords" : "æ²¡æœ‰æŸ¥è©¢åˆ°ç»“æœ",
+                "sInfo" : "ç›®å‰æœ‰ _MAX_ ç­†è³‡æ–™",
+                "sInfoEmpty" : "ç›®å‰å…±æœ‰ 0 ç­†ç´€éŒ„",
+                "sInfoFiltered" : " ",
+                "sInfoPostFix" : "",
+                "sSearch" : "æœå°‹:",
+                "sUrl" : "",
+                "sEmptyTable" : "å°šæœªæœ‰è³‡æ–™ç´€éŒ„å­˜åœ¨",
+                "sLoadingRecords" : "è¼‰å…¥è³‡æ–™ä¸­...",
+                "sInfoThousands" : ",",
+                "oPaginate" : {
+                    "sFirst" : "é¦–é ",
+                    "sPrevious" : "ä¸Šä¸€é ",
+                    "sNext" : "ä¸‹ä¸€é ",
+                    "sLast" : "æœ«é "
+                },
+                "order" : [ [ 0, "desc" ] ],
+                "oAria" : {
+                    "sSortAscending" : ": ä»¥å‡åºæ’åˆ—æ­¤åˆ—",
+                    "sSortDescending" : ": ä»¥é™åºæ’åˆ—æ­¤åˆ—"
+                }
+            },
+        });
+    });
+</script>
 
 <!-- <h4> -->
-<!-- ¡¸¸U¥Î½Æ¦X¬d¸ß  - ¥i¥Ñ«È¤áºİ select_page.jsp ÀH·N¼W´î¥ô¦ó·Q¬d¸ßªºÄæ¦ì<br> -->
-<!-- ¡¸¦¹­¶§@¬°½Æ¦X¬d¸ß®É¤§µ²ªG½m²ß¡A<font color=red>¤w¼W¥[¤À­¶¡B°e¥X­×§ï¡B§R°£¤§¥\¯à</font></h4> -->
+<!-- â˜†è¬ç”¨è¤‡åˆæŸ¥è©¢  - å¯ç”±å®¢æˆ¶ç«¯ select_page.jsp éš¨æ„å¢æ¸›ä»»ä½•æƒ³æŸ¥è©¢çš„æ¬„ä½<br> -->
+<!-- â˜†æ­¤é ä½œç‚ºè¤‡åˆæŸ¥è©¢æ™‚ä¹‹çµæœç·´ç¿’ï¼Œ<font color=red>å·²å¢åŠ åˆ†é ã€é€å‡ºä¿®æ”¹ã€åˆªé™¤ä¹‹åŠŸèƒ½</font></h4> -->
 
 
-<!-- <br>¥»ºô­¶ªº¸ô®|:<br><b> -->
+<!-- <br>æœ¬ç¶²é çš„è·¯å¾‘:<br><b> -->
 <%--    <font color=blue>request.getServletPath():</font> <%=request.getServletPath()%><br> --%>
 <%--    <font color=blue>request.getRequestURI(): </font> <%=request.getRequestURI()%> </b> --%>
 
