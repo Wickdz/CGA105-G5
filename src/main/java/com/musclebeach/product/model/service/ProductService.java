@@ -12,9 +12,6 @@ public interface ProductService {
 
     List<Product> getAll();
 
-    Product addProd(String proName, Integer typeID, Integer proQty, Integer proPrice,
-                    String proContent, Integer proStatus, Integer proID, byte[] ProImg);
-
     void deleteProd(Integer proID);
 
     Product updateProd(Integer proID, String proName, Integer typeID, Integer proQty, Integer proPrice,
@@ -29,9 +26,8 @@ public interface ProductService {
 
     List<Product> findAllProduct();
 
-    List<Product> findSameCategoryProduct(Integer prodType);
+    List<Product> findSameCategoryProduct(Integer proType);
 
     List<Product> findSpecifiedProduct(String keyword);
 
-    byte[] findProductImg(Integer proID);
 }

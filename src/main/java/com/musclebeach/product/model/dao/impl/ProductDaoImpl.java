@@ -50,7 +50,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        final String hql = "From Product";
+        final String hql = "From Product order by createTime desc";
         return session.createQuery(hql, Product.class).list();
     }
 

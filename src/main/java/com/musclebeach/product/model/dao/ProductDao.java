@@ -6,7 +6,7 @@ import com.musclebeach.product.model.entity.ProductImg;
 import java.util.List;
 
 public interface ProductDao {
-    List<Product> selectByProdType(Integer prodType);
+    List<Product> selectByProdType(Integer typeName);
 
     List<Product> selectByKeyword(String keyword);
 

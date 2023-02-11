@@ -1,6 +1,7 @@
 package com.musclebeach.product.controller;
 
 import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.product.model.entity.ProductImg;
 import com.musclebeach.product.model.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -23,18 +24,18 @@ public class ShowProdImg extends HttpServlet {
         ServletOutputStream out = response.getOutputStream();
 
         Integer proID = Integer.valueOf(request.getParameter("proID"));
+        
+        ProductImg prodImgVO = prodSvc.getOneProdIMG(proID);
 
-        try {
-            out.write(prodSvc.getOneProdIMG(proID).getProImg());
-        } catch (Exception e) {
-
+        if (prodImgVO != null) {
+            byte[] pic = prodImgVO.getProImg();
+            out.write(pic);
+        } else {
             InputStream in = getServletContext()
-                    .getResourceAsStream("/back-end/product/images/product" + proID + ".jpg");
-            byte[] buf = new byte[in.available()];
-            in.read(buf);
+                    .getResourceAsStream("/back-end/product/images/nopic.png");
+            byte[] buf = in.readAllBytes();
             out.write(buf);
             in.close();
-            prodSvc.upload(buf, proID);
         }
 
     }

@@ -9,8 +9,6 @@
     <meta charset="utf-8">
     <title>商品詳情</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free Website Template" name="keywords">
-    <meta content="Free Website Template" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -39,7 +37,7 @@
                    class="btn btn-info mb-3">返回商城</a>
                 <ul class="breadcrumb">
                     <h2>商品詳情</h2>
-                    <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                    <i class="fa-brands fa-shopify" style="font-size: 36px ;margin-right: 10px;"></i>
                 </ul>
             </div>
         </div>
@@ -50,12 +48,17 @@
 <!-- shopDetail -->
 <div class="col-lg-8 col-md-12 col-sm-12 ">
     <div style="display: flex;">
-        <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImgFront?proID=${prodVO.proID}" width="300px"
+        <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}" width="300px"
              class="img-fluid">
         <div class="text-block NopaddingDetails">
             <h3 class="mb-4">${prodVO.proName}</h3>
-            <p class="mb-2">庫存：${prodVO.proQty}</p>
-            <p class="mb-2">價格：${prodVO.proPrice}</p>
+            <p class="mb-2">庫存：${prodVO.proQty} 個</p>
+            <%--            <p class="mb-2">價格：${prodVO.proPrice}</p>--%>
+            <p class="price">
+                <span class="price-new"
+                      style="color:red">會員價:${prodVO.proPrice*0.9}元</span>
+                <span class="price-old">原價:${prodVO.proPrice}元</span>
+            </p>
             <p class="mb-2">詳情：${prodVO.proContent}</p>
             <a href="<%=request.getContextPath()%>/front-end/product/cart.jsp" class="btn btn-info mb-3">加入購物車</a>
         </div>

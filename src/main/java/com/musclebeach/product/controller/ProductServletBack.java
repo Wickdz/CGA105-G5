@@ -21,9 +21,9 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet({"/back-end/product/listOneProd", "/back-end/product/getOneForUpdate", "/back-end/product/delete",
-        "/back-end/product/updateProdInput", "/back-end/product/addOneProd", "/back-end/product/listAllProd1",
-        "/back-end/product/addOneProd1", "/back-end/product/select_page1"})
+@WebServlet({"/back-end/product/getOneForUpdate", "/back-end/product/delete",
+        "/back-end/product/updateProdInput", "/back-end/product/addOneProd",
+        "/front-end/product/shopDetail"})
 @MultipartConfig
 public class ProductServletBack extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -49,14 +49,14 @@ public class ProductServletBack extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
-            int proID = Integer.valueOf(req.getParameter("proID"));
+        if ("getOne_For_Display".equals(action)) { // 來自shop.jsp的請求
+            Integer proID = Integer.valueOf(req.getParameter("proID"));
 
             Product prodVO = prodSvc.getOneProd(proID);
             req.setAttribute("prodVO", prodVO); // 資料庫取出的prodVO物件,存入req
 
             String url = "/front-end/product/shopDetail.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneProd.jsp
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 shopDetail.jsp
             successView.forward(req, res);
         }
 

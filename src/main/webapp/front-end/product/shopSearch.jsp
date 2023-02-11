@@ -19,6 +19,8 @@
     ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
     List<ProductType> typeList = productTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
+    List<Product> keyword = (List<Product>) request.getAttribute("keywordList");
+    pageContext.setAttribute("keyword", keyword);
 %>
 
 <!DOCTYPE html>
@@ -73,7 +75,6 @@
             top: 5px;
             color: white;
         }
-
     </style>
 
 </head>
@@ -88,16 +89,16 @@
         <div class="header-top">
             <!-- start logo -->
             <div id="logo">
-                <a href="#"><img
+                <a href="index-commonhome.html"><img
                         src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/logo.jpg"
                         title="Store" alt="Store" class="img-responsive"></a>
             </div>
             <div class="header-right header-links">
                 <!-- start account -->
                 <div id="header_ac" class="dropdown ">
-                    <a href="#" title="My Account"
-                       class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-user"></i>
+                    <a href="index-accountlogin.html" title="My Account"
+                       class="dropdown-toggle" data-toggle="dropdown"> <span></span><i
+                            class="icon-user"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
                         <li><a href="#">會員註冊</a></li>
@@ -137,10 +138,9 @@
                         <span id="category" class="">Menu</span><i class="icon-close"></i>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="menulist home"><a id="shophome"
+                        <li class="menulist home"><a id="homeshop"
                                                      href="<%=request.getContextPath()%>/front-end/product/shop.jsp">首頁</a>
                         </li>
-                        <!-- type menu -->
                         <c:forEach var="prodTypeVO" items="${typeList}">
                             <li>
                                 <a href="<%=request.getContextPath()%>/front-end/product/shopType?typeID=${prodTypeVO.typeID}&action=getType_Display"
@@ -223,63 +223,8 @@
                         <div id="category-carousel"
                              class="box-category  category-carousel  clearfix" data-items="3">
 
-
                             <div class="product-content">
-                                <c:forEach var="prodVO" items="${list}" begin="7" end="8">
-                                    <c:if test="${prodVO.proStatus == 1}">
-                                        <div class="category-layout col-xs-12">
-                                            <div class="category-thumb clearfix">
-                                                <div class="images-hover image">
-                                                    <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display">
-                                                        <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}"
-                                                             class="img-responsive img-circle">
-                                                    </a>
-                                                </div>
-                                                <div class="caption">
-                                                    <div class="cat-title">
-                                                        <h4>
-                                                            <span>${prodVO.proName}</span>
-                                                        </h4>
-                                                        <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display"
-                                                           class="category-view">商品介紹</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-
-
-                            <div class="product-content">
-                                <c:forEach var="prodVO" items="${list}" begin="5" end="6">
-                                    <c:if test="${prodVO.proStatus == 1}">
-                                        <div class="category-layout col-xs-12">
-                                            <div class="category-thumb clearfix">
-                                                <div class="images-hover image">
-                                                    <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display">
-                                                        <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}"
-                                                             class="img-responsive img-circle">
-                                                    </a>
-                                                </div>
-                                                <div class="caption">
-                                                    <div class="cat-title">
-                                                        <h4>
-                                                            <span>${prodVO.proName}</span>
-                                                        </h4>
-                                                        <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display"
-                                                           class="category-view">商品介紹</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-
-
-                            <div class="product-content">
-                                <c:forEach var="prodVO" items="${list}" begin="3" end="4">
+                                <c:forEach var="prodVO" items="${keyword}">
                                     <c:if test="${prodVO.proStatus == 1}">
                                         <div class="category-layout col-xs-12">
                                             <div class="category-thumb clearfix">

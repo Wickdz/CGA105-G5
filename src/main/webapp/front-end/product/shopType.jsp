@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.musclebeach.product.model.entity.Product" %>
+<%@ page import="com.musclebeach.product.model.entity.ProductType" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
-<%@ page import="com.musclebeach.product.model.entity.ProductType" %>
 <%@ page import="com.musclebeach.product.model.service.ProductService" %>
 <%@ page import="com.musclebeach.product.model.service.ProductTypeService" %>
 
@@ -15,11 +15,11 @@
     ProductService productService = context.getBean(ProductService.class);
     List<Product> list = productService.findAllProduct();
     pageContext.setAttribute("list", list);
+
     ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
-    List<ProductType> list2 = productTypeService.getAll();
-    pageContext.setAttribute("list2", list2);
-
-
+    List<ProductType> typeList = productTypeService.getAll();
+    pageContext.setAttribute("typeList", typeList);
+    List<Product> listByTypeID = (List<Product>) request.getAttribute("listByTypeID");
 %>
 
 <!DOCTYPE html>
@@ -83,16 +83,6 @@
 <!-- header -->
 <%-- 	<%@include file="/front-end/common/header.jsp"%> --%>
 
-<div class="loader"></div>
-<!-- 	<nav id="top"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<div class="top-inner"> -->
-<!-- 				<div class="top-left"> -->
-<!-- 					<div class="welcome-text hidden-xs">歡迎來到MUSCLE BEACH商城</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</nav> -->
 <header>
     <div class="container">
         <div class="header-top">
@@ -110,24 +100,23 @@
                             class="icon-user"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
-                        <li><a href="index-accountregister.html">會員註冊</a></li>
-                        <li><a href="index-accountlogin1.html">會員登入</a></li>
+                        <li><a href="#">會員註冊</a></li>
+                        <li><a href="#">會員登入</a></li>
                     </ul>
                 </div>
                 <!-- start cart -->
                 <div class="header_cart">
                     <div id="cart" class="btn-group btn-block">
+                        <a id="home" href="<%=request.getContextPath()%>/front-end/product/cart.jsp"></a>
                         <button type="button" data-toggle="dropdown"
                                 data-loading-text="Loading..."
                                 class="btn btn-inverse btn-block btn-lg dropdown-toggle">
-								<span id="cart-total"><span class="cart-item">0</span><span
-                                        class="hidden-md hidden-sm hidden-xs">$0.00</span></span>
+								<span id="cart-total">
+									<span class="cart-item">0</span><span
+                                        class="hidden-md hidden-sm hidden-xs">$0.00
+									</span>
+								</span>
                         </button>
-                        <ul class="dropdown-menu header-cart-toggle pull-right ">
-                            <li>
-                                <p class="text-center product-cart-empty">購物車為空!</p>
-                            </li>
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -148,12 +137,12 @@
                         <span id="category" class="">Menu</span><i class="icon-close"></i>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="menulist home"><a id="home"
+                        <li class="menulist home"><a id="homeshop"
                                                      href="<%=request.getContextPath()%>/front-end/product/shop.jsp">首頁</a>
                         </li>
-                        <c:forEach var="prodTypeVO" items="${list2}">
+                        <c:forEach var="prodTypeVO" items="${typeList}">
                             <li>
-                                <a href="<%=request.getContextPath()%>/front-end/product/shopType.jsp?${prodTypeVO.typeID}"
+                                <a href="<%=request.getContextPath()%>/front-end/product/shopType?typeID=${prodTypeVO.typeID}&action=getType_Display"
                                    class="menulist" id="type">${prodTypeVO.typeName}
                                 </a>
                             </li>
@@ -166,55 +155,18 @@
                     <!-- start search -->
                     <div class="btn_search">
                         <div id="mahardhiSearch" class="input-group mahardhi-search">
-                            <input type="text" name="search" value=""
-                                   placeholder="搜尋商品..."
-                                   class="form-control input-lg ui-autocomplete-input">
-                            <span class="btn-search input-group-btn">
-									<button type="button" class="btn btn-default btn-lg">
-										<i class="search-icon icon-search"></i>
-									</button>
-								</span>
+                            <form class="shop-search-form" method="post" STYLE="display: flex"
+                                  action="<%=request.getContextPath()%>/front-end/shop/search" name="form1">
+                                <input type="hidden" name="action" value="getSearch_Display">
+                                <input type="text" name="keyword" placeholder="搜尋商品..."
+                                       class="form-control input-lg ui-autocomplete-input">
+                                <span class="btn-search input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-lg">
+                                        <i class="search-icon icon-search"></i>
+                                    </button>
+                                </span>
+                            </form>
                         </div>
-
-                        <script type="text/javascript">
-                            $('#mahardhiSearch .btn-search button')
-                                .bind(
-                                    'click',
-                                    function () {
-                                        url = 'index.php?route=product/search';
-
-                                        var search = $(
-                                            '#mahardhiSearch input[name=\'search\']')
-                                            .prop('value');
-                                        if (search) {
-                                            url += '&search='
-                                                + encodeURIComponent(search);
-                                        }
-                                        var category_id = $(
-                                            '#mahardhiSearch select[name=\'category_id\']')
-                                            .prop('value');
-                                        if (category_id > 0) {
-                                            url += '&category_id='
-                                                + encodeURIComponent(category_id);
-                                            // url += '&sub_category=true';
-                                            // url += '&description=true';
-                                        }
-                                        location = url;
-                                    });
-
-                            $('#mahardhiSearch input[name=\'search\']')
-                                .bind(
-                                    'keydown',
-                                    function (e) {
-                                        if (e.keyCode == 13) {
-                                            $(
-                                                '#mahardhiSearch .btn-search button')
-                                                .trigger(
-                                                    'click');
-                                        }
-                                    });
-                        </script>
-
                     </div>
                 </div>
             </div>
@@ -243,39 +195,27 @@
     });
 </script>
 <div id="common-home">
-    <div class="slideshow">
-        <div class="swiper-viewport">
-            <div id="slideshow0" class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide text-center Main-banner1">
-                        <a href="#"><img
-                                src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/mainbanner1.jpg"
-                                alt="Main-banner1" class="img-responsive"></a>
-                    </div>
-                    <div class="swiper-slide text-center Main-banner2">
-                        <a href="#"><img
-                                src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/mainbanner2.jpg"
-                                alt="Main-banner2" class="img-responsive"></a>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper-pagination slideshow0"></div>
-            <div class="swiper-pager">
-                <div class="swiper-button-prev">
-                    <i class="icon-left-arrow"></i>
-                </div>
-                <div class="swiper-button-next">
-                    <i class="icon-send"></i>
-                </div>
-            </div>
+
+    <div class="owl-carousel owl-theme" id="L">
+        <div class="item">
+            <a href="#"><img
+                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/mainbanner1.jpg"
+                    alt="Main-banner1" class="img-responsive"></a>
         </div>
+
+        <div class="item">
+            <a href="#"><img
+                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/mainbanner2.jpg"
+                    alt="Main-banner2" class="img-responsive"></a>
+        </div>
+
     </div>
 
     <div class="category-featured box mt-60">
         <div class="container box">
             <div class="row">
                 <div class="page-title toggled">
-                    <h3>熱銷商品</h3>
+                    <h3>所有商品</h3>
                 </div>
                 <div class="category-box">
                     <div class="category-feature-list">
@@ -283,141 +223,31 @@
                              class="box-category  category-carousel  clearfix" data-items="3">
 
                             <div class="product-content">
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_25.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product7.jpg"
-                                                    alt="巧克力風味蛋白粉" title="巧克力風味蛋白粉"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>巧克力風味蛋白粉</span>
-                                                </h4>
-                                                <a href="index-productcategory_25.html"
-                                                   class="category-view">商品介紹</a>
+                                <c:forEach var="prodVO" items="${listByTypeID}">
+                                    <c:if test="${prodVO.proStatus == 1}">
+                                        <div class="category-layout col-xs-12">
+                                            <div class="category-thumb clearfix">
+                                                <div class="images-hover image">
+                                                    <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display">
+                                                        <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}"
+                                                             class="img-responsive img-circle">
+                                                    </a>
+                                                </div>
+                                                <div class="caption">
+                                                    <div class="cat-title">
+                                                        <h4>
+                                                            <span>${prodVO.proName}</span>
+                                                        </h4>
+                                                        <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display"
+                                                           class="category-view">商品介紹</a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_20.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product8.jpg"
-                                                    alt="奶茶風味蛋白粉" title="奶茶風味蛋白粉"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>奶茶風味蛋白粉</span>
-                                                </h4>
-                                                <a href="index-productcategory_20.html"
-                                                   class="category-view">商品介紹</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
 
-
-                            <div class="product-content">
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_18.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product1.jpg"
-                                                    alt="專業家用瑜伽啞鈴" title="專業家用瑜伽啞鈴"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>專業家用瑜伽啞鈴</span>
-                                                </h4>
-                                                <a href="index-productcategory_18.html"
-                                                   class="category-view">商品介紹</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_52.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product2.jpg"
-                                                    alt="實心包膠啞鈴" title="實心包膠啞鈴"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>實心包膠啞鈴</span>
-                                                </h4>
-                                                <a href="index-productcategory_52.html"
-                                                   class="category-view">商品介紹</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="product-content">
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_43.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product3.jpg"
-                                                    alt="筋肉彈力繩" title="筋肉彈力繩"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>筋肉彈力繩</span>
-                                                </h4>
-                                                <a href="index-productcategory_43.html"
-                                                   class="category-view">商品介紹</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="category-layout col-xs-12">
-                                    <div class="category-thumb clearfix">
-                                        <div class="images-hover image">
-                                            <a href="index-productcategory_24.html"> <img
-                                                    src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/product4.jpg"
-                                                    alt="懸吊健身彈力帶" title="懸吊健身彈力帶"
-                                                    class="img-responsive img-circle">
-                                            </a>
-                                        </div>
-                                        <div class="caption">
-                                            <div class="cat-title">
-                                                <h4>
-                                                    <span>懸吊健身彈力帶</span>
-                                                </h4>
-                                                <a href="index-productcategory_24.html"
-                                                   class="category-view">商品介紹</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -426,7 +256,6 @@
     </div>
 
     <script>
-        <!--
         // set slider
         const dirCategory = $('html').attr('dir');
 
@@ -466,7 +295,6 @@
                         $(this).owlCarousel(sliderOptions);
                     }
                 });
-        //-->
     </script>
 
     <div class="box all-products mt-60">
@@ -487,8 +315,8 @@
                                             <div class="product-layout col-xs-12">
                                                 <div class="product-thumb transition clearfix">
                                                     <div class="image">
-                                                        <a href="shopDetail.jsp?${prodVO.proID}">
-                                                            <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImgFront?proID=${prodVO.proID}"
+                                                        <a href="<%=request.getContextPath()%>/front-end/product/shopDetail?proID=${prodVO.proID}&action=getOne_For_Display">
+                                                            <img src="<%=request.getContextPath()%>/front-end/product/ShowProdImg?proID=${prodVO.proID}"
                                                                  class="col">
                                                         </a>
 
@@ -502,41 +330,21 @@
                                                                     onclick="quickView.ajaxView('?route=product/quickview&product_id=33');">
                                                                 <i class="icon-eye"></i><span>檢視商品</span>
                                                             </button>
-                                                            <button type="button" class="wishlist"
-                                                                    title="Add To WishList"
-                                                                    onclick="wishlist.add('33');">
-                                                                <i class="icon-heart"></i><span>加入最愛</span>
-                                                            </button>
+                                                                <%--                                                            <button type="button" class="wishlist"--%>
+                                                                <%--                                                                    title="Add To WishList"--%>
+                                                                <%--                                                                    onclick="wishlist.add('33');">--%>
+                                                                <%--                                                                <i class="icon-heart"></i><span>加入最愛</span>--%>
+                                                                <%--                                                            </button>--%>
                                                         </div>
                                                     </div>
                                                     <div class="thumb-description clearfix">
                                                         <div class="caption">
                                                             <div class="price-rating">
                                                                 <div class="rating">
-																	<span class="fa fa-stack"><i
-                                                                            class="fa fa-star fa-stack-2x"></i><i
-                                                                            class="fa fa-star-o fa-stack-2x"></i>
-																	</span>
-                                                                    <span
-                                                                            class="fa fa-stack"><i
-                                                                            class="fa fa-star fa-stack-2x"></i><i
-                                                                            class="fa fa-star-o fa-stack-2x"></i>
-																	</span>
-                                                                    <span
-                                                                            class="fa fa-stack"><i
-                                                                            class="fa fa-star fa-stack-2x"></i><i
-                                                                            class="fa fa-star-o fa-stack-2x"></i>
-																	</span>
-                                                                    <span
-                                                                            class="fa fa-stack"><i
-                                                                            class="fa fa-star fa-stack-2x"></i><i
-                                                                            class="fa fa-star-o fa-stack-2x"></i>
-																	</span>
-                                                                    <span
-                                                                            class="fa fa-stack"><i
-                                                                            class="fa fa-star fa-stack-2x"></i><i
-                                                                            class="fa fa-star-o fa-stack-2x"></i>
-																	</span>
+                                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i>
                                                                 </div>
                                                             </div>
                                                             <h4 class="product-title">
@@ -544,8 +352,8 @@
                                                             </h4>
                                                             <p class="price">
                                                                 <span class="price-new"
-                                                                      style="color:red">${prodVO.proPrice*0.9}元</span>
-                                                                <span class="price-old">${prodVO.proPrice}元</span>
+                                                                      style="color:red">NT$${prodVO.proPrice*0.9}元</span>
+                                                                <span class="price-old">NT$${prodVO.proPrice}元</span>
                                                             </p>
                                                             <button type="button" class="addcart" title="加入購物車"
                                                                     onclick="cart.add('33')">加入購物車
@@ -567,17 +375,35 @@
     </div>
 
     <script>
-        <!--
+        $("#L").owlCarousel({
+            loop: true, // 循環播放
+            margin: 10, // 外距 10px
+            nav: true,
+            navText: ['<i class="fa fa-angle-left"></i>',
+                '<i class="fa fa-angle-right"></i>'],
+            autoplay: true,
+            autoplayTimeout: 2000,
+            responsiveRefreshRate: 500,
+            responsive: {
+                0: {
+                    items: 1 // 螢幕大小為 0~600 顯示 1 個項目
+                }
+            }
+        });
+    </script>
+
+
+    <script>
         const direct = $('html').attr('dir');
         const items = 3;
         $(".slideTestimonial").each(
             function () {
                 const sliderOptions = {
-                    loop: false,
+                    loop: true,
                     nav: true,
                     navText: ['<i class="fa fa-angle-left"></i>',
                         '<i class="fa fa-angle-right"></i>'],
-                    dots: false,
+                    dots: true,
                     items: items,
                     autoplay: true,
                     autoplayTimeout: 3000,
@@ -596,7 +422,6 @@
                     sliderOptions['rtl'] = true;
                 $(this).owlCarousel(sliderOptions);
             });
-        //-->
     </script>
 
     <script type="text/javascript">
@@ -645,7 +470,7 @@
     </script>
 </div>
 <!-- Footer -->
-<%@include file="/front-end/common/footer.jsp" %>
+<%--<%@include file="/front-end/common/footer.jsp" %>--%>
 
 <!-- shop js -->
 <script src="<%=request.getContextPath()%>/front-end/product/resources/shop/js/bootstrap.min.js"></script>

@@ -35,26 +35,6 @@ public class ProductServiceImpl implements ProductService {
         return productDao.getAll();
     }
 
-    @Override
-    public Product addProd(String proName, Integer typeID, Integer proQty, Integer proPrice,
-                           String proContent, Integer proStatus, Integer proID, byte[] ProImg) {
-
-        Product product = new Product();
-
-        product.setProName(proName);
-        product.setTypeID(typeID);
-        product.setProQty(proQty);
-        product.setProPrice(proPrice);
-        product.setProContent(proContent);
-        product.setProStatus(proStatus);
-        productDao.add(product);
-
-        ProductImg prodIMG = new ProductImg();
-        prodIMG.setProImg(ProImg);
-        prodIMG.setProID(proID);
-
-        return product;
-    }
 
     @Override
     public void deleteProd(Integer proID) {
@@ -142,9 +122,5 @@ public class ProductServiceImpl implements ProductService {
         return productDao.selectByKeyword(keyword);
     }
 
-    @Override
-    public byte[] findProductImg(Integer proID) {
-        return productImgDao.getByproID(proID).getProImg();
-    }
 
 }
