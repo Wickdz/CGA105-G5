@@ -241,30 +241,30 @@
         <div class="inputBox">
             <span>會員編號</span>
             <input type="text" maxlength="16" name="memID"
-                   value="<%= (creditCardVO==null)? "" : creditCardVO.getMemID()%>"/>
+                   value="<%= (creditCardVO==null)? "" : creditCardVO.getMemID()%>" required/>
         </div>
         <div class="inputBox">
             <span>信用卡卡號</span>
-            <input type="text" maxlength="16" name="ccNumber" class="card-number-input"
-                   value="<%= (creditCardVO==null)? "" :creditCardVO.getCcNumber()%>"/>
+            <input type="text" maxlength="16" name="ccNumber" class="card-number-input pattern="[0-9]{16}"
+                   value="<%= (creditCardVO==null)? "" :creditCardVO.getCcNumber()%>" required/>
         </div>
         <div class="inputBox">
             <span>持卡人姓名</span>
-            <input type="text" name="ccName" class="card-holder-input"
-                   value="<%= (creditCardVO==null)?  "" : creditCardVO.getCcName()%>"/>
+            <input type="text" name="ccName" class="card-holder-input pattern="[0-9]{4}"
+                   value="<%= (creditCardVO==null)?  "" : creditCardVO.getCcName()%>" required/>
         </div>
         <div class="flexbox">
             <div class="inputBox">
                 <span>信用卡期限</span>
-                <input type="text" maxlength="4" name="ccTime" class="month-input"
-                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcTime()%>"/>
+                <input type="text" maxlength="4" name="ccTime" class="month-input pattern="[0-9]{3}s"
+                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcTime()%>" required/>
 
             </div>
 
             <div class="inputBox">
                 <span>驗證碼</span>
                 <input type="text" maxlength="3" name="ccvc" class="cvv-input"
-                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcvc()%>"/>
+                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcvc()%>" required/>
             </div>
         </div>
         <input type="hidden" name="action1" value="updatememberaccessanddate">

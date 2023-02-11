@@ -55,9 +55,10 @@
             const app = new Vue({
                 el: '#app',
                 mounted() {
-                    this.memID = 3;
-                    this.getMemInfo(this.memID);
-                    this.load();
+                    this.getMemInfo().then(()=>{
+                        this.load();
+                    });
+
                 },
                 data() {
                     return {
@@ -74,8 +75,12 @@
                 },
                 methods: {
                     // 獲取會員名稱、權限等資料
-                    getMemInfo(memID) {
-                        axios.get(`../../member/memID/${memID}`).then((Response) => (this.memInfo = Response.data.data));
+                    async getMemInfo() {
+                        axios.get(`../../member/memID`)
+                            .then((Response) => {
+                                this.memInfo = Response.data.data;
+                                this.memID = this.memInfo.memID;
+                            });
                     },
                     // 載入
                     load() {

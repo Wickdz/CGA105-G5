@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.musclebeach.absentMember.model.*" %>
@@ -15,7 +15,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Muscle Beach ��x����</title>
+    <title>Muscle Beach 後台首頁</title>
     <link
             rel="canonical"
             href="https://getbootstrap.com/docs/5.3/examples/headers/"
@@ -36,31 +36,39 @@
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/course/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
           rel="stylesheet"/>
+    <!-- DataTables  -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
-    <title>�Ҧ��ҵ{�ɶ��� - listAllClassSchedule.jsp</title>
+    <!-- jq DataTables -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <title>所有課程時間表 - listAllClassSchedule.jsp</title>
 
     <style>
-        table#table-1 {
-            width: 95%;
-            background-color: #CDA581;
-            border: 2px solid black;
-            text-align: center;
+
+
+        td {
+            max-width: 250px;
+            /* 設置最大寬度 */
+            overflow: hidden;
+            /* 隱藏超出部分 */
+            text-overflow: ellipsis;
+            /* 添加省略號 */
+            white-space: nowrap;
+            /* 不換行 */
+            color: maroon;
         }
 
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-
-        h4 {
-            color: blue;
-            display: inline;
+        .showTd {
+            max-width: none;
+            overflow: visible;
+            white-space: normal;
+            /* 換行 */
         }
     </style>
-
     <style>
-
         div#v-pills-class {
             width: 100%;
             height: 100%;
@@ -71,13 +79,12 @@
         }
 
         table#table-2 {
-            width: 95%;
+            width: 100%;
             border: 2px solid black;
             text-align: center;
         }
 
         table {
-
             background-color: white;
             margin-top: 5px;
             margin-bottom: 5px;
@@ -96,21 +103,41 @@
             transition: all 0.5s ease-in-out;
         }
 
+        #table-2 tr:hover td {
+            background-color: lightblue;
+            transition: all 0.5s ease-in-out;
+        }
+
         #table-2 tr td {
             color: maroon;
 
             transition: all 0.5s ease-in-out;
         }
 
+        #table-2 tr:hover td {
+            color: blue;
+            border-left: 5px solid rgba(79, 192, 210, 0.6);
+            transition: all 0.5s ease-in-out;
+        }
+
+
 
         #table-2 tr {
             border-bottom: 1px solid #2a2a2a;
+        }
 
+        #table-2 tr:last-of-type {
+            border-bottom: none;
+        }
+
+
+        #show {
+            cursor: pointer;
+        }
     </style>
-
 </head>
 <body bgcolor='white'>
-<!-- ======================================== header �}�l ======================================== -->
+<!-- ======================================== header 開始 ======================================== -->
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div
@@ -127,14 +154,14 @@
                         class="btn btn-outline-light"
                         style="margin-right: 5px"
                 >
-                    �ק�K�X
+                    修改密碼
                 </button>
-                <button type="button" class="btn btn-outline-light">�n�X</button>
+                <button type="button" class="btn btn-outline-light">登出</button>
             </div>
         </div>
     </div>
 </header>
-<!-- ======================================== sidebar �}�l ======================================== -->
+<!-- ======================================== sidebar 開始 ======================================== -->
 <main class="d-flex flex-nowrap">
     <div
             class="d-flex flex-column flex-shrink-0 p-3"
@@ -161,7 +188,7 @@
                         style="font-size: 1.5rem"
                 >
                     <i class="bi bi-house-door" style="margin-right: 8px"></i>
-                    ����
+                    首頁
                 </a>
             </li>
             <hr/>
@@ -177,7 +204,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-person" style="color: white; margin: 5px"></i>
-                    ���u�޲z
+                    員工管理
                 </a>
             </li>
             <li>
@@ -195,7 +222,7 @@
                             class="bi bi-person-circle"
                             style="color: white; margin: 5px"
                     ></i>
-                    �|���޲z
+                    會員管理
                 </a>
             </li>
             <li>
@@ -210,7 +237,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-shop" style="color: white; margin: 5px"></i>
-                    �ӫ��޲z
+                    商城管理
                 </a>
             </li>
             <li>
@@ -228,7 +255,7 @@
                             class="bi bi-universal-access"
                             style="color: white; margin: 5px"
                     ></i>
-                    �нm�޲z
+                    教練管理
                 </a>
             </li>
             <li>
@@ -248,7 +275,7 @@
                             class="bi bi-calendar2-week"
                             style="color: white; margin: 5px"
                     ></i>
-                    �ҵ{�޲z
+                    課程管理
                 </a>
             </li>
             <li>
@@ -263,7 +290,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-building" style="color: white; margin: 5px"></i>
-                    ���a�޲z
+                    場地管理
                 </a>
             </li>
             <li>
@@ -281,7 +308,7 @@
                             class="bi bi-chat-right-text"
                             style="color: white; margin: 5px"
                     ></i>
-                    �׾º޲z
+                    論壇管理
                 </a>
             </li>
             <li>
@@ -296,7 +323,7 @@
                         aria-selected="false"
                 >
                     <i class="bi bi-envelope" style="color: white; margin: 5px"></i>
-                    �ȪA�޲z
+                    客服管理
                 </a>
             </li>
         </ul>
@@ -304,7 +331,7 @@
         <div class="mx-auto d-flex mt-3 mb-3 text-muted">&copy; 2022</div>
     </div>
     <div class="tab-content" id="v-pills-tabContent">
-        <!-- ============================================ ���� ============================================ -->
+        <!-- ============================================ 首頁 ============================================ -->
         <div
                 class="tab-pane fade"
                 id="v-pills-home"
@@ -315,7 +342,7 @@
             <img src="/image/welcome.gif" style="width: 96%" alt=""/>
         </div>
 
-        <!-- ========================================= �ҵ{�޲z ========================================= -->
+        <!-- ========================================= 課程管理 ========================================= -->
         <div
                 class="tab-pane fade show active"
                 id="v-pills-class"
@@ -324,42 +351,71 @@
                 tabindex="0"
                 style="border: 2px solid purple "
         >
-            <%-- ���~���C --%>
+            <%-- 錯誤表列 --%>
             <c:if test="${not empty errorMsgs}">
-                <font style="color:red">ĵ�i:</font>
+                <font style="color:red">警告:</font>
                 <ul>
                     <c:forEach var="message" items="${errorMsgs}">
                         <li style="color:red">${message}</li>
                     </c:forEach>
                 </ul>
             </c:if>
-            <table id="table-1">
-                <tr>
-                    <td>
-                        <h3>�ʮu�W��</h3>
 
-                    </td>
-                </tr>
-            </table>
 
             <table id="table-2">
+                <thead>
                 <tr>
-                    <th>�ɶ��s��</th>
-                    <th>�|���s��</th>
+                    <th>時間編號</th>
+                    <th>會員編號</th>
 
 
                 </tr>
-
+                </thead>
+                <tbody>
                 <c:forEach var="absentMemberVO" items="${list}">
 
-                    <tr>
-                        <td>${absentMemberVO.timeID}</td>
-                        <td>${absentMemberVO.memID}</td>
+                <tr>
+                    <td>${absentMemberVO.timeID}</td>
+                    <td>${absentMemberVO.memID}</td>
 
 
-                    </tr>
+                </tr>
                 </c:forEach>
+                <tbody>
             </table>
+            <script>
+                $(document).ready(function() {
+                    $('#table-2').DataTable({
+                        "searching" : true,
+                        "ordering" : true,
+                        language : {
+                            "lengthMenu" : "顯示 _MENU_ 筆資料",
+                            "sProcessing" : "處理中...",
+                            "sZeroRecords" : "没有查詢到结果",
+                            "sInfo" : "目前有 _MAX_ 筆資料",
+                            "sInfoEmpty" : "目前共有 0 筆紀錄",
+                            "sInfoFiltered" : " ",
+                            "sInfoPostFix" : "",
+                            "sSearch" : "搜尋:",
+                            "sUrl" : "",
+                            "sEmptyTable" : "尚未有資料紀錄存在",
+                            "sLoadingRecords" : "載入資料中...",
+                            "sInfoThousands" : ",",
+                            "oPaginate" : {
+                                "sFirst" : "首頁",
+                                "sPrevious" : "上一頁",
+                                "sNext" : "下一頁",
+                                "sLast" : "末頁"
+                            },
+                            "order" : [ [ 0, "desc" ] ],
+                            "oAria" : {
+                                "sSortAscending" : ": 以升序排列此列",
+                                "sSortDescending" : ": 以降序排列此列"
+                            }
+                        },
+                    });
+                });
+            </script>
         </div>
 
 </main>

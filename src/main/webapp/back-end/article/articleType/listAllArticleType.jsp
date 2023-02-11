@@ -63,16 +63,11 @@ td {
 	color: maroon;
 }
 
-.showTd {
-	max-width: none;
-	overflow: visible;
-	white-space: normal;
-	/* 換行 */
-}
+
 </style>
 <style>
         div#v-pills-article {
-            width: 100%;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -251,9 +246,7 @@ td {
 						<tr>
 							<th>類別編號</th>
 							<th>類別名稱</th>
-							
-					
-						
+
 						</tr>
 					</thead>
 					<tbody>
@@ -266,10 +259,10 @@ td {
 						</c:forEach>
 					</tbody>
 				</table>
-				
+
 								
-				<button onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleType/addArticleType.jsp';">新增文章類別</button>
-			</div>
+				<button onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleType/addArticleType.jsp';">新增文章類別</button></div>
+
 				<script>
 					$(document).ready(function() {
 						$('#table-2').DataTable({

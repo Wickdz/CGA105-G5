@@ -320,7 +320,7 @@
         >
             <table id="table-1">
                 <tr>
-                    <td><h3>GYM ClassSchedule</h3></td>
+                    <td><h3>MuscleBeach 課程時間表</h3></td>
                 </tr>
             </table>
 
