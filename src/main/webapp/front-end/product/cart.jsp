@@ -1,6 +1,10 @@
+<%@ page import="com.musclebeach.cart.entity.CartProduct" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%
+    List<CartProduct> cartList = (List<CartProduct>) session.getAttribute("cartList");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,49 +100,81 @@
 <!-- End All Title Box -->
 
 <!-- Cart Start -->
-<table>
+<table id="cartTable">
     <tr>
         <th>商品名稱</th>
         <th>數量</th>
         <th>價格</th>
         <th>總金額</th>
+        <th>操作</th>
     </tr>
-    <tr>
-        <td>專業家用瑜伽啞鈴</td>
-        <td>
-            <input type="number" value="1" class="quantity">
-        </td>
-        <td class="price">$10</td>
-        <td class="total">$10</td>
-    </tr>
-    <tr>
-        <td>實心包膠啞鈴</td>
-        <td>
-            <input type="number" value="1" class="quantity">
-        </td>
-        <td class="price">$20</td>
-        <td class="total">$20</td>
-    </tr>
+    <c:if test="${cartList == null || cartList.isEmpty()}">
+        你的購物車沒有東西喔
+    </c:if>
+    <c:forEach items="${cartList}" var="cartProduct">
+        <tr id="tr${cartProduct.proID}">
+            <td>${cartProduct.proName}</td>
+            <td>
+                <input type="number" value="${cartProduct.count}" class="quantity" min="1" max="10"
+                       id="quantity${cartProduct.proID}">
+                <input hidden="hidden" value="${cartProduct.count}" id="initialCount${cartProduct.proID}">
+            </td>
+            <td class="price" id="price${cartProduct.proID}">${cartProduct.proPrice}</td>
+            <td class="total" id="totalPrice${cartProduct.proID}">${cartProduct.totalPrice}</td>
+            <td>
+                <button onclick="remove(${cartProduct.proID})">刪除</button>
+            </td>
+        </tr>
+    </c:forEach>
 </table>
 <p>總金額: $<span id="total">".total"</span></p>
 <button id="checkout">結帳</button>
 
 <script>
-    const quantities = document.querySelectorAll(".quantity");
-    const prices = document.querySelectorAll(".price");
-    const totals = document.querySelectorAll(".total");
-    const totalEl = document.querySelector("#total");
-    const checkoutBtn = document.querySelector("#checkout");
+    getTotal();
+    const quantity = document.querySelectorAll(".quantity");
+    quantity.forEach(q => {
+        q.addEventListener("change", e => {
+            const proID = e.target.id.substring(e.target.id.length - 1);
+            const newValue = parseInt(e.target.value);
+            if (e.target.oldValue === null || e.target.oldValue === undefined) {
+                e.target.oldValue = document.querySelector('#initialCount' + proID).value;
+            }
+            const oldValue = parseInt(e.target.oldValue);
+            const totalPriceTd = document.querySelector('#totalPrice' + proID);
+            if (typeof totalPriceTd.innerText !== "number") {
+                totalPriceTd.innerText = Math.floor(parseInt(totalPriceTd.innerText) * (newValue / oldValue));
+            } else {
+                totalPriceTd.innerText = Math.floor(totalPriceTd.innerText * (newValue / oldValue));
+            }
+            e.target.oldValue = e.target.value;
+            getTotal();
+            axios.post("carts", [{
+                proID: parseInt(proID),
+                count: newValue
+            }]);
+        })
+    })
 
-    function updateTotal() {
+    function remove(id) {
+        axios.delete('carts/' + id).then((res) => {
+            if (res.data.data) {
+                alert("刪除成功");
+            }
+        });
+        document.querySelector('#tr' + id).remove();
+    }
+
+    function getTotal() {
         let total = 0;
-        for (let i = 0; i < quantities.length; i++) {
-            const quantity = parseInt(quantities[i].value);
-            const price = parseInt(prices[i].textContent.slice(1));
-            totals[i].textContent = "$" + (price * quantity);
-            total += price * quantity;
-        }
-        totalEl.textContent = total;
+        document.querySelectorAll('.total').forEach(p => {
+            if (typeof p.innerText !== 'number') {
+                total += parseInt(p.innerText);
+            } else {
+                total += p.innerText;
+            }
+        })
+        document.querySelector("#total").innerText = Math.floor(total);
     }
 </script>
 <!-- Cart End -->
@@ -161,13 +197,6 @@
 <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/js/main.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
 <script>
-    getAll();
-
-    function getAll() {
-        axios.get("../../carts").then((res) => {
-            console.log(res.data.data);
-        })
-    }
 </script>
 </body>
 

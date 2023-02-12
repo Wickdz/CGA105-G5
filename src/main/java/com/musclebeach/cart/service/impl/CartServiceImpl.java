@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -23,15 +23,15 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void deleteInCart(Integer memID, CartItem cartItem) {
-        cartMapper.delete(memID, cartItem.getProID());
+    public void deleteInCart(Integer memID, Integer proID) {
+        cartMapper.delete(memID, proID);
     }
 
     @Override
     public List<CartItem> getAllInCartByMemID(Integer memID) {
-        Map<Integer, Integer> map = cartMapper.selectAllByID(memID);
+        TreeMap<Integer, Integer> treeMap = new TreeMap<>(cartMapper.selectAllByID(memID));
         List<CartItem> list = new ArrayList<>();
-        map.forEach((k, v) -> {
+        treeMap.forEach((k, v) -> {
             CartItem cartItem = new CartItem();
             cartItem.setProID(k);
             cartItem.setCount(v);

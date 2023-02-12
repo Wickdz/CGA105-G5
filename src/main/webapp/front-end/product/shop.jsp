@@ -110,9 +110,11 @@
                         <a id="home" href="<%=request.getContextPath()%>/front-end/product/cart.jsp"></a>
                         <button type="button" data-toggle="dropdown"
                                 data-loading-text="Loading..."
-                                class="btn btn-inverse btn-block btn-lg dropdown-toggle">
+                                class="btn btn-inverse btn-block btn-lg dropdown-toggle"
+                                onclick="location.href = '../../carts'"
+                        >
 								<span id="cart-total">
-									<span class="cart-item">0</span><span
+									<span class="cart-item" id="cartCount">0</span><span
                                         class="hidden-md hidden-sm hidden-xs">$0.00
 									</span>
 								</span>
@@ -547,12 +549,20 @@
    title="Top"><i class="fa fa-angle-up"></i></a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
 <script>
+    axios.get('../../carts/cartCount').then((res) => {
+        document.querySelector('#cartCount').textContent = res.data.data;
+    });
+
     function addInCart(id) {
-        console.log(id);
         axios.post("../../carts", [{
             proID: id,
             count: 1
-        }])
+        }]).then((res) => {
+            if (res.data.data >= 0) {
+                document.querySelector('#cartCount').textContent = res.data.data;
+                alert("已加入購物車");
+            }
+        });
     }
 </script>
 </body>

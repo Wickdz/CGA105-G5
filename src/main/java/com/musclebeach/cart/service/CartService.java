@@ -9,7 +9,7 @@ import java.util.List;
 public interface CartService {
     void changeInCart(Integer memID, CartItem cartItem);
 
-    void deleteInCart(Integer memID, CartItem cartItem);
+    void deleteInCart(Integer memID, Integer proID);
 
     List<CartItem> getAllInCartByMemID(Integer memID);
 }

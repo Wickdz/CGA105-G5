@@ -8,4 +8,5 @@ public class CartProduct {
     private String proName;
     private Integer proPrice;
     private Integer count;
+    private Integer totalPrice;
 }

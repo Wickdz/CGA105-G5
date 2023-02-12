@@ -21,6 +21,7 @@ public class CartProductServiceImpl implements CartProductService {
         for (CartItem cartItem : cartItemList) {
             CartProduct cartProduct = cartProductMapper.getCartProduct(cartItem.getProID());
             cartProduct.setCount(cartItem.getCount());
+            cartProduct.setTotalPrice((cartItem.getCount() * cartProduct.getProPrice()));
             cartProductList.add(cartProduct);
         }
         return cartProductList;

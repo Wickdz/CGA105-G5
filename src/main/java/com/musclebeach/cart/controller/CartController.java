@@ -7,25 +7,23 @@ import com.musclebeach.cart.service.CartService;
 import com.musclebeach.common.controller.Code;
 import com.musclebeach.common.controller.Result;
 import com.musclebeach.mem.model.MemVO;
-import com.musclebeach.product.model.service.ProductService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/carts")
 public class CartController {
     @Resource
     private CartService cartService;
     @Resource
-    private ProductService productService;
-    @Resource
     private CartProductService cartProductService;
 
     @GetMapping
-    public Result getAll(HttpServletRequest request) {
+    public String getAll(HttpServletRequest request) {
         MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
         Integer memID = -1;
         if (memVO != null) {
@@ -33,12 +31,12 @@ public class CartController {
         }
         List<CartItem> allInCartByMemID = cartService.getAllInCartByMemID(memID);
         List<CartProduct> cartProductList = cartProductService.getCartProduct(allInCartByMemID);
-        Integer code = cartProductList.isEmpty() ? Code.READ_OK : Code.READ_ERR;
-        String msg = cartProductList.isEmpty() ? "查詢成功" : "查詢失敗";
-        return new Result(code, cartProductList, msg);
+        request.getSession().setAttribute("cartList", cartProductList);
+        return "forward:/front-end/product/cart.jsp";
     }
 
     @PostMapping
+    @ResponseBody
     public Result addInCart(@RequestBody List<CartItem> cartItems, HttpServletRequest request) {
         MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
         Integer memID = -1;
@@ -48,19 +46,33 @@ public class CartController {
         for (CartItem cartItem : cartItems) {
             cartService.changeInCart(memID, cartItem);
         }
-        return new Result(Code.CREATE_OK, true, "成功");
+        return new Result(Code.CREATE_OK, cartService.getAllInCartByMemID(memID).size(), "成功");
     }
 
-    @DeleteMapping
-    public Result deleteInCart(@RequestBody List<CartItem> cartItems, HttpServletRequest request) {
+    @DeleteMapping("/{proID}")
+    @ResponseBody
+    public Result deleteInCart(@PathVariable Integer proID, HttpServletRequest request) {
         MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
         Integer memID = -1;
         if (memVO != null) {
             memID = memVO.getMemID();
         }
-        for (CartItem cartItem : cartItems) {
-            cartService.deleteInCart(memID, cartItem);
-        }
+        cartService.deleteInCart(memID, proID);
         return new Result(Code.DELETE_OK, true, "成功");
+    }
+
+    @GetMapping("/cartCount")
+    @ResponseBody
+    public Result getCartCount(HttpServletRequest request) {
+        MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+        Integer memID = -1;
+        if (memVO != null) {
+            memID = memVO.getMemID();
+        }
+        int cartCount = 0;
+        if (memID != -1) {
+            cartCount = cartService.getAllInCartByMemID(memID).size();
+        }
+        return new Result(Code.DELETE_OK, cartCount, "成功");
     }
 }
