@@ -30,6 +30,9 @@
     <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css" rel="stylesheet"/>
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+    <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
+
+
 </head>
 <body>
 <!-- ======================================== header 開始 ======================================== -->
@@ -248,7 +251,10 @@
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0 font-weight-bold">商品管理</h3>
+                            <a href="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp"
+                               class="nav-link">
+                                <p><i class="fa-sharp fa-solid fa-dumbbell"></i>商品管理</p>
+                            </a>
                         </div>
                         <div class="col-sm-6">
                             <div class="d-flex align-items-center justify-content-md-end">
@@ -310,5 +316,7 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+<script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
+
 </body>
 </html>

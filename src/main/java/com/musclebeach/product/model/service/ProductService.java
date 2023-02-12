@@ -22,8 +22,6 @@ public interface ProductService {
     Product addProdAndFile(String proName, Integer typeID, Integer proQty, Integer proPrice,
                            String proContent, byte[] proImg);
 
-    Product getSpecifiedProduct(Integer proID);
-
     List<Product> findAllProduct();
 
     List<Product> findSameCategoryProduct(Integer proType);

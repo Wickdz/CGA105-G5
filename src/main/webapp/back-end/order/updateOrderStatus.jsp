@@ -4,7 +4,7 @@
 <%@ page import="com.web.order.model.entity.OrderMaster"%>
 
 <%
-OrderMaster orderMasterVO = (OrderMaster) request.getAttribute("orderMasterVO");
+OrderMaster orderVO = (OrderMaster) request.getAttribute("orderVO");
 %>
 
 <!DOCTYPE html>
@@ -30,6 +30,8 @@ OrderMaster orderMasterVO = (OrderMaster) request.getAttribute("orderMasterVO");
     <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css" rel="stylesheet" />
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet" />
+    <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
+    
   </head>
   <body>
     <!-- ======================================== header 開始 ======================================== -->
@@ -242,14 +244,17 @@ OrderMaster orderMasterVO = (OrderMaster) request.getAttribute("orderMasterVO");
           role="tabpanel"
           aria-labelledby="v-pills-shop-tab"
           tabindex="0"
-          style="border: 2px solid brown"
+          style="border: 2px solid white"
         >
         
         <div class="main-panel">
             <div class="content-wrapper">
               <div class="row">
                 <div class="col-sm-6">
-                  <h3 class="mb-0 font-weight-bold">訂單管理</h3>
+                  <a href="<%=request.getContextPath()%>/back-end/product/listAllOrder.jsp"
+                     class="nav-link">
+                      <p><i class="fa-sharp fa-solid fa-dumbbell"></i>訂單管理</p>
+                  </a>
                 </div>
                 <div class="col-sm-6">
                   <div class="d-flex align-items-center justify-content-md-end">
@@ -278,41 +283,53 @@ OrderMaster orderMasterVO = (OrderMaster) request.getAttribute("orderMasterVO");
                                   </c:forEach>
                               </ul>
                           </c:if>
-                          <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/back-end/Order/" name="form1">
-	                          <table>
-	                          	  <tr>
-	                                  <td>編號:<font color=red><b>*</b></font></td>
-	                                  <td><%=orderMasterVO.getOrderID()%></td>
-	                                  <td>名稱:</td>
-	                                  <td><input type="TEXT" name="orderName" size="45" value="<%=orderMasterVO.getOrderRecName()%>" /></td>
-	                                  <td>電話:</td>
-	                                  <td><input type="TEXT" name="orderRecPhone" size="45"	value="<%=orderMasterVO.getOrderRecPhone()%>" /></td>
-	                                  <td>地址:</td>
-	                                  <td><input type="TEXT" name="orderAddress" size="45" value="<%=orderMasterVO.getOrderAddress()%>" /></td>
-	                                  <td>金額:</td>
-	                                  <td><input type="TEXT" name="orderTotalPrice" size="45" value="<%=orderMasterVO.getTotalPrice()%>" /></td>
-<!-- 		                              <td> -->
-<!-- 										<input type="radio" name="orderStatus" size="45" id="0" -->
-<!--                                    		 	value=0 checked/> -->
-<!--                                     	<label for="0">>出貨中</label> -->
-<!--                                     	<input type="radio" name="orderStatus" size="45" id="1" -->
-<!--                                    		 	value=1 /> -->
-<!--                                     	<label for="1">>配送中</label> -->
-<!--                                     	<input type="radio" name="orderStatus" size="45" id="2" -->
-<!--                                    		 	value=2 /> -->
-<!--                                     	<label for="2">>訂單完成</label> -->
-<!--                                     	<input type="radio" name="orderStatus" size="45" id="3" -->
-<!--                                    		 	value=3 /> -->
-<!--                                     	<label for="3">>訂單取消</label> -->
-<!-- 									 </td> -->
-	                                 <td>下單時間:<font color=red><b>*</b></font></td>
-	                                 <td><%=orderMasterVO.getCreateTime()%></td>
-	                         	  </tr>
-	                          </table>
+                          <FORM METHOD="post" ACTION="<%=request.getContextPath() %>/back-end/order/" name="form1">
+		                     <table>
+							    <tr>
+							        <td>編號:<font color=red><b>*</b></font></td>
+							        <td><%=orderVO.getOrderID()%></td>
+							    </tr>
+							    <tr>
+							        <td>名稱:</td>
+							        <td><%=orderVO.getOrderRecName()%></td>
+							    </tr>
+							    <tr>
+							        <td>電話:</td>
+							        <td><%=orderVO.getOrderRecPhone()%></td>
+							    </tr>  
+							    <tr>
+							        <td>地址:</td>
+							        <td><%=orderVO.getOrderAddress()%></td>
+							    </tr>
+							    <tr>
+							        <td>金額:</td>
+							        <td><%=orderVO.getTotalPrice()%></td>
+							    </tr>
+							    <tr>
+							        <td>狀態:</td>
+							        <td>
+							            <input type="radio" name="orderStatus" size="45" id="status0" 
+							                    value="0" checked/>
+							                <label for="status0">出貨中</label>
+							            <input type="radio" name="orderStatus" size="45" id="status1"
+							                    value="1" />
+							                <label for="status1">配送中</label>
+							            <input type="radio" name="orderStatus" size="45" id="status2"
+							                    value="2" />
+							                <label for="status2">訂單完成</label>
+							            <input type="radio" name="orderStatus" size="45" id="status3"
+							                    value="3" />
+							                <label for="status3">訂單取消</label>
+							        </td>
+							    </tr>
+							    <tr>
+							        <td>下單時間:<font color=red><b>*</b></font></td>
+							        <td><%=orderVO.getCreateTime()%></td>
+							    </tr>
+							</table>
 	                          <br>
 	                          <input type="hidden" name="action" value="changeStatus">
-	                          <input type="hidden" name="orderID" value="<%=orderMasterVO.getOrderID()%>">
-	                          <input type="hidden" name="orderStatus" value="<%=orderMasterVO.getOrderStatus()%>">
+	                          <input type="hidden" name="orderID" value="<%=orderVO.getOrderID()%>">
 	                          <input type="submit" value="送出修改">
                           </FORM>
                       </div>
@@ -328,5 +345,12 @@ OrderMaster orderMasterVO = (OrderMaster) request.getAttribute("orderMasterVO");
     <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
+    <script>
+	    $(function(){
+	        $("#status${orderVO.orderStatus}").attr("checked",true);
+	    });
+	</script>
   </body>
 </html>

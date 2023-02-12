@@ -38,6 +38,9 @@
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
     <link href="<%=request.getContextPath()%>/back-end/resources/css/listAll_dataTable.css" rel="stylesheet">
+    <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
+
+
 </head>
 <body>
 <!-- ======================================== header 開始 ======================================== -->
@@ -254,19 +257,17 @@
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-sm-6">
-                            <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview" style="display: flex">
                                 <li class="nav-item">
                                     <a href="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>商品管理</p>
+                                        <p><i class="fa-sharp fa-solid fa-dumbbell"></i>商品管理</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<%=request.getContextPath()%>/back-end/order/listAllOrder.jsp"
+                                    <a href="${pageContext.request.contextPath}/back-end/order/listAllOrder.jsp"
                                        class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>訂單管理</p>
+                                        <p><i class="fa-solid fa-truck"></i>訂單管理</p>
                                     </a>
                                 </li>
                             </ul>
@@ -297,7 +298,7 @@
                                                style="width: 100%; font-size: 12px">
                                             <thead>
                                             <tr>
-                                                <th>現有類別種類</th>
+                                                <th>現有類別</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -567,6 +568,6 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
-
+<script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
 </body>
 </html>

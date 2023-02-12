@@ -2,12 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.web.order.model.service.MasterService"%>
+<%@ page import="com.web.order.model.entity.OrderDetail"%>
 <%@ page import="com.web.order.model.entity.OrderMaster"%>
 
 <%
-MasterService orderSvc = new MasterService();
-List<OrderMaster> list = orderSvc.getAll();
-pageContext.setAttribute("list", list);
+List<OrderDetail> detailList = (List<OrderDetail>)request.getAttribute("detailVO");
+pageContext.setAttribute("detailList", detailList);
 %>
 
 <!DOCTYPE html>
@@ -35,7 +35,6 @@ pageContext.setAttribute("list", list);
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet" />
   	<link href="<%=request.getContextPath()%>/back-end/resources/css/listAll_dataTable.css" rel="stylesheet" >
   	<link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
-  	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
   	
   </head>
   <body>
@@ -254,80 +253,34 @@ pageContext.setAttribute("list", list);
 				<div class="content-wrapper">
 					<div class="row">
 						<div class="col-sm-6">
-							<ul class="nav nav-treeview">
-					            <li class="nav-item">
-					              <a href="<%=request.getContextPath()%>/back-end/product/listAllProd.jsp"
-                                       class="nav-link">
-                                        <p><i class="fa-sharp fa-solid fa-dumbbell"></i>商品管理</p>
-                                    </a>
-					            </li>
-					            <li class="nav-item">
-					              <a href="${pageContext.request.contextPath}/back-end/order/listAllOrder.jsp"
-                                       class="nav-link">
-                                        <p><i class="fa-solid fa-truck"></i>訂單管理</p>
-                                    </a>
-					            </li>
-				          	</ul>
-						</div>
+                            <a href="<%=request.getContextPath()%>/back-end/order/listAllOrder.jsp"
+                               class="nav-link">
+                                 <p><i class="fa-solid fa-truck"></i>訂單管理</p>
+                            </a>
+                        </div>
 					</div>
 					<div class="row  mt-3">
 						<div class="col-lg-12 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">所有訂單</h4>
+									<h4 class="card-title">所有訂單明細</h4>
 									<div class="table-responsive">
 										<table id="dataTables" class="display compact hover cell-border stripe table-hover" style="width: 100%; font-size: 12px">
 											<thead>
 												<tr>
-													<th>編號</th>
-													<th>姓名</th>
-													<th>電話</th>
-													<th>地址</th>
+													<th>訂單編號</th>
+													<th>商品名稱</th>
+													<th>數量</th>
 													<th>金額</th>
-													<th>狀態</th>
-													<th>下單時間</th>
-													<th>訂單明細</th>
-													<th>出貨狀態調整</th>
 												</tr>
 											</thead>
 											<tbody> 
-												<c:forEach var="order" items="${list}">
+												<c:forEach var="detailVO" items="${detailList}">
 													<tr>
-														<td>${order.orderID}</td>
-														<td>${order.orderRecName}</td>
-														<td>${order.orderRecPhone}</td>
-														<td>${order.orderAddress}</td>
-														<td>${order.totalPrice}</td>
-														<td>
-															<c:if test="${order.orderStatus == 0}">
-																<div>出貨中</div>
-															</c:if>
-															<c:if test="${order.orderStatus == 1}">
-																<div>配送中</div>
-															</c:if>
-															<c:if test="${order.orderStatus == 2}">
-																<div>訂單完成</div>
-															</c:if>
-															<c:if test="${order.orderStatus == 3}">
-																<div>訂單取消</div>
-															</c:if>
-														</td>
-														<td>${order.createTime}</td>
-														<td>
-                                                            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/order/" style="margin-bottom: 0px;">
-																<button type="submit" title="檢視明細"><i class="fa-solid fa-eye"></i>
-                                                            	</button>
-																<input type="hidden" name="orderID"  value="${order.orderID}">
-																<input type="hidden" name="action"	value="getOne_For_Detail">
-															</FORM>
-														</td>
-														<td>
-															<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/order/"  style="margin-bottom: 0px;">
-																<button type="submit"><i class="fa fa-pen-square"></i></button>
-																<input type="hidden" name="orderID" value="${order.orderID}">
-																<input type="hidden" name="action" value="getOne_For_Update" >
-															</FORM>	
-														</td>
+														<td>${detailVO.orderID}</td>
+														<td>${detailVO.product.proName}</td>
+														<td>${detailVO.detQty}</td>
+														<td>${detailVO.detPrice}</td>
 													</tr>
 												</c:forEach>
 											</tbody>

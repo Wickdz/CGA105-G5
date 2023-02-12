@@ -347,7 +347,8 @@
                                                         <FORM METHOD="post"
                                                               ACTION="<%=request.getContextPath()%>/back-end/product/getOneForUpdate"
                                                               enctype="multipart/form-data" style="margin-bottom: 0px;">
-                                                            <input type="submit" value="修改">
+                                                            <button type="submit"><i class="fa fa-pen-square"></i>
+                                                            </button>
                                                             <input type="hidden" name="proID" value="${prodVO.proID}">
                                                             <input type="hidden" name="action"
                                                                    value="getOne_For_Update">
@@ -357,8 +358,10 @@
                                                         <FORM METHOD="post"
                                                               ACTION="<%=request.getContextPath()%>/back-end/product/delete"
                                                               enctype="multipart/form-data" style="margin-bottom: 0px;">
-                                                            <input type="submit" value="刪除">
-                                                            <input type="hidden" name="proID" value="${prodVO.proID}">
+                                                            <button type="submit"><i class="fa-solid fa-trash"></i>
+                                                            </button>
+                                                            <input type="hidden" name="proID"
+                                                                   value="${prodVO.proID}">
                                                             <input type="hidden" name="action" value="delete">
                                                         </FORM>
                                                     </td>

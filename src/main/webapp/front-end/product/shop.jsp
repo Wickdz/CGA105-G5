@@ -158,7 +158,7 @@
                     <!-- start search -->
                     <div class="btn_search">
                         <div id="mahardhiSearch" class="input-group mahardhi-search">
-                            <form class="shop-search-form" method="post" STYLE="display: flex"
+                            <form class="shop-search-form" method="post" style="display: flex"
                                   action="<%=request.getContextPath()%>/front-end/shop/search" name="form1">
                                 <input type="hidden" name="action" value="getSearch_Display">
                                 <input type="text" name="keyword" placeholder="搜尋商品..."

@@ -103,11 +103,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getSpecifiedProduct(Integer proID) {
-        return productDao.getById(proID);
-    }
-
-    @Override
     public List<Product> findAllProduct() {
         return productDao.getAll();
     }

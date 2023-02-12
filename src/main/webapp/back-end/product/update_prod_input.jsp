@@ -342,11 +342,11 @@
                                                     <td>
                                                         <input type="radio" name="proStatus" size="45" id="status1"
                                                                value="1" checked/>
-                                                        <label for="on">已上架</label>
+                                                        <label for="status1">已上架</label>
                                                         <br>
                                                         <input type="radio" name="proStatus" size="45" id="status0"
                                                                value="0"/>
-                                                        <label for="off" style="color: red;">已下架</label>
+                                                        <label for="status0" style="color: red;">已下架</label>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -391,6 +391,7 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+<script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
 <!-- 預覽圖 -->
 <script>
     window.addEventListener("load", function (e) {
