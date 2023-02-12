@@ -14,7 +14,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean localSessionFactoryBean(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan("com.musclebeach.product.model.entity");
+        sessionFactory.setPackagesToScan("com.musclebeach.product.model.entity", "com.musclebeach.order.model.entity");
         sessionFactory.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;

@@ -17,7 +17,7 @@ public class ProductImg implements Serializable {
     private Integer imgID;
     @Column(name = "pro_img")
     private byte[] proImg;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "pro_id", insertable = false, updatable = false)
     private Product product;
     @Column(name = "pro_id")

@@ -91,8 +91,12 @@
             proID: id,
             count: 1,
         }]).then((res) => {
+            const resURL = res.request.responseURL;
+            if ('/login.jsp' === resURL.substring(resURL.lastIndexOf('/'))) {
+                window.location.href = resURL;
+            }
             if (res.data.data > 0) {
-                location.href = '../../carts';
+                window.location.href = '../../carts';
             }
         });
     }
