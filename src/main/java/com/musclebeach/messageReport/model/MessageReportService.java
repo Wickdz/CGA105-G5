@@ -1,15 +1,14 @@
 package com.musclebeach.messageReport.model;
 
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 import java.util.List;
 
-
+@Service
 public class MessageReportService {
-
+    @Resource
     private MessageReportDAO_interface dao;
-
-    public MessageReportService() {
-        dao = new MessageReportJDBCDAO();
-    }
 
     public MessageReportVO addMessageReport(Integer memID, Integer msgID, String reportContent) {
 

@@ -21,4 +21,8 @@ public interface EmpDAO_interface {
     List<EmpVO> getFunctionEmp(Integer fID);
 
     void updateStatus(Integer empID, Integer Status);
+
+    EmpVO getNameByEmpid(Integer empID);
+
+    List<EmpVO> getCoachList();
 }

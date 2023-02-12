@@ -56,7 +56,7 @@ public class MasterDaoImpl implements MasterDao {
 
     @Override
     public List<OrderMaster> getAll() {
-        String hql = "from OrderMaster";
+        String hql = "from OrderMaster order by createTime desc";
         return session.createQuery(hql, OrderMaster.class).list();
     }
 

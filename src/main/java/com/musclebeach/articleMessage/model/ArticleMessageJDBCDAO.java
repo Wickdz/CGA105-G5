@@ -2,30 +2,27 @@ package com.musclebeach.articleMessage.model;
 
 import org.springframework.stereotype.Repository;
 
-
-
-import java.sql.*;
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Repository
 public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
-
-    String driver = "com.mysql.cj.jdbc.Driver";
-
-    String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
-
-    String userid = "root";
-
-    String passwd = "password";
 
     private static final String INSERT_STMT = "INSERT INTO gym.article_message (art_id,mem_id,msg_content) VALUES (?, ?, ?)";
     private static final String GET_ALL_STMT = "SELECT msg_id,art_id,mem_id,msg_content,msg_stime,msg_status FROM gym.article_message order by msg_id";
     private static final String GET_ONE_STMT = "SELECT msg_ID,art_ID,mem_ID,msg_content,msg_stime,msg_status FROM gym.article_message where msg_id = ?";
     private static final String GET_ONE_STMT_BY_ARTID = "SELECT msg_ID,art_ID,mem_ID,msg_content,msg_stime,msg_status FROM gym.article_message where art_id = ?";
     private static final String UPDATE = "UPDATE gym.article_message set msg_content=?, msg_status=? where msg_id = ?";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    @Resource
+    private DataSource dataSource;
 
     @Override
     public void insert(ArticleMessageVO articleMessageVO) {
@@ -36,7 +33,7 @@ public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
         try {
 
             Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+            con = dataSource.getConnection();
             pstmt = con.prepareStatement(INSERT_STMT);
 
             pstmt.setInt(1, articleMessageVO.getArtID());
@@ -80,7 +77,7 @@ public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
         try {
 
             Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+            con = dataSource.getConnection();
             pstmt = con.prepareStatement(UPDATE);
 
             pstmt.setString(1, articleMessageVO.getMsgContent());
@@ -126,7 +123,7 @@ public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
         try {
 
             Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+            con = dataSource.getConnection();
             pstmt = con.prepareStatement(GET_ONE_STMT);
 
             pstmt.setInt(1, msgID);
@@ -188,7 +185,7 @@ public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
         try {
 
             Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+            con = dataSource.getConnection();
             pstmt = con.prepareStatement(GET_ONE_STMT_BY_ARTID);
             pstmt.setInt(1, artID);
             rs = pstmt.executeQuery();
@@ -249,7 +246,7 @@ public class ArticleMessageJDBCDAO implements ArticleMessageDAO_interface {
         try {
 
             Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+            con = dataSource.getConnection();
             pstmt = con.prepareStatement(GET_ALL_STMT);
             rs = pstmt.executeQuery();
 

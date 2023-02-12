@@ -2,7 +2,8 @@ package com.musclebeach.articleImg.model;
 
 import org.springframework.stereotype.Repository;
 
-
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,466 +11,463 @@ import java.util.List;
 @Repository
 public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String INSERT_STMT =
+            "INSERT INTO gym.article_img (art_img,art_id) VALUES (?, ?)";
+    private static final String GET_ALL_STMT =
+            "SELECT img_id,art_img,art_id FROM gym.article_img order by img_id";
+    private static final String GET_ALL_STMT_BY_ART_ID =
+            "SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
+    private static final String GET_ONE_STMT =
+            "SELECT img_id,art_img,art_id FROM gym.article_img where img_id = ?";
+    private static final String GET_ONE_STMT_BY_ARTID =
+            "SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
+    private static final String DELETE =
+            "DELETE FROM gym.article_img where img_id = ?";
+    private static final String UPDATE =
+            "UPDATE gym.article_img set art_img=? where img_id = ?";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    String userid = "root";
+    String passwd = "password";
+    @Resource
+    private DataSource dataSource;
 
-	String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    @Override
+    public void insert(ArticleImgVO articleImgVO) {
 
-	String userid = "root";
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
-	String passwd = "password";
-	
-	private static final String INSERT_STMT = 
-			"INSERT INTO gym.article_img (art_img,art_id) VALUES (?, ?)";
-	private static final String GET_ALL_STMT = 
-			"SELECT img_id,art_img,art_id FROM gym.article_img order by img_id";
-	private static final String GET_ALL_STMT_BY_ART_ID = 
-			"SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
-	private static final String GET_ONE_STMT = 
-			"SELECT img_id,art_img,art_id FROM gym.article_img where img_id = ?";
-	private static final String GET_ONE_STMT_BY_ARTID = 
-			"SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
-	private static final String DELETE = 
-			"DELETE FROM gym.article_img where img_id = ?";
-	private static final String UPDATE = 
-			"UPDATE gym.article_img set artImg=? where img_id = ?";
-	
-	
-	@Override
-	public void insert(ArticleImgVO articleImgVO) {
+        try {
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(INSERT_STMT);
 
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
-
-			pstmt.setBytes(1, articleImgVO.getArtImg());
-			pstmt.setInt(2, articleImgVO.getArtID());
+            pstmt.setBytes(1, articleImgVO.getArtImg());
+            pstmt.setInt(2, articleImgVO.getArtID());
 
 
-			pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-	}
-	
-	@Override
-	public void update(ArticleImgVO articleImgVO) {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+    }
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+    @Override
+    public void update(ArticleImgVO articleImgVO) {
 
-		try {
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+        try {
 
-			pstmt.setBytes(1, articleImgVO.getArtImg());
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(UPDATE);
+
+            pstmt.setBytes(1, articleImgVO.getArtImg());
 
 
-			pstmt.executeUpdate();
+            pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-	}
-	
-	@Override
-	public void delete(Integer imgID) {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+    }
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+    @Override
+    public void delete(Integer imgID) {
 
-		try {
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
+        try {
 
-			pstmt.setInt(1, imgID);
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(DELETE);
 
-			pstmt.executeUpdate();
+            pstmt.setInt(1, imgID);
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-	}
-	
-	@Override
-	public List<ArticleImgVO> getAllByArtID(Integer artID) {
-		List<ArticleImgVO> list = new ArrayList<ArticleImgVO>();
-		ArticleImgVO articleImgVO = null;
+            pstmt.executeUpdate();
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+    }
 
-		try {
+    @Override
+    public List<ArticleImgVO> getAllByArtID(Integer artID) {
+        List<ArticleImgVO> list = new ArrayList<ArticleImgVO>();
+        ArticleImgVO articleImgVO = null;
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT_BY_ART_ID);
-			pstmt.setInt(1, artID);
-			rs = pstmt.executeQuery();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-			while (rs.next()) {
-				// empVO 也稱為 Domain objects
-				articleImgVO = new ArticleImgVO();
-				articleImgVO.setImgID(rs.getInt("img_id"));
-				articleImgVO.setArtImg(rs.getBytes("art_img"));
-				articleImgVO.setArtID(rs.getInt("art_id"));
-				
-				list.add(articleImgVO); // Store the row in the list
-			}
+        try {
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
-	
-	@Override
-	public List<ArticleImgVO> getAll() {
-		List<ArticleImgVO> list = new ArrayList<ArticleImgVO>();
-		ArticleImgVO articleImgVO = null;
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT_BY_ART_ID);
+            pstmt.setInt(1, artID);
+            rs = pstmt.executeQuery();
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                articleImgVO = new ArticleImgVO();
+                articleImgVO.setImgID(rs.getInt("img_id"));
+                articleImgVO.setArtImg(rs.getBytes("art_img"));
+                articleImgVO.setArtID(rs.getInt("art_id"));
 
-		try {
+                list.add(articleImgVO); // Store the row in the list
+            }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
 
-			while (rs.next()) {
-				// empVO 也稱為 Domain objects
-				articleImgVO = new ArticleImgVO();
-				articleImgVO.setImgID(rs.getInt("img_id"));
-				articleImgVO.setArtImg(rs.getBytes("art_img"));
-				articleImgVO.setArtID(rs.getInt("art_id"));
-				list.add(articleImgVO); // Store the row in the list
-			}
+    @Override
+    public List<ArticleImgVO> getAll() {
+        List<ArticleImgVO> list = new ArrayList<ArticleImgVO>();
+        ArticleImgVO articleImgVO = null;
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
-	
-	
-	@Override
-	public ArticleImgVO findByPrimaryKey(Integer imgID) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-		ArticleImgVO articleImgVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+        try {
 
-		try {
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT);
+            rs = pstmt.executeQuery();
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                articleImgVO = new ArticleImgVO();
+                articleImgVO.setImgID(rs.getInt("img_id"));
+                articleImgVO.setArtImg(rs.getBytes("art_img"));
+                articleImgVO.setArtID(rs.getInt("art_id"));
+                list.add(articleImgVO); // Store the row in the list
+            }
 
-			pstmt.setInt(1, imgID);
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
 
-			rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				// empVo 也稱為 Domain objects
-				articleImgVO = new ArticleImgVO();
-				articleImgVO.setImgID(rs.getInt("img_id"));
-				articleImgVO.setArtImg(rs.getBytes("art_img"));
-				articleImgVO.setArtID(rs.getInt("art_id"));
-			}
+    @Override
+    public ArticleImgVO findByPrimaryKey(Integer imgID) {
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return articleImgVO;
-	}
-	
-	@Override
-	public ArticleImgVO findByArtID(Integer artID) {
+        ArticleImgVO articleImgVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-		ArticleImgVO articleImgVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+        try {
 
-		try {
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT);
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT_BY_ARTID);
+            pstmt.setInt(1, imgID);
 
-			pstmt.setInt(1, artID);
+            rs = pstmt.executeQuery();
 
-			rs = pstmt.executeQuery();
+            while (rs.next()) {
+                // empVo 也稱為 Domain objects
+                articleImgVO = new ArticleImgVO();
+                articleImgVO.setImgID(rs.getInt("img_id"));
+                articleImgVO.setArtImg(rs.getBytes("art_img"));
+                articleImgVO.setArtID(rs.getInt("art_id"));
+            }
 
-			while (rs.next()) {
-				// empVo 也稱為 Domain objects
-				articleImgVO = new ArticleImgVO();
-				articleImgVO.setImgID(rs.getInt("img_id"));
-				articleImgVO.setArtImg(rs.getBytes("art_img"));
-				articleImgVO.setArtID(rs.getInt("art_id"));
-			}
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return articleImgVO;
+    }
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return articleImgVO;
-	}
+    @Override
+    public ArticleImgVO findByArtID(Integer artID) {
 
-	
-	@Override
-	public void insert2 (ArticleImgVO articleImgVO , Connection con) {
+        ArticleImgVO articleImgVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-		PreparedStatement pstmt = null;
+        try {
 
-		try {
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT_BY_ARTID);
 
-     		pstmt = con.prepareStatement(INSERT_STMT);
+            pstmt.setInt(1, artID);
 
-			pstmt.setBytes(1, articleImgVO.getArtImg());
-			pstmt.setInt(2, articleImgVO.getArtID());
-			
-			
-Statement stmt=	con.createStatement();
-			pstmt.executeUpdate();
+            rs = pstmt.executeQuery();
 
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-ArticleImg");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}
+            while (rs.next()) {
+                // empVo 也稱為 Domain objects
+                articleImgVO = new ArticleImgVO();
+                articleImgVO.setImgID(rs.getInt("img_id"));
+                articleImgVO.setArtImg(rs.getBytes("art_img"));
+                articleImgVO.setArtID(rs.getInt("art_id"));
+            }
 
-	}
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return articleImgVO;
+    }
 
-	@Override
-	public void insertImgBatch(List<ArticleImgVO> articleImgVOList) {
-		try(Connection connection = DriverManager.getConnection(url,userid,passwd);
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STMT)
-				){
-			for (ArticleImgVO articleImgVO : articleImgVOList) {
-				preparedStatement.setBytes(1,articleImgVO.getArtImg());
-				preparedStatement.setInt(2, articleImgVO.getArtID());
-				preparedStatement.addBatch();
-			}
-			preparedStatement.executeBatch();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
+    @Override
+    public void insert2(ArticleImgVO articleImgVO, Connection con) {
+
+        PreparedStatement pstmt = null;
+
+        try {
+
+            pstmt = con.prepareStatement(INSERT_STMT);
+
+            pstmt.setBytes(1, articleImgVO.getArtImg());
+            pstmt.setInt(2, articleImgVO.getArtID());
+
+
+            Statement stmt = con.createStatement();
+            pstmt.executeUpdate();
+
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            if (con != null) {
+                try {
+                    // 3●設定於當有exception發生時之catch區塊內
+                    System.err.print("Transaction is being ");
+                    System.err.println("rolled back-由-ArticleImg");
+                    con.rollback();
+                } catch (SQLException excep) {
+                    throw new RuntimeException("rollback error occured. "
+                            + excep.getMessage());
+                }
+            }
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void insertImgBatch(List<ArticleImgVO> articleImgVOList) {
+        try (Connection connection = DriverManager.getConnection(url, userid, passwd);
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STMT)
+        ) {
+            for (ArticleImgVO articleImgVO : articleImgVOList) {
+                preparedStatement.setBytes(1, articleImgVO.getArtImg());
+                preparedStatement.setInt(2, articleImgVO.getArtID());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

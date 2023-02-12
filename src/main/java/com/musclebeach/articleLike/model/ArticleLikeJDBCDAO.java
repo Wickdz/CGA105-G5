@@ -2,9 +2,9 @@ package com.musclebeach.articleLike.model;
 
 import org.springframework.stereotype.Repository;
 
-
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,317 +12,279 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Repository
 public class ArticleLikeJDBCDAO implements ArticleLikeDAO_interface {
 
-	String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String INSERT_STMT = "INSERT INTO gym.article_like (art_id,mem_id) VALUES (?, ?)";
+    private static final String GET_ALL_STMT = "SELECT art_id,mem_id FROM gym.article_like order by art_id";
+    private static final String GET_ONE_STMT = "SELECT art_id,mem_id FROM gym.article_like where art_id = ?";
+    private static final String GET_ONE_STMT_BY_LIKE = "SELECT art_id,mem_id FROM gym.article_like where art_id = ? and mem_id = ?";
+    private static final String DELETE = "DELETE FROM gym.article_like where art_id = ? and mem_id = ?";
+    String driver = "com.mysql.cj.jdbc.Driver";
+    @Resource
+    private DataSource dataSource;
 
-	String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    @Override
+    public void insert(ArticleLikeVO artLikeVO) {
 
-	String userid = "root";
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
-	String passwd = "password";
+        try {
 
-	private static final String INSERT_STMT = "INSERT INTO gym.article_like (art_id,mem_id) VALUES (?, ?)";
-	private static final String GET_ALL_STMT = "SELECT art_id,mem_id FROM gym.article_like order by art_id";
-	private static final String GET_ONE_STMT = "SELECT art_id,mem_id FROM gym.article_like where art_id = ?";
-	private static final String GET_ONE_STMT_BY_LIKE = "SELECT art_id,mem_id FROM gym.article_like where art_id = ? and mem_id = ?";
-	private static final String DELETE = "DELETE FROM gym.article_like where art_id = ? and mem_id = ?";
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(INSERT_STMT);
 
-	@Override
-	public void insert(ArticleLikeVO artLikeVO) {
+            pstmt.setInt(1, artLikeVO.getArtID());
+            pstmt.setInt(2, artLikeVO.getMemID());
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+            pstmt.executeUpdate();
 
-		try {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(INSERT_STMT);
+    }
 
-			pstmt.setInt(1, artLikeVO.getArtID());
-			pstmt.setInt(2, artLikeVO.getMemID());
+    @Override
+    public void delete(Integer artID, Integer memID) {
 
-			pstmt.executeUpdate();
+        Connection con = null;
+        PreparedStatement pstmt = null;
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+        try {
 
-	}
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(DELETE);
 
-	@Override
-	public void delete(Integer artID, Integer memID) {
+            pstmt.setInt(1, artID);
+            pstmt.setInt(2, memID);
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
+            pstmt.executeUpdate();
 
-		try {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
+    }
 
-			pstmt.setInt(1, artID);
-			pstmt.setInt(2, memID);
+    @Override
+    public List<ArticleLikeVO> getAllByArtID(Integer artID) {
+        List<ArticleLikeVO> list = new ArrayList<ArticleLikeVO>();
+        ArticleLikeVO artLikeVO = null;
 
-			pstmt.executeUpdate();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
+        try {
 
-	}
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT);
+            pstmt.setInt(1, artID);
+            rs = pstmt.executeQuery();
 
-	@Override
-	public List<ArticleLikeVO> getAllByArtID(Integer artID) {
-		List<ArticleLikeVO> list = new ArrayList<ArticleLikeVO>();
-		ArticleLikeVO artLikeVO = null;
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                artLikeVO = new ArticleLikeVO();
+                artLikeVO.setArtID(rs.getInt("art_id"));
+                artLikeVO.setMemID(rs.getInt("mem_id"));
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+                list.add(artLikeVO); // Store the row in the list
+            }
 
-		try {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT);
-			pstmt.setInt(1, artID);
-			rs = pstmt.executeQuery();
+    @Override
+    public List<ArticleLikeVO> getAll() {
+        List<ArticleLikeVO> list = new ArrayList<ArticleLikeVO>();
+        ArticleLikeVO artLikeVO = null;
 
-			while (rs.next()) {
-				// empVO 也稱為 Domain objects
-				artLikeVO = new ArticleLikeVO();
-				artLikeVO.setArtID(rs.getInt("art_id"));
-				artLikeVO.setMemID(rs.getInt("mem_id"));
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-				list.add(artLikeVO); // Store the row in the list
-			}
+        try {
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT);
+            rs = pstmt.executeQuery();
 
-	@Override
-	public List<ArticleLikeVO> getAll() {
-		List<ArticleLikeVO> list = new ArrayList<ArticleLikeVO>();
-		ArticleLikeVO artLikeVO = null;
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                artLikeVO = new ArticleLikeVO();
+                artLikeVO.setArtID(rs.getInt("art_id"));
+                artLikeVO.setMemID(rs.getInt("mem_id"));
 
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+                list.add(artLikeVO); // Store the row in the list
+            }
 
-		try {
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ALL_STMT);
-			rs = pstmt.executeQuery();
+    @Override
+    public ArticleLikeVO findByForeignKey(Integer artID, Integer memID) {
 
-			while (rs.next()) {
-				// empVO 也稱為 Domain objects
-				artLikeVO = new ArticleLikeVO();
-				artLikeVO.setArtID(rs.getInt("art_id"));
-				artLikeVO.setMemID(rs.getInt("mem_id"));
+        ArticleLikeVO articleLikeVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-				list.add(artLikeVO); // Store the row in the list
-			}
+        try {
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return list;
-	}
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT_BY_LIKE);
 
-	
-	@Override
-	public ArticleLikeVO findByForeignKey(Integer artID,Integer memID) {
+            pstmt.setInt(1, artID);
+            pstmt.setInt(2, memID);
 
-		ArticleLikeVO articleLikeVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+            rs = pstmt.executeQuery();
 
-		try {
+            while (rs.next()) {
+                // empVo 也稱為 Domain objects
+                articleLikeVO = new ArticleLikeVO();
+                articleLikeVO.setMemID(rs.getInt("mem_id"));
+                articleLikeVO.setArtID(rs.getInt("art_id"));
+            }
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(GET_ONE_STMT_BY_LIKE);
-
-			pstmt.setInt(1, artID);
-			pstmt.setInt(2, memID);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				// empVo 也稱為 Domain objects
-				articleLikeVO = new ArticleLikeVO();
-				articleLikeVO.setMemID(rs.getInt("mem_id"));
-				articleLikeVO.setArtID(rs.getInt("art_id"));
-			}
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return articleLikeVO;
-	}
-	public static void main(String[] args) {
-		ArticleLikeJDBCDAO dao = new ArticleLikeJDBCDAO();
-
-//	// 新增
-//	ArtLikeVO artLikeVO1 = new ArtLikeVO();
-//	artLikeVO1.setArtID(1);
-//	artLikeVO1.setMemID(1);
-//
-//	dao.insert(artLikeVO1);
-
-//		// 刪除
-//	dao.delete(1,1);
-
-//	// 查詢
-//	List<ArtLikeVO> list = dao.getAllByArtID(1);
-//	for (ArtLikeVO e : list) {
-//		System.out.print(e.getArtID() + ",");
-//		System.out.println(e.getMemID());
-//	}
-//	
-//	System.out.println("---------------------");
-//
-//	// 查詢
-//	List<ArtLikeVO> list1 = dao.getAll();
-//	for (ArtLikeVO e : list1) {
-//		System.out.print(e.getArtID() + ",");
-//		System.out.print(e.getMemID());
-//
-//		System.out.println();
-//	}
-	}
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return articleLikeVO;
+    }
 }
