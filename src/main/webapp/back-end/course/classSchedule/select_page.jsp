@@ -226,6 +226,7 @@
                         role="tab"
                         aria-controls="v-pills-article"
                         aria-selected="false"
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
                 >
                     <i
                             class="bi bi-chat-right-text"
@@ -318,11 +319,10 @@
                 tabindex="0"
                 style="border: 2px solid purple "
         >
-            <table id="table-1">
-                <tr>
-                    <td><h3>MuscleBeach 課程時間表</h3></td>
-                </tr>
-            </table>
+
+
+
+
 
 
             <%-- 錯誤表列 --%>

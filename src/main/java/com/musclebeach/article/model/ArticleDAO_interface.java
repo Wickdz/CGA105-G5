@@ -1,6 +1,5 @@
 package com.musclebeach.article.model;
 
-
 import com.musclebeach.articleImg.model.ArticleImgVO;
 
 import java.util.List;
@@ -20,6 +19,12 @@ public interface ArticleDAO_interface {
 
     public void insertWithArticleImgs(ArticleVO articleVO, List<ArticleImgVO> list);
 
-    public List<ArticleVO> getAllByTypeID(Integer TypeID);
+    public List<ArticleVO> getAllByTypeID(Integer typeID);
+
+    public List<ArticleVO> getAllByArticleTitleOrArticleContent(String artTitle,String artContent);
+
+    public List<ArticleVO> getAllByArtID(Integer artID);
+
+    public List<ArticleVO> getAllByMemID(Integer memID);
 
 }

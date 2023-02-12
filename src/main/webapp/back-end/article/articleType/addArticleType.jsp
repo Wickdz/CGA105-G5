@@ -24,83 +24,53 @@
             rel="canonical"
             href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
     />
-    <link href="<%=request.getContextPath()%>/back-end/resources/assets/dist/css/bootstrap.min.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
     <style type="text/css"></style>
-    <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/index/index.css"
           rel="stylesheet"/>
     <!-- Flaticon Font -->
-    <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
           rel="stylesheet"/>
     <style>
-        table#table-1 {
-            width: 95%;
-            background-color: #CDA581;
-            border: 2px solid black;
+        <style>
+        #table-1 {
+            width: 50%;
+            margin: 0 auto;
             text-align: center;
-        }
-
-        table#table-1 h4 {
-            color: red;
-            display: block;
-            margin-bottom: 1px;
-        }
-
-        h4 {
-            color: blue;
-            display: inline;
+            background-color: #1E88E5;
+            color: white;
+            border-radius: 10px;
         }
 
         #table-2 {
-
-            border: 2px solid black;
-            text-align: center;
-        }
-
-        #table-2 td {
             width: 50%;
-            background-color: azure;
-            color: silver;
-            text-align: center;
-            transition: all 0.5s ease-in-out;
+            margin: 0 auto;
         }
 
-        #table-2 tr:hover td {
-            background-color: lightblue;
-            transition: all 0.5s ease-in-out;
+        #addArticleTypeForm {
+            padding: 20px;
+            background-color: #ECEFF1;
+            border-radius: 10px;
         }
 
-        #table-2 tr td {
-            color: maroon;
-
-            transition: all 0.5s ease-in-out;
+        .btn-primary {
+            background-color: #1E88E5;
+            color: white;
+            border-radius: 10px;
+            float: right;
         }
 
-        #table-2 tr:hover td {
-            color: blue;
-
-            border-left: 5px solid rgba(79, 192, 210, 0.6);
-            transition: all 0.5s ease-in-out;
+        .font-weight-bold {
+            width: 20%;
         }
-
-        #table-2 tr:hover .show {
-            display: block;
-
-        }
-
-        #table-2 tr {
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        #table-2 tr:last-of-type {
-            border-bottom: none;
-        }
-
+    </style>
 
     </style>
 
+
     <style>
-        div#v-pills-article {
+        div#v-pills-class {
             width: 100%;
             height: 100%;
             display: flex;
@@ -250,7 +220,7 @@
             </li>
             <li>
                 <a
-                        class="nav-link  text-white"
+                        class="nav-link text-white"
                         id="v-pills-class-tab"
                         data-bs-toggle="pill"
                         data-bs-target="#v-pills-class"
@@ -258,7 +228,7 @@
                         role="tab"
                         aria-controls="v-pills-class"
                         aria-selected="false"
-
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/course/select_page.jsp';"
 
                 >
                     <i
@@ -333,25 +303,16 @@
             <img src="/image/welcome.gif" style="width: 96%" alt=""/>
         </div>
 
-        <!-- ========================================= 論壇管理 ========================================= -->
+        <!-- ========================================= 課程管理 ========================================= -->
         <div
                 class="tab-pane fade show active"
-                id="v-pills-article"
+                id="v-pills-class"
                 role="tabpanel"
                 aria-labelledby="v-pills-class-tab"
                 tabindex="0"
-                style="border: 2px solid purple "
+                style="border: 0px solid purple"
         >
-
-            <table id="table-1">
-                <tr>
-                    <td>
-                        <h3>課程資料新增</h3></td>
-
-                </tr>
-            </table>
-
-
+            <h1>文章類別新增</h1>
             <%-- 錯誤表列 --%>
             <c:if test="${not empty errorMsgs}">
                 <font style="color:red">請修正以下錯誤:</font>
@@ -361,29 +322,25 @@
                     </c:forEach>
                 </ul>
             </c:if>
+            <div class="container mt-5" id="addArticleTypeForm">
+                <form method="post" action="articleType.do" name="form1">
+                    <h5>類別名稱:<h5>
+                        <input type="text" class="form-control" name="typeName" size="40"
+                               value="<%= (articleTypeVO==null)? "" : articleTypeVO.getTypeName()%>"
+                               placeholder="請輸入類別名稱" required maxlength="10">
+                        <input type="hidden" name="action" value="insert">
+                        <input type="submit" class="btn btn-dark mt-3" value="送出新增">
+                </form>
+            </div>
 
-            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/article/articleType.do" name="form1">
-                <table id="table-2">
-                    
-              
-                    <tr>
-                        <td>類別名稱:</td>
-                        <td><input type="TEXT" name="typeName" size="45"
-                                   value="<%= (articleTypeVO==null)? "類別名稱1" : articleTypeVO.getTypeName()%>"/></td>
-                    </tr>
-                    
 
-                </table>
-                <br>
-                <input type="hidden" name="action" value="insert">
-                <input type="submit" value="送出新增"></FORM>
         </div>
 
 </main>
-<script src="<%=request.getContextPath()%>/back-end/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/index/sidebars.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/js/popper.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/index/sidebars.js"></script>
 
 
 </body>

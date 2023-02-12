@@ -7,30 +7,39 @@ import java.util.List;
 
 @Service
 public class ArticleFavoriteService {
-    @Resource
-    private ArticleFavoriteDAO_interface dao;
 
-    public ArticleFavoriteVO addArticleFavorite(Integer artID, Integer memID) {
+	@Resource
+	private ArticleFavoriteDAO_interface dao;
 
-        ArticleFavoriteVO articleFavoriteVO = new ArticleFavoriteVO();
+	public ArticleFavoriteService() {
+		dao = new ArticleFavoriteJDBCDAO();
+	}
 
-        articleFavoriteVO.setArtID(artID);
-        articleFavoriteVO.setMemID(memID);
+	public ArticleFavoriteVO addArticleFavorite(Integer artID, Integer memID) {
 
-        dao.insert(articleFavoriteVO);
+		ArticleFavoriteVO articleFavoriteVO = new ArticleFavoriteVO();
 
-        return articleFavoriteVO;
-    }
+		articleFavoriteVO.setArtID(artID);
+		articleFavoriteVO.setMemID(memID);
+	
+		dao.insert(articleFavoriteVO);
 
-    public void deleteArtFavorite(Integer artID, Integer memID) {
-        dao.delete(artID, memID);
-    }
+		return articleFavoriteVO;
+	}
 
-    public List<ArticleFavoriteVO> getAllByMemID(Integer memID) {
-        return dao.getAllByMemID(memID);
-    }
+	public void deleteArtFavorite(Integer artID, Integer memID) {
+		dao.delete(artID, memID);
+	}
 
-    public List<ArticleFavoriteVO> getAll() {
-        return dao.getAll();
-    }
+	public List<ArticleFavoriteVO> getAllByMemID(Integer memID) {
+		return dao.getAllByMemID(memID);
+	}
+
+	public List<ArticleFavoriteVO> getAll() {
+		return dao.getAll();
+	}
+	
+	public ArticleFavoriteVO getOneArticleFavorite(Integer artID, Integer memID) {
+		return dao.findByForeignKey(artID,memID);
+	}
 }

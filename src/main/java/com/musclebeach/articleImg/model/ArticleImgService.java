@@ -3,60 +3,70 @@ package com.musclebeach.articleImg.model;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ArticleImgService {
-    @Resource
-    private ArticleImgDAO_interface dao;
 
-    public ArticleImgVO addArticleImg(byte[] artImg, Integer artID) {
+	@Resource
+	private ArticleImgDAO_interface dao;
 
-        ArticleImgVO articleImgVO = new ArticleImgVO();
+	public ArticleImgService() {
+		dao = new ArticleImgJDBCDAO();
+	}
 
-        articleImgVO.setArtImg(artImg);
-        articleImgVO.setArtID(artID);
+	public ArticleImgVO addArticleImg(byte[] artImg, Integer artID) {
 
-        dao.insert(articleImgVO);
-        return articleImgVO;
-    }
+		ArticleImgVO articleImgVO = new ArticleImgVO();
 
-    public ArticleImgVO addArticleImg2(byte[] artImg, Integer artID, Connection con) {
-        ArticleImgVO articleImgVO = new ArticleImgVO();
-        articleImgVO.setArtImg(artImg);
-        articleImgVO.setArtID(artID);
-        dao.insert2(articleImgVO, con);
-        return articleImgVO;
-    }
+		articleImgVO.setArtImg(artImg);
+		articleImgVO.setArtID(artID);
+		dao.insert(articleImgVO);
+		return articleImgVO;
+	}
 
-    public void deleteArticleImg(Integer imgID) {
-        dao.delete(imgID);
-    }
+	public void addWithArticleImgs(Integer artID, List<byte[]> list) {
 
-    public ArticleImgVO updateArticleImg(Integer imgID, byte[] artImg) {
+		List<ArticleImgVO> articleImgVOList = new ArrayList<>();
+		
+		for (byte[] artImg : list) {
+			ArticleImgVO articleImgVO = new ArticleImgVO();
+            articleImgVO.setArtImg(artImg);
+            articleImgVO.setArtID(artID);
+            articleImgVOList.add(articleImgVO);
+        }
+		dao.insertImgBatch(articleImgVOList);
+		
+	}
+	
+	
+	
+	public void deleteArticleImg(Integer imgID) {
+		dao.delete(imgID);
+	}
 
-        ArticleImgVO articleImgVO = new ArticleImgVO();
+	public ArticleImgVO updateArticleImg(Integer imgID,byte[] artImg) {
 
-        articleImgVO.setImgID(imgID);
-        articleImgVO.setArtImg(artImg);
+		ArticleImgVO articleImgVO = new ArticleImgVO();
+		articleImgVO.setImgID(imgID);
+		articleImgVO.setArtImg(artImg);
 
-        return articleImgVO;
-    }
+		return articleImgVO;
+	}
+	public List<ArticleImgVO> getAllByArtID(Integer artID) {
+		return dao.getAllByArtID(artID);
+	}
 
-    public List<ArticleImgVO> getAllByArtID(Integer artID) {
-        return dao.getAllByArtID(artID);
-    }
-
-    public List<ArticleImgVO> getAll() {
-        return dao.getAll();
-    }
-
-    public ArticleImgVO getOneArticleImg(Integer imgID) {
-        return dao.findByPrimaryKey(imgID);
-    }
-
-    public Boolean insertArticleImages(List<ArticleImgVO> articleImgVOList) {
-        return dao.insertImagesBatch(articleImgVOList) > 0;
-    }
+	public List<ArticleImgVO> getAll() {
+		return dao.getAll();
+	}
+	
+	public ArticleImgVO getOneArticleImg(Integer imgID) {
+		return dao.findByPrimaryKey(imgID);
+	}
+	
+	public ArticleImgVO getOneArticleImgByArtID(Integer artID) {
+		return dao.findByArtID(artID);
+	}
 }

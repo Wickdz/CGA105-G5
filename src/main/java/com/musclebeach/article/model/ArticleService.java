@@ -1,81 +1,103 @@
 package com.musclebeach.article.model;
 
+import com.musclebeach.articleImg.model.ArticleImgService;
 import com.musclebeach.articleImg.model.ArticleImgVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class ArticleService {
-    @Resource
-    private ArticleDAO_interface dao;
 
-    public ArticleVO addArticle(Integer memID, Integer typeID, String artTitle, String artContent) {
+	@Resource
+	private ArticleDAO_interface dao;
 
-        ArticleVO articleVO = new ArticleVO();
+	@Resource
+	private ArticleImgService articleImgService;
 
-        articleVO.setMemID(memID);
-        articleVO.setTypeID(typeID);
-        articleVO.setArtTitle(artTitle);
-        articleVO.setArtContent(artContent);
-        dao.insert(articleVO);
 
-        return articleVO;
-    }
 
-    public ArticleVO addWithArticleImgs(Integer memID, Integer typeID, String artTitle, String artContent,
-                                        List<byte[]> list) {
+	public ArticleVO addArticle(Integer memID, Integer typeID, String artTitle, String artContent) {
 
-        ArticleVO articleVO = new ArticleVO();
+		ArticleVO articleVO = new ArticleVO();
 
-        articleVO.setMemID(memID);
-        articleVO.setTypeID(typeID);
-        articleVO.setArtTitle(artTitle);
-        articleVO.setArtContent(artContent);
+		articleVO.setMemID(memID);
+		articleVO.setTypeID(typeID);
+		articleVO.setArtTitle(artTitle);
+		articleVO.setArtContent(artContent);
+		dao.insert(articleVO);
 
-        List<ArticleImgVO> articleImgVO = (List<ArticleImgVO>) new ArticleImgVO();
+		return articleVO;
+	}
 
-        for (byte[] item : list) {
-            ((ArticleImgVO) articleImgVO).setArtImg(item);
-        }
+	public ArticleVO addWithArticleImgs(Integer memID, Integer typeID, String artTitle, String artContent,
+										List<byte[]> list) {
 
-        dao.insertWithArticleImgs(articleVO, articleImgVO);
+		ArticleVO articleVO = new ArticleVO();
 
-        return articleVO;
-    }
+		articleVO.setMemID(memID);
+		articleVO.setTypeID(typeID);
+		articleVO.setArtTitle(artTitle);
+		articleVO.setArtContent(artContent);
 
-    public ArticleVO updateArticle(Integer artID, Integer memID, Integer typeID, String artTitle, String artContent,
-                                   Integer artStatus) {
+		List<ArticleImgVO> articleImgVOList = new ArrayList<>();
 
-        ArticleVO articleVO = new ArticleVO();
+		for (byte[] artImg : list) {
+			ArticleImgVO articleImgVO = new ArticleImgVO();
+			articleImgVO.setArtImg(artImg);
+			articleImgVOList.add(articleImgVO);
+		}
+		dao.insertWithArticleImgs(articleVO,articleImgVOList);
 
-        articleVO.setArtID(artID);
-        articleVO.setMemID(memID);
-        articleVO.setTypeID(typeID);
-        articleVO.setArtTitle(artTitle);
-        articleVO.setArtContent(artContent);
-        articleVO.setArtStatus(artStatus);
+		return articleVO;
+	}
 
-        dao.update(articleVO);
+	public ArticleVO updateArticle(Integer artID, Integer memID, Integer typeID, String artTitle, String artContent,
+								   Integer artStatus) {
 
-        return articleVO;
-    }
+		ArticleVO articleVO = new ArticleVO();
 
-    public ArticleVO getOneArticleVO(Integer artID) {
-        return dao.findByPrimaryKey(artID);
-    }
+		articleVO.setArtID(artID);
+		articleVO.setMemID(memID);
+		articleVO.setTypeID(typeID);
+		articleVO.setArtTitle(artTitle);
+		articleVO.setArtContent(artContent);
+		articleVO.setArtStatus(artStatus);
 
-    public List<ArticleVO> getAll() {
-        return dao.getAll();
-    }
+		dao.update(articleVO);
 
-    public List<ArticleVO> getAllByTypeID(Integer TypeID) {
-        return dao.getAllByTypeID(TypeID);
-    }
+		return articleVO;
+	}
 
-    public List<ArticleVO> getAll(Map<String, String[]> map) {    //複合查詢
-        return dao.getAll(map);
-    }
+	public ArticleVO getOneArticleVO(Integer artID) {
+		return dao.findByPrimaryKey(artID);
+	}
+
+	public List<ArticleVO> getAll() {
+		return dao.getAll();
+	}
+
+	public List<ArticleVO> getAllByTypeID(Integer typeID) {
+		return dao.getAllByTypeID(typeID);
+	}
+
+	public List<ArticleVO> getAllByArtID(Integer artID) {
+		return dao.getAllByArtID(artID);
+	}
+
+	public List<ArticleVO> getAllByMemID(Integer memID) {
+		return dao.getAllByMemID(memID);
+	}
+
+	public List<ArticleVO> getAllByArticleTitleOrArticleContent(String artTitle,String artContent) {
+		return dao.getAllByArticleTitleOrArticleContent(artTitle,artContent);
+	}
+
+	public List<ArticleVO> getAll(Map<String, String[]> map) {    //複合查詢
+		return dao.getAll(map);
+	}
 }

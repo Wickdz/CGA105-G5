@@ -138,7 +138,9 @@
             <li><a class="nav-link text-white" id="v-pills-article-tab"
                    data-bs-toggle="pill" data-bs-target="#v-pills-article"
                    type="button" role="tab" aria-controls="v-pills-article"
-                   aria-selected="false"> <i class="bi bi-chat-right-text"
+                   aria-selected="false"
+                   onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
+            > <i class="bi bi-chat-right-text"
                                              style="color: white; margin: 5px"></i> 論壇管理
             </a></li>
             <li><a class="nav-link text-white" id="v-pills-service-tab"
@@ -215,29 +217,29 @@
                     <tr>
                         <td>課程類別:</td>
                         <td><input type="TEXT" name="typeID" size="45"
-                                   value="<%=teamClassVO.getTypeID()%>" /></td>
+                                   value="<%=teamClassVO.getTypeID()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程名稱:</td>
                         <td><input type="TEXT" name="className" size="45"
-                                   value="<%=teamClassVO.getClassName()%>" /></td>
+                                   value="<%=teamClassVO.getClassName()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程人數上限:</td>
                         <td><input type="TEXT" name="peopleMax" size="45"
-                                   value="<%=teamClassVO.getPeopleMax()%>" /></td>
+                                   value="<%=teamClassVO.getPeopleMax()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程內容:</td>
                         <td><input type="TEXT" name="classContent" size="45"
-                                   value="<%=teamClassVO.getClassContent()%>" /></td>
+                                   value="<%=teamClassVO.getClassContent()%>" required/></td>
                     </tr>
 
 
                     <tr>
                         <td>課程狀態:</td>
                         <td><input type="TEXT" name="classStatus" size="45"
-                                   value="<%=teamClassVO.getClassStatus()%>" /></td>
+                                   value="<%=teamClassVO.getClassStatus()%>" required/></td>
                     </tr>
 
                 </table>

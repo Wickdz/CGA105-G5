@@ -53,6 +53,8 @@
         }
 
         div#v-pills-class {
+            width:100%;
+            height:100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -291,6 +293,7 @@
                         role="tab"
                         aria-controls="v-pills-article"
                         aria-selected="false"
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
                 >
                     <i
                             class="bi bi-chat-right-text"
@@ -363,19 +366,19 @@
                     <tr>
                         <td>課程編號:</td>
                         <td><input type="TEXT" name="classID" size="50"
-                                   value="<%= (classScheduleVO==null)? "1" : classScheduleVO.getClassID()%>"/></td>
+                                   value="<%= (classScheduleVO==null)? "1" : classScheduleVO.getClassID()%>" required/></td>
                     </tr>
                     <tr>
 
                         <td>開始時間:</td>
                         <td><input type="TEXT" name="startTime" size="50"
-                                   value="<%= (classScheduleVO==null)? "2023-01-12 09:00:00" : classScheduleVO.getStartTime()%>"/>
+                                   value="<%= (classScheduleVO==null)? "2023-01-12 09:00:00" : classScheduleVO.getStartTime()%>" required/>
                         </td>
                     </tr>
                     <tr>
                         <td>結束時間:</td>
                         <td><input type="TEXT" name="endTime" size="50"
-                                   value="<%= (classScheduleVO==null)? "2023-01-12 12:00:00" : classScheduleVO.getEndTime()%>"/>
+                                   value="<%= (classScheduleVO==null)? "2023-01-12 12:00:00" : classScheduleVO.getEndTime()%>" required/>
                         </td>
                     </tr>
 

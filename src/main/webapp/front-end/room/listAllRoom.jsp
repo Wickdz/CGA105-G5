@@ -70,18 +70,19 @@
         <div class="collapse navbar-collapse justify-content-between"
              id="navbarCollapse">
             <div class="navbar-nav ml-auto p-4 bg-secondary">
-                <a href="#" class="nav-item nav-link">線上商城</a>
+                <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp" class="nav-item nav-link">線上商城</a>
                 <a href="<%=request.getContextPath()%>/front-end/room/listAllRoom.jsp" class="nav-item nav-link active">找場地</a>
                 <a href="#" class="nav-item nav-link">找教練</a>
-                <a href="#" class="nav-item nav-link">找課程</a>
+                <a href="<%=request.getContextPath()%>/front-end/course/class.html" class="nav-item nav-link">找課程</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-item nav-link dropdown-toggle"
                        data-toggle="dropdown">會員專區</a>
                     <form method="post" action="<%=request.getContextPath()%>/back-end/member/mem.do">
                         <div class="dropdown-menu text-capitalize">
                             <a href="<%=request.getContextPath()%>/front-end/member/mem_info.jsp" class="dropdown-item">會員資料</a>
-                            <a href="#" class="dropdown-item">教練課管理</a>
-                            <a href="#" class="dropdown-item">團課管理</a>
+                            <a href="" class="dropdown-item">教練課管理</a>
+                            <a href="<%=request.getContextPath()%>/front-end/course/myClassOrders.html" class="dropdown-item">團課管理</a>
+                            <a href="<%=request.getContextPath()%>/front-end/course/myAbsence.html" class="dropdown-item">查看團課缺席</a>
                             <a href="<%=request.getContextPath()%>/front-end/room/room_order_info.jsp"
                                class="dropdown-item">場地管理</a>
                             <input class="btn text-danger" style="margin-left:10px;" type="submit" value="登出">
@@ -89,7 +90,7 @@
                         </div>
                     </form>
                 </div>
-                <a href="#" class="nav-link">會員交流區</a>
+                <a href="<%=request.getContextPath()%>/front-end/article/listAllArticle.jsp" class="nav-link">會員交流區</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-item nav-link dropdown-toggle"
                        data-toggle="dropdown">聯絡我們</a>
