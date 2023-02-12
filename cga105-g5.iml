@@ -21,7 +21,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="cga105-g5" value="1b56ad22-3b1c-40bd-8a3a-18cf6d97d1f2" />
+          <factory-entry name="cga105-g5" value="9745e530-ec35-409e-90d1-1eb393ab2b71" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

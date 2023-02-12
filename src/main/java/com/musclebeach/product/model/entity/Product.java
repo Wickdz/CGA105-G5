@@ -1,6 +1,6 @@
 package com.musclebeach.product.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.ToString;
@@ -15,7 +15,6 @@ import java.util.List;
 @Data
 @ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"productType", "productImgs"})
 public class Product implements Serializable {
     @Id // 設定識別屬性 ->⼀定要設定此Annotation
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 設定識別值產⽣⽅式
@@ -27,21 +26,27 @@ public class Product implements Serializable {
     private Integer typeID;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "type_id", insertable = false, updatable = false)
+    @JsonIgnore
     private ProductType productType;
     @Column(name = "pro_qty")
     private Integer proQty;
     @Column(name = "pro_price")
     private Integer proPrice;
     @Column(name = "pro_content")
+    @JsonIgnore
     private String proContent;
     @Column(name = "pro_status", insertable = false)
     private Integer proStatus;
     @Column(name = "updatetime", insertable = false) // insertable = false ->新增時，跳過某欄位
+    @JsonIgnore
     private Timestamp updateTime;
     @Column(name = "createtime", insertable = false, updatable = false) // updatable = false ->更新時，跳過某欄位
+    @JsonIgnore
     private Timestamp createTime;
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<ProductImg> productImgs;
     @Transient
+    @JsonIgnore
     private ProductImg updateImg; // 修改商品圖片用
 }

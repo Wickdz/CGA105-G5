@@ -412,7 +412,7 @@
                                                                 <span class="price-old">NT$${prodVO.proPrice}元</span>
                                                             </p>
                                                             <button type="button" class="addcart" title="加入購物車"
-                                                                    onclick="cart.add('33')">加入購物車
+                                                                    onclick="addInCart(${prodVO.proID})">加入購物車
                                                             </button>
                                                         </div>
                                                     </div>
@@ -545,6 +545,15 @@
 <!-- top scroll -->
 <a href="#" class="scrollToTop back-to-top" data-toggle="tooltip"
    title="Top"><i class="fa fa-angle-up"></i></a>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
+<script>
+    function addInCart(id) {
+        console.log(id);
+        axios.post("../../carts", [{
+            proID: id,
+            count: 1
+        }])
+    }
+</script>
 </body>
 </html>

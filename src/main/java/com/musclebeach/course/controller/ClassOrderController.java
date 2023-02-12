@@ -4,9 +4,11 @@ import com.musclebeach.common.controller.Code;
 import com.musclebeach.common.controller.Result;
 import com.musclebeach.course.entity.ClassOrder;
 import com.musclebeach.course.service.ClassOrderService;
+import com.musclebeach.mem.model.MemVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -48,8 +50,13 @@ public class ClassOrderController {
     }
 
     // 個人課程管理-查看個人已預約課程課表
-    @GetMapping("/memID/{memID}")
-    public Result selectByMemID(@PathVariable Integer memID) {
+    @GetMapping("/memID")
+    public Result selectByMemID(HttpServletRequest request) {
+        MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+        Integer memID = -1;
+        if (memVO != null) {
+            memID = memVO.getMemID();
+        }
         List<ClassOrder> classOrders = service.selectByMemID(memID);
         Integer code = !classOrders.isEmpty() ? Code.READ_OK : Code.READ_ERR;
         String msg = !classOrders.isEmpty() ? "成功" : "查無此項目";
