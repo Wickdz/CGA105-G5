@@ -60,7 +60,7 @@
                 <span class="price-old">原價:${prodVO.proPrice}元</span>
             </p>
             <p class="mb-2">詳情：${prodVO.proContent}</p>
-            <a href="<%=request.getContextPath()%>/front-end/product/cart.jsp" class="btn btn-info mb-3">加入購物車</a>
+            <button onclick="addInCart(${prodVO.proID})" class="btn btn-info mb-3">加入購物車</button>
         </div>
     </div>
 </div>
@@ -84,6 +84,18 @@
 <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/mail/contact.js"></script>
 <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/js/main.js"></script>
 <script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
+<script>
+    function addInCart(id) {
+        axios.post('../../carts', [{
+            proID: id,
+            count: 1,
+        }]).then((res) => {
+            if (res.data.data > 0) {
+                location.href = '../../carts';
+            }
+        });
+    }
+</script>
 </body>
-
 </html>
