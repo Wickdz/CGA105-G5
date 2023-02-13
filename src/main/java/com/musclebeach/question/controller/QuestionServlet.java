@@ -1,8 +1,10 @@
 package com.musclebeach.question.controller;
 
 
+import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.question.model.QuestionService;
 import com.musclebeach.question.model.QuestionVO;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +18,8 @@ import java.util.List;
 import java.util.Set;
 @WebServlet("/back-end/question/question.do")
 public class QuestionServlet extends HttpServlet {
+    private final ApplicationContext context = ApplicationContextUtil.getContext();
+    private final QuestionService questionSvc = context.getBean(QuestionService.class);
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doPost(req, res);
     }
@@ -59,7 +63,6 @@ public class QuestionServlet extends HttpServlet {
                 return;// 程式中斷
                 /*************************** 2.開始查詢資料 *****************************************/
             }
-            QuestionService questionSvc = new QuestionService();
             QuestionVO questionVO = questionSvc.getOneQuestion(questionID);
             if (questionVO == null) {
                 errorMsgs.add("查無資料");
@@ -88,7 +91,6 @@ public class QuestionServlet extends HttpServlet {
             Integer questionID = Integer.valueOf(req.getParameter("questionID"));
 
             /*************************** 2.開始查詢資料 ****************************************/
-            QuestionService questionSvc = new QuestionService();
             QuestionVO questionVO = questionSvc.getOneQuestion(questionID);
 
             /*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
@@ -127,7 +129,6 @@ public class QuestionServlet extends HttpServlet {
                 return;
             }
             /*************************** 2.開始修改資料 ***************************************/
-            QuestionService questionSvc = new QuestionService();
             questionVO = questionSvc.updateQuestion(questionID, questionTitle, questionContent);
 
             /*************************** 3.修改完成,準備轉交(Send the Success view) ***********/
@@ -169,7 +170,6 @@ public class QuestionServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-            QuestionService questionSvc = new QuestionService();
             questionVO = questionSvc.addQuestion(questionTitle, questionContent);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -188,7 +188,6 @@ public class QuestionServlet extends HttpServlet {
             Integer questionID = Integer.valueOf(req.getParameter("questionID"));
 
             /*************************** 2.開始刪除資料 ***************************************/
-            QuestionService questionSvc = new QuestionService();
             questionSvc.deletQuestion(questionID);
 
             /*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
@@ -216,7 +215,6 @@ public class QuestionServlet extends HttpServlet {
 
             /*************************** 2.開始查詢資料 ****************************************/
 
-            QuestionService questionSvc = new QuestionService();
             Set<QuestionVO> set = questionSvc.getQuestionByQuestionContent(QuestionContent);
             if (set.size() == 0) {
                 RequestDispatcher successView = req.getRequestDispatcher("/back-end/question/nodata.jsp");
@@ -254,7 +252,6 @@ public class QuestionServlet extends HttpServlet {
                 return;// 程式中斷
             }
             /*************************** 2.開始查詢資料 ****************************************/
-            QuestionService questionSvc = new QuestionService();
             Set<QuestionVO> set = questionSvc.getQuestionByQuestionTitle(questionTitle);
             if (set.size() == 0) {
                 RequestDispatcher successView = req.getRequestDispatcher("/back-end/question/nodata.jsp");
