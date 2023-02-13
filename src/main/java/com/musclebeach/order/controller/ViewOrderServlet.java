@@ -2,7 +2,7 @@ package com.musclebeach.order.controller;
 
 
 import com.musclebeach.common.util.ApplicationContextUtil;
-import com.musclebeach.order.model.entity.OrderMaster;
+import com.musclebeach.order.model.entity.OrderDetail;
 import com.musclebeach.order.model.service.DetailService;
 import com.musclebeach.order.model.service.MasterService;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet({"/front-end/order/view"})
 public class ViewOrderServlet extends HttpServlet {
@@ -28,17 +29,20 @@ public class ViewOrderServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        String action = req.getParameter("action");
 
-        /***************************1.接收請求參數****************************************/
-        Integer memID = Integer.valueOf(req.getParameter("memID"));
-        /***************************2.開始查詢資料****************************************/
-        OrderMaster orderVO = masterService.getOneMasterByMem(memID);
+        if ("getOne_For_Detail".equals(action)) {
+            /***************************1.接收請求參數****************************************/
+            Integer orderID = Integer.valueOf(req.getParameter("orderID"));
+            /***************************2.開始查詢資料****************************************/
+            List<OrderDetail> detailVO = masterService.getOneDetail(orderID);
 
-        /***************************3.查詢完成,準備轉交(Send the Success view)************/
-        req.setAttribute("orderVO", orderVO);         // 資料庫取出的detailVO物件,存入req
-        String url = "/front-end/product/memOrderDetail.jsp";
-        RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 listAllOrderDetail.jsp
-        successView.forward(req, res);
+            /***************************3.查詢完成,準備轉交(Send the Success view)************/
+            req.setAttribute("detailVO", detailVO);         // 資料庫取出的detailVO物件,存入req
+            String url = "/front-end/product/memOrderDetail.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 memOrderDetail.jsp
+            successView.forward(req, res);
+        }
 
     }
 }

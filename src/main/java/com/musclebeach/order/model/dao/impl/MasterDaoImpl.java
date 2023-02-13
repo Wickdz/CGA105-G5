@@ -68,4 +68,12 @@ public class MasterDaoImpl implements MasterDao {
         session.save(orderMaster);
         session.save(orderDetail);
     }
+
+    @Override
+    public List<OrderMaster> findByMemID(Integer memID) {
+        String hql = "FROM OrderMaster WHERE memID = :memID order by createTime desc";
+        return session.createQuery(hql, OrderMaster.class).
+                setParameter("memID", memID)
+                .list();
+    }
 }

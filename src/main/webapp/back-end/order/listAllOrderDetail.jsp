@@ -101,6 +101,7 @@
                                     <script>
                                         $(document).ready(function () {
                                             $('#dataTables').DataTable({
+                                                "order": [[6, 'desc']],
                                                 "language": {
                                                     "processing": "處理中...",
                                                     "loadingRecords": "載入中...",

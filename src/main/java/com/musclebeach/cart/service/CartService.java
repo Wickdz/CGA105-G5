@@ -11,5 +11,7 @@ public interface CartService {
 
     void deleteInCart(Integer memID, Integer proID);
 
+    void deleteAllInCart(Integer memID);
+
     List<CartItem> getAllInCartByMemID(Integer memID);
 }

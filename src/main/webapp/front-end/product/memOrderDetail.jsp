@@ -7,7 +7,6 @@
 <%
     List<OrderDetail> detailList = (List<OrderDetail>) request.getAttribute("detailVO");
     pageContext.setAttribute("detailList", detailList);
-    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,10 +74,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp"
-                   class="btn btn-info mb-3">返回商城</a>
+                <a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp"
+                   class="btn btn-info mb-3">返回訂單</a>
                 <ul class="breadcrumb">
-                    <h2>我的購物清單</h2>
+                    <h2>我的訂單</h2>
                 </ul>
             </div>
         </div>
@@ -93,13 +92,13 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">我的訂單明細</h4>
+                        <h4 class="card-title">訂單明細</h4>
                         <div class="table-responsive">
-                            <table id="dataTables"
-                                   class="display compact hover cell-border stripe table-hover"
+                            <table id="dataTables" class="table table-hover align-middle mb-0"
                                    style="width: 100%; font-size: 12px">
                                 <thead>
                                 <tr>
+                                    <th>商品圖片</th>
                                     <th>商品名稱</th>
                                     <th>數量</th>
                                     <th>金額</th>
@@ -108,6 +107,10 @@
                                 <tbody>
                                 <c:forEach var="detailVO" items="${detailList}">
                                     <tr>
+                                        <td>
+                                            <img src="<%=request.getContextPath()%>/back-end/product/ShowProdImg?proID=${detailVO.proID}"
+                                                 width="100px">
+                                        </td>
                                         <td>${detailVO.product.proName}</td>
                                         <td>${detailVO.detQty}</td>
                                         <td>${detailVO.detPrice}</td>

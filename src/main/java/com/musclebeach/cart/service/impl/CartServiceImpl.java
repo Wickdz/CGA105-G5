@@ -28,6 +28,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    public void deleteAllInCart(Integer memID) {
+        cartMapper.deleteAll(memID);
+    }
+
+    @Override
     public List<CartItem> getAllInCartByMemID(Integer memID) {
         TreeMap<Integer, Integer> treeMap = new TreeMap<>(cartMapper.selectAllByID(memID));
         List<CartItem> list = new ArrayList<>();

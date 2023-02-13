@@ -7,6 +7,7 @@
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.product.model.service.ProductService" %>
 <%@ page import="com.musclebeach.product.model.service.ProductTypeService" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 
 <%
@@ -19,6 +20,8 @@
     ProductTypeService productTypeService = context.getBean(ProductTypeService.class);
     List<ProductType> typeList = productTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
+
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <!DOCTYPE html>
@@ -95,7 +98,7 @@
             <div class="header-right header-links">
                 <!-- start account -->
                 <div id="header_ac" class="dropdown ">
-                    <a href="#" title="我的訂單"
+                    <a title="我的訂單"
                        class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-user"></i>
                     </a>
@@ -104,7 +107,7 @@
                         <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
                             <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a></li>
                         </ul>
-                        <input type="hidden" name="memID" value="4">
+                        <input type="hidden" name="memID" value="${memVO.memID}">
                     </form>
                 </div>
                 <!-- start cart -->
@@ -284,7 +287,7 @@
 
 
                             <div class="product-content">
-                                <c:forEach var="prodVO" items="${list}" begin="3" end="4">
+                                <c:forEach var="prodVO" items="${list}" begin="1" end="2">
                                     <c:if test="${prodVO.proStatus == 1}">
                                         <div class="category-layout col-xs-12">
                                             <div class="category-thumb clearfix">

@@ -2,11 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.musclebeach.mem.model.MemVO" %>
 <%@ page import="com.musclebeach.order.model.entity.OrderMaster" %>
+<%@ page import="com.musclebeach.order.model.service.MasterService" %>
+<%@ page import="java.util.List" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 
 <%
-    OrderMaster orderVO = (OrderMaster) request.getAttribute("orderVO");
-    pageContext.setAttribute("orderVO", orderVO);
+    ApplicationContext context = ApplicationContextUtil.getContext();
     MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+    MasterService orderSvc = context.getBean(MasterService.class);
+    List<OrderMaster> list = orderSvc.getAllMasterByMem(memVO.getMemID());
+    pageContext.setAttribute("list", list);
 %>
 
 <!DOCTYPE html>
@@ -28,6 +34,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css" rel="stylesheet" type="text/css">
     <link href="<%=request.getContextPath()%>/back-end/resources/css/listAll_dataTable.css" rel="stylesheet">
+
+    <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+            crossorigin="anonymous"></script>
     <style>
         table {
             border-collapse: collapse;
@@ -78,7 +91,7 @@
                 <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp"
                    class="btn btn-info mb-3">返回商城</a>
                 <ul class="breadcrumb">
-                    <h2>我的購物清單</h2>
+                    <h2>我的訂單</h2>
                 </ul>
             </div>
         </div>
@@ -93,9 +106,9 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">所有訂單</h4>
+                        <h4 class="card-title">歷史訂單</h4>
                         <div class="table-responsive">
-                            <table id="dataTables"
+                            <table id="dataTables" class="table table-hover align-middle"
                                    class="display compact hover cell-border stripe table-hover"
                                    style="width: 100%; font-size: 12px">
                                 <thead>
@@ -108,55 +121,43 @@
                                     <th>狀態</th>
                                     <th>下單時間</th>
                                     <th>訂單明細</th>
-                                    <th>出貨狀態調整</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="order" items="${list}">
+                                <c:forEach var="orderVO" items="${list}">
                                     <tr>
-                                        <td>${order.orderID}</td>
-                                        <td>${order.orderRecName}</td>
-                                        <td>${order.orderRecPhone}</td>
-                                        <td>${order.orderAddress}</td>
-                                        <td>${order.totalPrice}</td>
+                                        <td>${orderVO.orderID}</td>
+                                        <td>${orderVO.orderRecName}</td>
+                                        <td>${orderVO.orderRecPhone}</td>
+                                        <td>${orderVO.orderAddress}</td>
+                                        <td>${orderVO.totalPrice}</td>
                                         <td>
-                                            <c:if test="${order.orderStatus == 0}">
+                                            <c:if test="${orderVO.orderStatus == 0}">
                                                 <div>出貨中</div>
                                             </c:if>
-                                            <c:if test="${order.orderStatus == 1}">
+                                            <c:if test="${orderVO.orderStatus == 1}">
                                                 <div>配送中</div>
                                             </c:if>
-                                            <c:if test="${order.orderStatus == 2}">
+                                            <c:if test="${orderVO.orderStatus == 2}">
                                                 <div>訂單完成</div>
                                             </c:if>
-                                            <c:if test="${order.orderStatus == 3}">
+                                            <c:if test="${orderVO.orderStatus == 3}">
                                                 <div>訂單取消</div>
                                             </c:if>
                                         </td>
-                                        <td>${order.createTime}</td>
+                                        <td>${orderVO.createTime}</td>
                                         <td>
                                             <FORM METHOD="post"
-                                                  ACTION="<%=request.getContextPath()%>/back-end/order/"
+                                                  ACTION="<%=request.getContextPath()%>/front-end/order/view"
                                                   style="margin-bottom: 0px;">
-                                                <button type="submit" title="檢視明細"><i
+                                                <button class="btn btn-outline-secondary" type="submit"
+                                                        title="檢視明細"><i
                                                         class="fa-solid fa-eye"></i>
                                                 </button>
                                                 <input type="hidden" name="orderID"
-                                                       value="${order.orderID}">
+                                                       value="${orderVO.orderID}">
                                                 <input type="hidden" name="action"
                                                        value="getOne_For_Detail">
-                                            </FORM>
-                                        </td>
-                                        <td>
-                                            <FORM METHOD="post"
-                                                  ACTION="<%=request.getContextPath()%>/back-end/order/"
-                                                  style="margin-bottom: 0px;">
-                                                <button type="submit"><i class="fa fa-pen-square"></i>
-                                                </button>
-                                                <input type="hidden" name="orderID"
-                                                       value="${order.orderID}">
-                                                <input type="hidden" name="action"
-                                                       value="getOne_For_Update">
                                             </FORM>
                                         </td>
                                     </tr>
@@ -166,6 +167,7 @@
                             <script>
                                 $(document).ready(function () {
                                     $('#dataTables').DataTable({
+                                        "aaSorting": [[6, "DESC"]],
                                         "language": {
                                             "processing": "處理中...",
                                             "loadingRecords": "載入中...",
@@ -439,8 +441,8 @@
 <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
 
-<script>
-</script>
+<script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 @WebServlet({"/back-end/order/", "/front-end/order/"})
@@ -70,7 +69,9 @@ public class OrderServlet extends HttpServlet {
                 detailService.add(orderDetail);
             }
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-            String url = "/front-end/order/shop.jsp";
+            req.getSession().removeAttribute("cartList");
+            cartService.deleteAllInCart(memID);
+            String url = "/front-end/product/shop.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交shop.jsp
             successView.forward(req, res);
         }
@@ -89,26 +90,8 @@ public class OrderServlet extends HttpServlet {
             successView.forward(req, res);
             return;
         }
-        if ("getOne_For_Update".equals(action)) {
-
-            /***************************1.接收請求參數****************************************/
-            Integer orderID = Integer.valueOf(req.getParameter("orderID"));
-            /***************************2.開始查詢資料****************************************/
-            OrderMaster orderVO = masterService.getOneMaster(orderID);
-            /***************************3.查詢完成,準備轉交(Send the Success view)************/
-            req.setAttribute("orderVO", orderVO);         // 資料庫取出的orderVO物件,存入req
-
-            String url = "/back-end/order/updateOrderStatus.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updateOrderStatus.jsp
-            successView.forward(req, res);
-            return;
-        }
 
         if ("changeStatus".equals(action)) {
-
-            List<String> errorMsgs = new LinkedList<String>();
-            // Store this set in the request scope, in case we need to send the ErrorPage view.
-            req.setAttribute("errorMsgs", errorMsgs);
 
             /***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
             Integer orderID = Integer.valueOf(req.getParameter("orderID").trim());
@@ -136,9 +119,6 @@ public class OrderServlet extends HttpServlet {
             /***************************2.開始查詢資料****************************************/
             List<OrderDetail> detailVO = masterService.getOneDetail(orderID);
 
-//			for(OrderDetail order:detailVO) {
-//				System.out.println("價格:" +order.getDetPrice());
-//			}
             /***************************3.查詢完成,準備轉交(Send the Success view)************/
             req.setAttribute("detailVO", detailVO);         // 資料庫取出的detailVO物件,存入req
             String url = "/back-end/order/listAllOrderDetail.jsp";

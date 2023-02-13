@@ -17,6 +17,14 @@ public class CartMapper {
 
     public void delete(Integer memID, Integer proID) {
         operations.delete(memID, proID);
+
+    }
+
+    public void deleteAll(Integer memID) {
+        Map<Integer, Integer> map = selectAllByID(memID);
+        map.forEach((k, v) -> {
+            delete(memID, k);
+        });
     }
 
     public Map<Integer, Integer> selectAllByID(Integer memID) {

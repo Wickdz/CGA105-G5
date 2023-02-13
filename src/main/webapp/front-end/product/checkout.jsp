@@ -6,8 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     ApplicationContext context = ApplicationContextUtil.getContext();
-    MemService memSvc = context.getBean(MemService.class);
-    MemVO memVO = memSvc.getOneMem(1);
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
     pageContext.setAttribute("memVO", memVO);
 %>
 <!DOCTYPE html>

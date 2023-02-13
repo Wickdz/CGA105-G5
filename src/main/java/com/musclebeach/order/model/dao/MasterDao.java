@@ -20,4 +20,6 @@ public interface MasterDao {
 
     //同時新增訂單主檔與明細檔
     void insertWithDetail(OrderMaster orderVO, OrderDetail detailVO);
+
+    List<OrderMaster> findByMemID(Integer memID);
 }
