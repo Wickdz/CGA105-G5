@@ -456,7 +456,7 @@ public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
 
     @Override
     public void insertImgBatch(List<ArticleImgVO> articleImgVOList) {
-        try (Connection connection = DriverManager.getConnection(url, userid, passwd);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STMT)
         ) {
             for (ArticleImgVO articleImgVO : articleImgVOList) {

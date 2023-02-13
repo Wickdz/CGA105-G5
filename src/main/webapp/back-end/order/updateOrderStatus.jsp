@@ -348,6 +348,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </main>
 <script src="<%=request.getContextPath()%>/back-end/resources/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
