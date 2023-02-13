@@ -30,7 +30,9 @@
             height: 80px;
             text-align: center;
         }
-
+        table#table-2 {
+            width:1056px;
+        }
         table, th, td {
             border: 1px solid #CCCCFF;
         }
@@ -100,7 +102,7 @@
             </tr>
         </table>
 
-        <table>
+        <table id="table-2">
             <tr>
                 <th>常見問題標題</th>
                 <th>常見問題內容</th>

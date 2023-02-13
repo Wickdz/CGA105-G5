@@ -37,6 +37,7 @@
 <%@ include file="/back-end/header_sidebar.jsp" %>
 <%
     QuestionService questionSvc = context.getBean(QuestionService.class);
+    pageContext.setAttribute("questionSvc", questionSvc);
 %>
 <div class="tab-content" id="v-pills-tabContent"
      style="width: 100%; height: calc(100vh - 70px);">
