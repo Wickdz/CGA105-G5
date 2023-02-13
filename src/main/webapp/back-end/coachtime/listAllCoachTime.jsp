@@ -6,13 +6,6 @@
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 
-<%
-    ApplicationContext context = ApplicationContextUtil.getContext();
-    CoachTimeService coachSvc = new CoachTimeService();
-    List<CoachTimeVO> list = coachSvc.getAll();
-    pageContext.setAttribute("list", list);
-%>
-
 
 <html>
 <head>
@@ -74,6 +67,11 @@
 <%@ include file="/back-end/header_sidebar.jsp" %>
 <div class="tab-content" id="v-pills-tabContent"
      style="width: 100%; height: calc(100vh - 70px);">
+    <%
+        CoachTimeService coachSvc = context.getBean(CoachTimeService.class);
+        List<CoachTimeVO> list = coachSvc.getAll();
+        pageContext.setAttribute("list", list);
+    %>
     <!-- ============================================ ­º­¶ ============================================ -->
     <div class="tab-pane fade " id="v-pills-home" role="tabpanel"
          aria-labelledby="v-pills-home-tab" tabindex="0">

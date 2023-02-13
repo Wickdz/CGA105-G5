@@ -131,7 +131,7 @@
                     <td>教練編號:</td>
                     <td><input type="TEXT" name="empid" size="45"
                                disabled="disabled"
-                               value="<%=(empVO == null) ? "6" : empVO.getEmpID()%>"/></td>
+                               value="${userID}"/></td>
                 </tr>
                 <tr style="position: relative; left: 48%">
                     <td><b>上午時段</b></td>
@@ -185,10 +185,9 @@
             </table>
 
             <br> <input type="hidden" name="empid"
-                        value="<%=empVO.getEmpID()%>"> <input type="hidden"
-                                                              name="action" value="insert"> <input type="submit"
-                                                                                                   style="position: relative; left: 45%;"
-                                                                                                   value="送出新增">
+                        value="${userID}">
+            <input type="hidden" name="action" value="insert">
+            <input type="submit" style="position: relative; left: 45%;" value="送出新增">
         </FORM>
 
     </div>
@@ -219,7 +218,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="sidebars.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
 <script>
     $(function () {
         $("#toCoach").addClass("active");
@@ -274,10 +273,10 @@
     }
 %>
 <link rel="stylesheet" type="text/css"
-      href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css"/>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+      href="../datetimepicker/jquery.datetimepicker.css"/>
+<script src="../datetimepicker/jquery.js"></script>
 <script
-        src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+        src="../datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
     .xdsoft_datetimepicker .xdsoft_datepicker {

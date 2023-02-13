@@ -8,13 +8,6 @@
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.emp.model.EmpService" %>
 
-<%
-    ApplicationContext context = ApplicationContextUtil.getContext();
-    EmpService empService = context.getBean(EmpService.class);
-    pageContext.setAttribute("EmpSvc", empService);
-    CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
-%>
-
 
 <html>
 <head>
@@ -98,6 +91,11 @@
 <%@ include file="/back-end/header_sidebar.jsp" %>
 <div class="tab-content" id="v-pills-tabContent"
      style="width: 100%; height: calc(100vh - 70px);">
+    <%
+        EmpService empService = context.getBean(EmpService.class);
+        pageContext.setAttribute("EmpSvc", empService);
+        CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+    %>
     <!-- ============================================ 首頁 ============================================ -->
     <div class="tab-pane fade " id="v-pills-home" role="tabpanel"
          aria-labelledby="v-pills-home-tab" tabindex="0">
@@ -290,10 +288,10 @@
 %>
 
 <link rel="stylesheet" type="text/css"
-      href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css"/>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+      href="../datetimepicker/jquery.datetimepicker.css"/>
+<script src="../datetimepicker/jquery.js"></script>
 <script
-        src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+        src="../datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
     .xdsoft_datetimepicker .xdsoft_datepicker {

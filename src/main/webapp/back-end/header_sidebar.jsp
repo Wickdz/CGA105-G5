@@ -159,7 +159,7 @@
                 <c:if test="${empAccessVO.fID ==7}">
                     <li>
                         <a
-                                href=""
+                                href="<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp"
                                 class="nav-link text-white"
                                 type="button"
                                 role="tab"

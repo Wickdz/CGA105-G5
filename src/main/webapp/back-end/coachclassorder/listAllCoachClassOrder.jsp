@@ -6,20 +6,13 @@
 <%@ page import="com.musclebeach.coachclassorder.model.CoachClassOrderService" %>
 <%@ page import="com.musclebeach.coachclassorder.model.CoachClassOrderVO" %>
 <%@ page import="com.musclebeach.coachtime.model.CoachTimeVO" %>
-
 <%
-    ApplicationContext context = ApplicationContextUtil.getContext();
-    CoachClassOrderService coachSvc = context.getBean(CoachClassOrderService.class);
-    List<CoachClassOrderVO> list = coachSvc.getAll();
-    pageContext.setAttribute("list", list);
-%>
-<%
-    CoachClassOrderVO coachClassOrderVO = (CoachClassOrderVO) request.getAttribute("coachClassOrderVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+    CoachClassOrderVO coachClassOrderVO = (CoachClassOrderVO) request.getAttribute("coachClassOrderVO"); //EmpServlet.java(Controller), 存入req的empVO物件
 %>
 
 
 <%
-    CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+    CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO"); //EmpServlet.java(Controller), 存入req的empVO物件
 %>
 
 <html>
@@ -82,6 +75,11 @@
 <%@ include file="/back-end/header_sidebar.jsp" %>
 <div class="tab-content" id="v-pills-tabContent"
      style="width: 100%; height: calc(100vh - 70px);">
+    <%
+        CoachClassOrderService coachSvc = context.getBean(CoachClassOrderService.class);
+        List<CoachClassOrderVO> list = coachSvc.getAll();
+        pageContext.setAttribute("list", list);
+    %>
     <!-- ============================================ 首頁 ============================================ -->
     <div class="tab-pane fade " id="v-pills-home" role="tabpanel"
          aria-labelledby="v-pills-home-tab" tabindex="0">
@@ -144,7 +142,7 @@
                         <td>${coachClassOrderVO.memID}</td>
                         <td><fmt:formatDate value="${coachClassOrderVO.createTime}"
                                             pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                        <td class="orderstauts">${coachClassOrderVO.orderstatus==0 ? '取消預約':'成功預約 '}</td>
+                        <td class="orderstauts">${coachClassOrderVO.orderstatus==0 ? '取消預約':'成功預約'}</td>
                         <td>${coachClassOrderVO.classTime}</td>
                         <td class="coachclassperiod">${coachClassOrderVO.coachclassperiod}</td>
                         <td><fmt:formatDate value="${coachClassOrderVO.updateTime}"
