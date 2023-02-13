@@ -6,6 +6,7 @@
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeService"%>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
     ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
@@ -14,7 +15,7 @@
     ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
     List<ArticleTypeVO> typeList = articleTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
-	Integer SessionMemID = 4;
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 <html>
 <head>
@@ -112,11 +113,11 @@
 
 
   <!-- 頁首 -->
-  <c:if test="${SessionMemID==null}">
- 	<%@ include file="/front-end/article/headerSignIn.jsp" %>
+ <c:if test="${ memVO.memID == null}">
+     <%@ include file="/front-end/article/headerSignIn.jsp" %>
  </c:if>
-   <c:if test="${SessionMemID!=null}}">
-	 <%@ include file="/front-end/article/headerSignOut.jsp" %>
+ <c:if test="${ memVO.memID!=null}">
+     <%@ include file="/front-end/article/headerSignOut.jsp" %>
  </c:if>
   <!-- 頁首 -->
   
@@ -136,7 +137,7 @@
           </select >
         </div>
         <div>
-          <p class="text-dark fs-4 mt-3" style="float: left;">發文者</p>
+          <p class="text-dark fs-4 mt-3" style="float: left;">${memVO.memName}</p>
         </div>
       </div>
 <%-- 錯誤表列 --%>
@@ -170,7 +171,7 @@
                 確認送出
               </div>
               <div class="modal-footer">
-                <input type="hidden" name="memID" value="4">
+                <input type="hidden" name="memID" value="${ memVO.memID}">
               	<input type="hidden" name="action" value="insertwithImg">
                 <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">否</button>
                 <button type="submit" class="btn btn-primary">是</button>

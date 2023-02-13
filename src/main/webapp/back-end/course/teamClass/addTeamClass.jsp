@@ -263,7 +263,7 @@
                 >
                     <i
                             class="bi bi-calendar2-week"
-                            style="color: white; margin: 5px"
+                            style="color: white; margin: 0px"
                     ></i>
                     ½Òµ{ºÞ²z
                 </a>

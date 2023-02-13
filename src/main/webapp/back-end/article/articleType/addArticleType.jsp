@@ -24,13 +24,13 @@
             rel="canonical"
             href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
     />
-    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/assets/dist/css/bootstrap.min.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/assets/dist/css/bootstrap.min.css"
           rel="stylesheet"/>
     <style type="text/css"></style>
-    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/index/index.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css"
           rel="stylesheet"/>
     <!-- Flaticon Font -->
-    <link href="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/lib/flaticon/font/flaticon.css"
+    <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css"
           rel="stylesheet"/>
     <style>
         <style>
@@ -337,10 +337,10 @@
         </div>
 
 </main>
-<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/js/popper.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/js/bootstrap.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/resources/Back_end_workspace/index/sidebars.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/js/popper.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
 
 
 </body>

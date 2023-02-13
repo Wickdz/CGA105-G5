@@ -16,11 +16,11 @@
       rel="canonical"
       href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
     />
-    <link href="/CGA105G5/back-end/index/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="./resources/css/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css"></style>
-    <link href="index.css" rel="stylesheet" />
+    <link href="./resources/index/index.css" rel="stylesheet" />
     <!-- Flaticon Font -->
-    <link href="/CGA105G5/back-end/index/lib/flaticon/font/flaticon.css" rel="stylesheet" />
+    <link href="./resources/lib/flaticon/font/flaticon.css" rel="stylesheet" />
   </head>
   <body>
     <!-- ======================================== header 開始 ======================================== -->
@@ -154,6 +154,7 @@
               role="tab"
               aria-controls="v-pills-class"
               aria-selected="false"
+              onclick="location.href='<%=request.getContextPath()%>/back-end/course/select_page.jsp';"
             >
               <i
                 class="bi bi-calendar2-week"
@@ -187,6 +188,7 @@
               role="tab"
               aria-controls="v-pills-article"
               aria-selected="false"
+              onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
             >
               <i
                 class="bi bi-chat-right-text"
@@ -223,7 +225,7 @@
           aria-labelledby="v-pills-home-tab"
           tabindex="0"
         >
-          <img src="/image/welcome.gif" style="width: 96%" alt="" />
+          <img src="./resources/image/welcome.gif" style="width: 96%" alt="" />
         </div>
         <!-- ========================================= 員工管理 ========================================= -->
         <div
@@ -331,9 +333,9 @@
         </div>
       </div>
     </main>
-    <script src="/CGA105G5/back-end/index/js/popper.min.js"></script>
-    <script src="/CGA105G5/back-end/index/js/bootstrap.min.js"></script>
-    <script src="/CGA105G5/back-end/index/js/bootstrap.bundle.min.js"></script>
-    <script src="sidebars.js"></script>
+    <script src="./resources/js/popper.min.js"></script>
+    <script src="./resources/js/bootstrap.min.js"></script>
+    <script src="./resources/js/bootstrap.bundle.min.js"></script>
+    <script src="./resources/index/sidebars.js"></script>
   </body>
 </html>

@@ -6,6 +6,7 @@
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeService" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeVO" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
     ApplicationContext ctx = ApplicationContextUtil.getContext();
@@ -20,7 +21,7 @@ while(iterator.hasNext()){
     if(articleVO.getArtStatus() != 1)
         iterator.remove();   //注意这个地方
 }
-Integer SessionMemID = 4;
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <html>
@@ -55,11 +56,11 @@ Integer SessionMemID = 4;
  <!-- 文章類別useBean -->
 
   <!-- 頁首 -->
-  <c:if test="${SessionMemID==null}">
- 	<%@ include file="/front-end/article/headerSignIn.jsp" %>
+ <c:if test="${ memVO.memID == null}">
+     <%@ include file="/front-end/article/headerSignIn.jsp" %>
  </c:if>
-   <c:if test="${SessionMemID!=null}}">
-	 <%@ include file="/front-end/article/headerSignOut.jsp" %>
+ <c:if test="${ memVO.memID!=null}">
+     <%@ include file="/front-end/article/headerSignOut.jsp" %>
  </c:if>
   <!-- 頁首 -->
   
@@ -74,7 +75,7 @@ Integer SessionMemID = 4;
     style="left: 208px; top: 73.333px;right:0 ;background-color: white ;height: calc(100vh - 73.33px); width: calc(100vw-208px); position: absolute; overflow:auto;">
     <div id="article_list" style="width: 800px;position: relative;left: 136px;">
 
-	<c:if test="${listBySearch.size() == 0}"> <%-- 判斷是否有文章  --%>
+	<c:if test="${listArticles_ByCompositeQuery.size() == 0}"> <%-- 判斷是否有文章  --%>
 	<h1 style="display: flex; justify-content:center ;">查無資料</h1>
 	</c:if>
 
@@ -142,7 +143,7 @@ Integer SessionMemID = 4;
             <div class="modal-footer">
             <form class='col-12' METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form1"">
               <input type="hidden" name="artID"  value="${articleVO.artID}">
-              <input type="hidden" name="memID"  value="4">
+              <input type="hidden" name="memID"  value="${articleVO.memID}">
               <input type="hidden" name="action" value="getOne_For_Display">
               <button type="submit" class="col-12 btn btn-secondary" data-bs-dismiss="modal">查看留言</button>
             </form>

@@ -6,7 +6,7 @@
   <header class="p-3 bg-dark fixed-top" style="height: 73.33px">
     <div>
       <div class="d-flex flex-wrap justify-content-lg-start">
-        <span class="fs-4 col-lg-2 me-4" style="color: white;"><a href="listAllArticle.jsp" style="color: white;text-decoration: none;">Muscle Beach</a></span>
+        <span class="fs-4 col-lg-2 me-4" style="color: white;"><a href="../index.html" style="color: white;text-decoration: none;">Muscle Beach</a></span>
         <form METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form2" class="col-12 col-lg-3 mb-lg-0" style="display: flex; flex-wrap: wrap; width: 33%">
           <input required type="search" name="artTitle" class="form-control form-control-dark" style="width: 320px;" placeholder="Search..."
             aria-label="Search">

@@ -48,90 +48,63 @@
 <script
 	src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <title>所有文章類別</title>
-<style>
+	<style>
 
 
-td {
-	max-width: 80%;
-	/* 設置最大寬度 */
-	overflow: hidden;
-	/* 隱藏超出部分 */
-	text-overflow: ellipsis;
-	/* 添加省略號 */
-	white-space: nowrap;
-	/* 不換行 */
-	color: maroon;
-}
+		td {
+			max-width: 80%;
+			/* 設置最大寬度 */
+			overflow: hidden;
+			/* 隱藏超出部分 */
+			text-overflow: ellipsis;
+			/* 添加省略號 */
+			white-space: nowrap;
+			/* 不換行 */
+		}
 
+		.showTd {
+			max-width: none;
+			overflow: visible;
+			white-space: normal;
+			/* 換行 */
+		}
+	</style>
+	<style>
+		<style>
+		#table-2 {
+			margin: 20px auto;
+			width: 80%;
+			border-collapse: collapse;
+		}
 
-</style>
-<style>
-        div#v-pills-article {
-			width:100%;
-			height:100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+		#table-2 thead tr th {
+			text-align: center;
+			background-color: #f8f9fa;
+			padding: 10px;
+			border: 1px solid #ddd;
+		}
 
-        }
+		#table-2 tbody tr td {
+			text-align: center;
+			padding: 10px;
+			border: 1px solid #ddd;
+		}
 
-        table#table-2 {
-            width: 100%;
-            border: 2px solid black;
-            text-align: center;
-        }
+		#table-2 tbody tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
 
-        table {
-            background-color: white;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        th {
-            background-color: #9D7553;
-            color: #DABEA7;
-
-        }
-
-        #table-2 td {
-            background-color: azure;
-            color: silver;
-            text-align: center;
-            transition: all 0.5s ease-in-out;
-        }
-
-        #table-2 tr:hover td {
-            background-color: lightblue;
-            transition: all 0.5s ease-in-out;
-        }
-
-        #table-2 tr td {
-            color: maroon;
-
-            transition: all 0.5s ease-in-out;
-        }
-
-        #table-2 tr:hover td {
-            color: blue;
-            border-left: 5px solid rgba(79, 192, 210, 0.6);
-            transition: all 0.5s ease-in-out;
-        }
-
-
-
-         #table-2 tr { 
-             border-bottom: 1px solid #2a2a2a; 
-         } 
-
-         #table-2 tr:last-of-type { 
-             border-bottom: none; 
-        } 
-
-
-        #show {
-            cursor: pointer;
-        }
-    </style>
+		button {
+			display: block;
+			margin: 20px auto;
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: 0;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body bgcolor='white'>
 	<!-- ======================================== header 開始 ======================================== -->
@@ -234,39 +207,34 @@ td {
 
 			<!-- ========================================= 論壇管理 ========================================= -->
 			 <div
-          class="tab-pane fade show active"
-          id="v-pills-article"
-          role="tabpanel"
-          aria-labelledby="v-pills-article-tab"
-          tabindex="0"
-          style="border: 2px solid rgb(253, 250, 66)"
+
+					class="tab-pane fade show active"
+					id="v-pills-article"
+					role="tabpanel"
+					aria-labelledby="v-pills-article-tab"
+					tabindex="0"
+					style="border: 0px solid rgb(253, 250, 66) ;width: 100%;height: 100%"
+
         >
-
-			<ul>
-
-				<table id="table-2">
-					<thead>
-						<tr>
-							<th>類別編號</th>
-							<th>類別名稱</th>
-
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="articleTypeVO" items="${list}">
-							<tr>
-								<td>${articleTypeVO.typeID}</td>
-								<td>${articleTypeVO.typeName}</td>
-	
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-
-
-				<button onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleType/addArticleType.jsp';">新增文章類別</button></div>
-
-				</ul>
+				 <div class="d-flex justify-content-between mb-3">
+					 <button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleType/addArticleType.jsp';">新增文章類別</button>
+				 </div>
+				 <table id="table-2" class="table table-striped table-bordered">
+					 <thead>
+					 <tr>
+						 <th>類別編號</th>
+						 <th>類別名稱</th>
+					 </tr>
+					 </thead>
+					 <tbody>
+					 <c:forEach var="articleTypeVO" items="${list}">
+						 <tr>
+							 <td>${articleTypeVO.typeID}</td>
+							 <td>${articleTypeVO.typeName}</td>
+						 </tr>
+					 </c:forEach>
+					 </tbody>
+				 </table>
 				<script>
 					$(document).ready(function() {
 						$('#table-2').DataTable({

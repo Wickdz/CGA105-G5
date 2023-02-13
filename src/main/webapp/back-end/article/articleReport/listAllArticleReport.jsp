@@ -222,7 +222,7 @@
 				role="tabpanel"
 				aria-labelledby="v-pills-article-tab"
 				tabindex="0"
-				style="border: 0px solid rgb(253, 250, 66)"
+				style="border: 0px solid rgb(253, 250, 66) width:100%;"
 		>
 
 

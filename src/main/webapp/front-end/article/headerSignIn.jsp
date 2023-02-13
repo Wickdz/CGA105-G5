@@ -6,7 +6,7 @@
   <header class="p-3 bg-dark fixed-top" style="height: 73.33px">
     <div>
       <div class="d-flex flex-wrap justify-content-lg-start">
-        <span class="fs-4 col-lg-2 me-4" style="color: white;"><a href="listAllArticle.jsp" style="color: white;text-decoration: none;">Muscle Beach</a></span>
+        <span class="fs-4 col-lg-2 me-4" style="color: white;"><a href="../index.html" style="color: white;text-decoration: none;">Muscle Beach</a></span>
         <form METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form2" class="col-12 col-lg-3 mb-lg-0" style="display: flex; flex-wrap: wrap; width: 33%">
           <input required type="search" name="artTitle" class="form-control form-control-dark" style="width: 320px;" placeholder="Search..."
             aria-label="Search">
@@ -73,27 +73,9 @@
 			</div>
           </li>
           <li style="width: 175px;"></li>
-          <li>
-          <a href="addArticle.jsp" style="color: white;text-decoration: none;">
-          <button class="nav-link px-3 btn btn-dark text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-            </svg>
-          </button>
-          </a>  
-          </li>         
-      	  <li>
-      		<a href="listAllArticleFavorite.jsp" style="color: white;text-decoration: none;">
-      		<button class="nav-link px-3 btn btn-dark text-white" autocomplete="off" aria-pressed="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-            </svg>
-          </button>
-          </a>
-          </li>
         </ul>
         <div class="text-end ">
-          <button type="button" class="btn btn-outline-light">Sign in</button>
+          <button type="button" class="btn btn-outline-light" onclick="location.href='<%=request.getContextPath()%>/front-end/article/login.jsp';">Sign in</button>
         </div>
       </div>
     </div>

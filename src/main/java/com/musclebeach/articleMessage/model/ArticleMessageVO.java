@@ -1,8 +1,16 @@
 package com.musclebeach.articleMessage.model;
 
+import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.mem.model.MemService;
+import com.musclebeach.mem.model.MemVO;
+import org.springframework.context.ApplicationContext;
+
 import java.sql.Timestamp;
 
 public class ArticleMessageVO implements java.io.Serializable {
+
+    private final ApplicationContext ctx = ApplicationContextUtil.getContext();
+    private final MemService memService = ctx.getBean(MemService.class);
     private Integer msgID;
     private Integer memID;
     private Integer artID;
@@ -56,6 +64,9 @@ public class ArticleMessageVO implements java.io.Serializable {
 
     public void setMsgStime(Timestamp msgStime) {
         this.msgStime = msgStime;
+    }
+    public MemVO getMemVO(){                //取得會員名稱
+        return memService.getOneMem(memID);
     }
 
 }

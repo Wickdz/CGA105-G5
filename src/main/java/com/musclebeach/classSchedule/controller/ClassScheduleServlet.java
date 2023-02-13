@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @WebServlet("/back-end/course/classSchedule/classSchedule.do")
-public class ClassScheduleServlet extends HttpServlet {
+    public class ClassScheduleServlet extends HttpServlet {
     private final ApplicationContext ctx = ApplicationContextUtil.getContext();
     private final ClassScheduleService classScheduleService = ctx.getBean(ClassScheduleService.class);
 

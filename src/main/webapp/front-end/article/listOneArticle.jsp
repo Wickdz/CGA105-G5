@@ -7,6 +7,7 @@
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeService" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeVO" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
 	ApplicationContext ctx = ApplicationContextUtil.getContext();
@@ -15,7 +16,8 @@
 	List<ArticleTypeVO> typeList = articleTypeService.getAll();
 	pageContext.setAttribute("typeList", typeList);
 	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
-	Integer SessionMemID = 4;
+	List<ArticleMessageVO> articleMessageVO = (List<ArticleMessageVO>) request.getAttribute("articleMessageVO");
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <html>
@@ -57,10 +59,10 @@
  <!-- 文章類別useBean -->
 
   <!-- 頁首 -->
-  <c:if test="${SessionMemID==null}">
- 	<%@ include file="/front-end/article/headerSignIn.jsp" %>
+ <c:if test="${ memVO.memID == null}">
+	 <%@ include file="/front-end/article/headerSignIn.jsp" %>
  </c:if>
-   <c:if test="${SessionMemID!=null}}">
+ <c:if test="${ memVO.memID!=null}">
 	 <%@ include file="/front-end/article/headerSignOut.jsp" %>
  </c:if>
   <!-- 頁首 -->
@@ -94,7 +96,7 @@
 </c:if>
 </div>
  <%-- 檢舉錯誤表列 --%>
-							<strong class="text-dark" style="font-size: 14px;">${articleVO.memID}</strong>
+							<strong class="text-dark" style="font-size: 14px;">${articleVO.memVO.memName}</strong>
 							<h1 class="blog-post-title">${articleVO.artTitle}</h1>
 							<p class="blog-post-meta">${articleVO.artStime}</p>
 							<p>${articleVO.artContent}</p>
@@ -138,10 +140,12 @@
         &nbsp;${articleVO.articleMessageVO.size()}
     </div>
     <div class="btn-group" style="position: absolute; right: 20px;">
+
+<c:if test="${memVO != null}">
         <!-- 按讚按鈕 -->
 	<c:if test="${artLikeVO.artID == null}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
-		<input type="hidden" name="memID" id="memID" value="4">
+		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="insert">
         <button id="artLikebutton" type="button" class="btn btn-link active insertartLike"  data-bs-toggle="button" autocomplete="off" aria-pressed="true" style="--bs-btn-color: red; --bs-btn-hover-color: red; --bs-btn-active-color: gray;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
@@ -151,7 +155,7 @@
 	</c:if>
 	<c:if test="${artLikeVO.artID != null}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
-		<input type="hidden" name="memID" id="memID" value="4">
+		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="delete">
         <button id="artLikebutton" type="button" class="btn btn-link deleteartLike"  data-bs-toggle="button" autocomplete="off" aria-pressed="true" style="--bs-btn-color: red; --bs-btn-hover-color: red; --bs-btn-active-color: gray;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
@@ -164,7 +168,7 @@
         <!-- 收藏按鈕 -->
 	<c:if test="${articleFavoriteVO.artID == null}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
-		<input type="hidden" name="memID" id="memID" value="4">
+		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="insert">        
         <button id="articleFavoritebutton" type="button" class="btn btn-link active insertarticleFavorite" data-bs-toggle="button" autocomplete="off" aria-pressed="true" style="--bs-btn-color: #0d6efd; --bs-btn-hover-color: #0d6efd; --bs-btn-active-color: gray;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
@@ -174,15 +178,16 @@
 	</c:if>      
 	<c:if test="${articleFavoriteVO.artID != null}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
-		<input type="hidden" name="memID" id="memID" value="4">
+		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="delete">        
         <button id="articleFavoritebutton" type="button" class="btn btn-link deletearticleFavorite" data-bs-toggle="button" autocomplete="off" aria-pressed="true" style="--bs-btn-color: #0d6efd; --bs-btn-hover-color: #0d6efd; --bs-btn-active-color: gray;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                 <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
             </svg>
         </button>
-	</c:if>      
-        <!-- 收藏按鈕 -->
+	</c:if>
+
+		<!-- 收藏按鈕 -->
 
         <!-- 檢舉按鈕 -->        
         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#ArticleReport" style="--bs-btn-color: gray; --bs-btn-hover-color: gray; --bs-btn-active-color: gray;">
@@ -190,6 +195,7 @@
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
             </svg>
         </button>
+</c:if>
   <!-- Modal -->
   <div class="modal fade" id="ArticleReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -203,7 +209,7 @@
           <textarea required name="reportContent" value="" rows="4" class="col-12"></textarea>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="memID" value="4">
+          <input type="hidden" name="memID" value="${memVO.memID}">
 		  <input type="hidden" name="artID" value="${articleVO.artID}">
           <input type="hidden" name="action" value="insert">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -220,10 +226,11 @@
 					</div>
 					
    					<!-- 編輯按鈕 -->
+<c:if test="${articleVO.memID == memVO.memID}">
 <div style="position: absolute; right: 20px; top: 20px;">
-	<form class='col-12' METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form1"">
+	<form class='col-12' METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form1">
         <input type="hidden" name="artID" value="${articleVO.artID}">
-    	<input type="hidden" name="memID" value="4">
+    	<input type="hidden" name="memID" value="${memVO.memID}">
     	<input type="hidden" name="action" value="getOne_For_Display_For_Alter_Article">
     	<button type="submit"class="btn btn-link" style="--bs-btn-color: #ced4da; --bs-btn-hover-color: gray; --bs-btn-active-color: gray;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -231,7 +238,8 @@
         </svg>
     </button>
       </form>
-</div>			
+</div>
+</c:if>
    					<!-- 編輯按鈕 -->	
 				</div>
 			</div>
@@ -244,11 +252,11 @@
 					<div class="card-body">
 						<blockquote class="blockquote mb-0">
 							<!-- 留言 -->
-							<c:forEach var="articleMessageVO" items="${articleVO.articleMessageVO}">
+							<c:forEach var="articleMessageVO" items="${articleMessageVO}">
 								<div style="max-width: 650px; position: relative;">
 									<div class="d-flex align-items-center mb-3">
 										<div class="d-flex flex-column">
-											<strong class="text-dark" style="font-size: 14px;">${articleMessageVO.memID}</strong>
+											<strong class="text-dark" style="font-size: 14px;">${articleMessageVO.MemVO.memName}</strong>
 											<span class="text-muted small" style="font-size: 12px;">${articleMessageVO.msgStime}</span>
 										</div>
 									</div>
@@ -299,7 +307,7 @@
 		  </div>
 		  <div class="g-col-4">
 		  	<div style="position: absolute; right: 10px; top: 30px; display: flex;">
-		        <input type="hidden" name="memID" value="4">
+		        <input type="hidden" name="memID" value="${memVO.memID}">
 		        <input type="hidden" name="artID" value="${articleVO.artID}">
 		        <input type="hidden" name="action" value="insert">
 		        <button type="submit" class="btn btn-dark">送出</button>

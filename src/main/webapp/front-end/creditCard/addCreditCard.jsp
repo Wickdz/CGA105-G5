@@ -3,6 +3,7 @@
 <%@ page import="com.musclebeach.creditCard.model.*" %>
 <%
     CreditCardVO creditCardVO = (CreditCardVO) request.getAttribute("creditCardVO");
+
 %>
 
 <!DOCTYPE html>

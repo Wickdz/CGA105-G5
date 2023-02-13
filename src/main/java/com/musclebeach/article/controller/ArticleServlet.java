@@ -6,7 +6,11 @@ import com.musclebeach.articleFavorite.model.ArticleFavoriteService;
 import com.musclebeach.articleFavorite.model.ArticleFavoriteVO;
 import com.musclebeach.articleLike.model.ArticleLikeService;
 import com.musclebeach.articleLike.model.ArticleLikeVO;
+import com.musclebeach.articleMessage.model.ArticleMessageService;
+import com.musclebeach.articleMessage.model.ArticleMessageVO;
 import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.mem.model.MemService;
+import com.musclebeach.mem.model.MemVO;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
@@ -27,6 +31,9 @@ public class ArticleServlet extends HttpServlet {
 
     private final ArticleFavoriteService articleFavoriteService = ctx.getBean(ArticleFavoriteService.class);
     private final ArticleLikeService artLikeService = ctx.getBean(ArticleLikeService.class);
+    private final MemService memService = ctx.getBean(MemService.class);
+
+    private final ArticleMessageService articleMessageSvc = ctx.getBean(ArticleMessageService.class);
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doPost(req, res);
@@ -36,6 +43,71 @@ public class ArticleServlet extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
+
+        if ("login".equals(action)) { // from login.jsp
+            List<String> errorAccount = new LinkedList<String>();
+            req.setAttribute("errorAccount", errorAccount);
+
+            /*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+            String account = req.getParameter("account");
+            String password = req.getParameter("password");
+            if (account == null || account.trim().length() == 0) {
+                errorAccount.add("帳號或密碼不可空白");
+            } else if (password == null || password.trim().length() == 0) {
+                errorAccount.add("帳號或密碼不可空白");
+            }
+            if (!errorAccount.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+                failureView.forward(req, res);
+                return;
+            }
+
+            /*************************** 2.開始比對資料 ***************************************/
+
+            MemVO memVO = memService.getAccount(account);
+            if (memVO == null) {
+                errorAccount.add("查無此帳號");
+            } else if (!password.equals(memVO.getPassword())) {
+                errorAccount.add("密碼輸入錯誤");
+            } else if (memVO.getMemStatus() == 0) {
+                errorAccount.add("帳號尚未啟用，請至註冊信箱點擊驗證連結");
+            } else if (memVO.getMemStatus() == 2) {
+                errorAccount.add("此使用者已停權，請洽客服");
+            }
+            if (!errorAccount.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
+                failureView.forward(req, res);
+                return;
+            }
+
+            /********** 比對會籍效期 **********/
+            if (memVO.getMemAccess() == 1) {
+                // 當前日期
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                Date date = calendar.getTime();
+                // 會員會籍
+                java.sql.Date sqlDate = memVO.getMembership();
+                Date utilDate = new Date(sqlDate.getTime());
+//				System.out.println(date);
+//				System.out.println(sqlDate);
+                if (date.compareTo(utilDate) > 0) {
+                    memService.updateMembership(memVO.getMemID());
+                }
+            }
+
+            /*************************** 3.確認帳密,準備轉交(Send the Success view) ***********/
+            HttpSession session = req.getSession(false);
+            MemVO memVO2 = memService.getAccount(account);
+            session.setAttribute("memVO", memVO2);
+
+            String url = "/front-end/article/listAllArticle.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);
+            successView.forward(req, res);
+        }
 
         if ("getOne_For_Display".equals(action)) { // 來自文章列表 list.jsp的請求
 
@@ -64,8 +136,12 @@ public class ArticleServlet extends HttpServlet {
             req.setAttribute("articleFavoriteVO", articleFavoriteVO);
             // 傳遞收藏資訊
 
+
+            List<ArticleMessageVO> articleMessageVO = articleMessageSvc.getAllByArtID(artID);
+
             /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-            req.setAttribute("articleVO", articleVO); // 資料庫取出的empVO物件,存入req
+            req.setAttribute("articleMessageVO", articleMessageVO);
+            req.setAttribute("articleVO", articleVO);
             String url = "/front-end/article/listOneArticle.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneArticle.jsp
             successView.forward(req, res);
@@ -187,6 +263,13 @@ public class ArticleServlet extends HttpServlet {
             articleVO.setArtTitle(artTitle);
             articleVO.setArtContent(artContent);
 
+            // Send the use back to the form, if there were errors
+            if (!errorMsgs.isEmpty()) {
+                req.setAttribute("articleVO", articleVO); // 含有輸入格式錯誤的articleVO物件,也存入req
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/article/alterArticle.jsp");
+                failureView.forward(req, res);
+                return; // 程式中斷
+            }
             /*************************** 2.開始修改資料 ****************************************/
 
             articleVO = articleService.updateArticle(artID, memID, typeID, artTitle, artContent, 1);

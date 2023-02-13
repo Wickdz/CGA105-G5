@@ -268,7 +268,7 @@
         </div>
 
         <input type="hidden" name="action" value="insert">
-        <input type="submit" value="½T»{¥I´Ú" class="submit-btn"></FORM>
+        <input type="submit" value="½T»{¥I´Ú" class="submit-btn">
     </form>
 
 </div>

@@ -8,6 +8,7 @@
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeService" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeVO" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
     ApplicationContext ctx = ApplicationContextUtil.getContext();
@@ -33,6 +34,7 @@ Integer SessionMemID = 4;
     ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
     List<ArticleTypeVO> typeList = articleTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 
@@ -71,11 +73,11 @@ Integer SessionMemID = 4;
 
 
   <!-- 頁首 -->
-  <c:if test="${SessionMemID==null}">
- 	<%@ include file="/front-end/article/headerSignIn.jsp" %>
+ <c:if test="${ memVO.memID == null}">
+     <%@ include file="/front-end/article/headerSignIn.jsp" %>
  </c:if>
-   <c:if test="${SessionMemID!=null}}">
-	 <%@ include file="/front-end/article/headerSignOut.jsp" %>
+ <c:if test="${ memVO.memID!=null}">
+     <%@ include file="/front-end/article/headerSignOut.jsp" %>
  </c:if>
   <!-- 頁首 -->
   
@@ -252,7 +254,7 @@ Integer SessionMemID = 4;
                                 <form class='col-12' METHOD="post"
                                     ACTION="<%=request.getContextPath()%>/front-end/article/article.do" name="form1"">
              						<input type="hidden" name="artID" value="${articleVO.artID}">
-                                    <input type="hidden" name="memID" value="4">
+                                    <input type="hidden" name="memID" value="${articleVO.memID}">
                                     <input type="hidden" name="action" value="getOne_For_Display">
                                     <button type="submit" class="col-12 btn btn-secondary"
                                         data-bs-dismiss="modal">查看留言</button>

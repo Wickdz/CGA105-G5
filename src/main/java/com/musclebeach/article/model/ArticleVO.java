@@ -6,7 +6,10 @@ import com.musclebeach.articleMessage.model.ArticleMessageService;
 import com.musclebeach.articleMessage.model.ArticleMessageVO;
 import com.musclebeach.articleType.model.ArticleTypeService;
 import com.musclebeach.articleType.model.ArticleTypeVO;
+import com.musclebeach.mem.model.MemService;
+import com.musclebeach.mem.model.MemVO;
 import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.mem.model.MemVO;
 import org.springframework.context.ApplicationContext;
 
 import java.sql.Timestamp;
@@ -17,8 +20,9 @@ public class ArticleVO implements java.io.Serializable {
     private final ArticleMessageService articleMessageService = ctx.getBean(ArticleMessageService.class);
     private final ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
     private final ArticleImgService articleImgService = ctx.getBean(ArticleImgService.class);
-
     private final ArticleLikeService articleLikeService = ctx.getBean(ArticleLikeService.class);
+    private final MemService memService = ctx.getBean(MemService.class);
+
 
     private Integer artID;
     private Integer memID;
@@ -111,5 +115,9 @@ public class ArticleVO implements java.io.Serializable {
     public List<com.musclebeach.articleLike.model.ArticleLikeVO> getArtLikeVO() {     //取得文章讚數
         return articleLikeService.getAllArtLike(artID);
 
+    }
+
+    public MemVO getMemVO(){                //取得會員名稱
+        return memService.getOneMem(memID);
     }
 }

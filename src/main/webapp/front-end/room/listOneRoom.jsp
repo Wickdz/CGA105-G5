@@ -87,8 +87,8 @@
                     <a href="#" class="nav-item nav-link dropdown-toggle"
                        data-toggle="dropdown">聯絡我們</a>
                     <div class="dropdown-menu text-capitalize">
-                        <a href="question.html" class="dropdown-item">常見問題</a> <a
-                            href="news.html" class="dropdown-item">最新資訊</a>
+                        <a href="<%=request.getContextPath()%>/front-end/question/listAllQuestion.jsp" class="dropdown-item">常見問題</a>
+                        <a href="<%=request.getContextPath()%>/front-end/news/listAllNews.jsp" class="dropdown-item">最新資訊</a>
                     </div>
                 </div>
             </div>

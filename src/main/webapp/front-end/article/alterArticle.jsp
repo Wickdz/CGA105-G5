@@ -6,6 +6,7 @@
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeService" %>
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeVO" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
 	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
@@ -14,6 +15,7 @@
     ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
     List<ArticleTypeVO> typeList = articleTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 <html>
 <head>
@@ -50,11 +52,11 @@
 
 
   <!-- 頁首 -->
-  <c:if test="${SessionMemID==null}">
- 	<%@ include file="/front-end/article/headerSignIn.jsp" %>
+ <c:if test="${ memVO.memID == null}">
+     <%@ include file="/front-end/article/headerSignIn.jsp" %>
  </c:if>
-   <c:if test="${SessionMemID!=null}}">
-	 <%@ include file="/front-end/article/headerSignOut.jsp" %>
+ <c:if test="${ memVO.memID!=null}">
+     <%@ include file="/front-end/article/headerSignOut.jsp" %>
  </c:if>
   <!-- 頁首 -->
 
@@ -68,13 +70,13 @@
         <div class="btn-group">
           <select name="typeID" class="btn btn-secondary text-white disabled" style="text-align:left;">
             <option>點此選擇發文類別</option>
-            <c:forEach var="articleTypeVO" items="${articleTypeSvc.all}"> 
+            <c:forEach var="articleTypeVO" items="${typeList}">
          	 <option value="${articleTypeVO.typeID}"${(articleVO.typeID==articleTypeVO.typeID)? 'selected':'' }>${articleTypeVO.typeName}</option>
          	</c:forEach> 
           </select >
         </div>
         <div>
-          <p class="text-dark fs-4 mt-3" style="float: left;">發文者</p>
+          <p class="text-dark fs-4 mt-3" style="float: left;">${memVO.memName}</p>
         </div>
       </div>
 <%-- 錯誤表列 --%>
@@ -158,7 +160,7 @@
               </div>
               <div class="modal-footer">
                 <input type="hidden" name="artID" value="${articleVO.artID}">
-                <input type="hidden" name="memID" value="4">
+                <input type="hidden" name="memID" value="${memVO.memID}">
               	<input type="hidden" name="action" value="getOne_For_Update">
                 <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">否</button>
                 <button type="submit" class="btn btn-primary">是</button>
