@@ -189,4 +189,3 @@
         <hr/>
         <div class="mx-auto d-flex mt-3 mb-3 text-muted">&copy; 2022</div>
     </div>
-</main>
