@@ -51,7 +51,7 @@
     <nav
             class="navbar navbar-expand-lg bg-none navbar-dark p-0 bg-secondary position-fixed justify-content-between"
             style="width: 100vw">
-        <a href="/front-end/index.html" class="navbar-brand">
+        <a href="<%=request.getContextPath()%>/front-end/index.html" class="navbar-brand">
             <h1 class="m-0 display-4 font-weight-bold text-uppercase text-white"
                 style="padding-left: 15px">Muscle beach</h1>
         </a>
