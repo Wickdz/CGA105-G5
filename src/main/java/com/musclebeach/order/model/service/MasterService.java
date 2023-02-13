@@ -5,11 +5,13 @@ import com.musclebeach.order.model.dao.MasterDao;
 import com.musclebeach.order.model.entity.OrderDetail;
 import com.musclebeach.order.model.entity.OrderMaster;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional("hibernate")
 public class MasterService {
     @Resource
     private MasterDao dao;

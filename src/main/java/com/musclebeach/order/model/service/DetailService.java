@@ -3,11 +3,13 @@ package com.musclebeach.order.model.service;
 import com.musclebeach.order.model.dao.DetailDao;
 import com.musclebeach.order.model.entity.OrderDetail;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional("hibernate")
 public class DetailService {
     @Resource
     private DetailDao dao;
