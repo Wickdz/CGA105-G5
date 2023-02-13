@@ -65,8 +65,8 @@
 
 
 <!-- Start All Title Box -->
-<div class="all-title-box">
-    <div class="container">
+<div class="all-title-box" style="padding-top: 100px;">
+    <div class=" container">
         <div class="row">
             <div class="col-lg-12">
                 <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp"
@@ -77,110 +77,113 @@
             </div>
         </div>
     </div>
-</div>
-<!-- End All Title Box -->
+    <!-- End All Title Box -->
 
-<!-- Cart Start -->
-<table id="cartTable">
-    <tr>
-        <th>商品名稱</th>
-        <th>數量</th>
-        <th>價格</th>
-        <th>總金額</th>
-        <th>操作</th>
-    </tr>
-    <c:if test="${cartList == null || cartList.isEmpty()}">
-        你的購物車沒有東西喔
-    </c:if>
-    <c:forEach items="${cartList}" var="cartProduct">
-        <tr id="tr${cartProduct.proID}">
-            <td>${cartProduct.proName}</td>
-            <td>
-                <input type="number" value="${cartProduct.count}" class="quantity" min="1" max="10"
-                       id="quantity${cartProduct.proID}">
-                <input hidden="hidden" value="${cartProduct.count}" id="initialCount${cartProduct.proID}">
-            </td>
-            <td class="price" id="price${cartProduct.proID}">${cartProduct.proPrice}</td>
-            <td class="total" id="totalPrice${cartProduct.proID}">${cartProduct.totalPrice}</td>
-            <td>
-                <button onclick="remove(${cartProduct.proID})">刪除</button>
-            </td>
+    <!-- Cart Start -->
+    <table id="cartTable">
+        <tr>
+            <th>商品名稱</th>
+            <th>數量</th>
+            <th>價格</th>
+            <th>總金額</th>
+            <th>操作</th>
         </tr>
-    </c:forEach>
-</table>
-<p>總金額: $<span id="total">".total"</span></p>
-<a href="<%=request.getContextPath()%>/front-end/product/checkout.jsp">
-    <button id="checkout">結帳</button>
-</a>
-<script>
-    getTotal();
-    const quantity = document.querySelectorAll(".quantity");
-    quantity.forEach(q => {
-        q.addEventListener("change", e => {
-            const proID = e.target.id.substring(e.target.id.length - 1);
-            const newValue = parseInt(e.target.value);
-            if (e.target.oldValue === null || e.target.oldValue === undefined) {
-                e.target.oldValue = document.querySelector('#initialCount' + proID).value;
-            }
-            const oldValue = parseInt(e.target.oldValue);
-            const totalPriceTd = document.querySelector('#totalPrice' + proID);
-            if (typeof totalPriceTd.innerText !== "number") {
-                totalPriceTd.innerText = Math.floor(parseInt(totalPriceTd.innerText) * (newValue / oldValue));
-            } else {
-                totalPriceTd.innerText = Math.floor(totalPriceTd.innerText * (newValue / oldValue));
-            }
-            e.target.oldValue = e.target.value;
-            getTotal();
-            axios.post("carts", [{
-                proID: parseInt(proID),
-                count: newValue
-            }]);
-        })
-    })
-
-    function remove(id) {
-        axios.delete('carts/' + id).then((res) => {
-            if (res.data.data) {
-                alert("刪除成功");
+        <c:if test="${cartList == null || cartList.isEmpty()}">
+            你的購物車沒有東西喔
+        </c:if>
+        <c:forEach items="${cartList}" var="cartProduct">
+            <tr id="tr${cartProduct.proID}">
+                <td>${cartProduct.proName}</td>
+                <td>
+                    <input type="number" value="${cartProduct.count}" class="quantity" min="1" max="10"
+                           id="quantity${cartProduct.proID}">
+                    <input hidden="hidden" value="${cartProduct.count}" id="initialCount${cartProduct.proID}">
+                </td>
+                <td class="price" id="price${cartProduct.proID}">${cartProduct.proPrice}</td>
+                <td class="total" id="totalPrice${cartProduct.proID}">${cartProduct.totalPrice}</td>
+                <td>
+                    <button onclick="remove(${cartProduct.proID})">刪除</button>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+    <div class=" container">
+        <div class="row">
+            <p>總金額: $<span id="total">".total"</span></p>
+            <a href="<%=request.getContextPath()%>/front-end/product/checkout.jsp">
+                <button id="checkout">結帳</button>
+            </a>
+        </div>
+    </div>
+    <script>
+        getTotal();
+        const quantity = document.querySelectorAll(".quantity");
+        quantity.forEach(q => {
+            q.addEventListener("change", e => {
+                const proID = e.target.id.substring(e.target.id.length - 1);
+                const newValue = parseInt(e.target.value);
+                if (e.target.oldValue === null || e.target.oldValue === undefined) {
+                    e.target.oldValue = document.querySelector('#initialCount' + proID).value;
+                }
+                const oldValue = parseInt(e.target.oldValue);
+                const totalPriceTd = document.querySelector('#totalPrice' + proID);
+                if (typeof totalPriceTd.innerText !== "number") {
+                    totalPriceTd.innerText = Math.floor(parseInt(totalPriceTd.innerText) * (newValue / oldValue));
+                } else {
+                    totalPriceTd.innerText = Math.floor(totalPriceTd.innerText * (newValue / oldValue));
+                }
+                e.target.oldValue = e.target.value;
                 getTotal();
-            }
-        });
-        document.querySelector('#tr' + id).remove();
-    }
-
-    function getTotal() {
-        let total = 0;
-        document.querySelectorAll('.total').forEach(p => {
-            if (typeof p.innerText !== 'number') {
-                total += parseInt(p.innerText);
-            } else {
-                total += p.innerText;
-            }
+                axios.post("carts", [{
+                    proID: parseInt(proID),
+                    count: newValue
+                }]);
+            })
         })
-        document.querySelector("#total").innerText = Math.floor(total);
-    }
-</script>
-<!-- Cart End -->
+
+        function remove(id) {
+            axios.delete('carts/' + id).then((res) => {
+                if (res.data.data) {
+                    alert("刪除成功");
+                    getTotal();
+                }
+            });
+            document.querySelector('#tr' + id).remove();
+        }
+
+        function getTotal() {
+            let total = 0;
+            document.querySelectorAll('.total').forEach(p => {
+                if (typeof p.innerText !== 'number') {
+                    total += parseInt(p.innerText);
+                } else {
+                    total += p.innerText;
+                }
+            })
+            document.querySelector("#total").innerText = Math.floor(total);
+        }
+    </script>
+    <!-- Cart End -->
 
 
-<!-- Footer -->
-<%@include file="/front-end/common/footer.jsp" %>
+    <!-- Footer -->
+    <%@include file="/front-end/common/footer.jsp" %>
 
-<!-- Back to Top -->
-<a href="#" class="btn btn-outline-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-outline-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-<!-- all js -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/lib/easing/easing.min.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/lib/waypoints/waypoints.min.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/mail/jqBootstrapValidation.min.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/mail/contact.js"></script>
-<script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/js/main.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
-<script>
-</script>
+    <!-- all js -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/lib/easing/easing.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/lib/waypoints/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/mail/jqBootstrapValidation.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/mail/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/product/resources/frontStage/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"></script>
+    <script>
+    </script>
 </body>
 
 </html>

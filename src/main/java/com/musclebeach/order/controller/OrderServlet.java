@@ -71,7 +71,7 @@ public class OrderServlet extends HttpServlet {
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
             req.getSession().removeAttribute("cartList");
             cartService.deleteAllInCart(memID);
-            String url = "/front-end/product/shop.jsp";
+            String url = "/front-end/product/memOrder.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交shop.jsp
             successView.forward(req, res);
         }
