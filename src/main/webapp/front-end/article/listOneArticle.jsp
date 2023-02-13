@@ -17,6 +17,7 @@
 	pageContext.setAttribute("typeList", typeList);
 	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 	List<ArticleMessageVO> articleMessageVO = (List<ArticleMessageVO>) request.getAttribute("articleMessageVO");
+	pageContext.setAttribute("articleMessageVO",articleMessageVO);
 	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
@@ -256,7 +257,7 @@
 								<div style="max-width: 650px; position: relative;">
 									<div class="d-flex align-items-center mb-3">
 										<div class="d-flex flex-column">
-											<strong class="text-dark" style="font-size: 14px;">${articleMessageVO.MemVO.memName}</strong>
+											<strong class="text-dark" style="font-size: 14px;">${articleMessageVO.memVO.memName}</strong>
 											<span class="text-muted small" style="font-size: 12px;">${articleMessageVO.msgStime}</span>
 										</div>
 									</div>
