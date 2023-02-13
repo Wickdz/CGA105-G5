@@ -3,12 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.musclebeach.room.model.RoomVO" %>
 <%@ page import="com.musclebeach.room.model.RoomService" %>
-<%
-    ApplicationContext context = ApplicationContextUtil.getContext();
-    RoomService roomSvc = context.getBean(RoomService.class);
-    List<RoomVO> list = roomSvc.getAllIncZ();
-    pageContext.setAttribute("list", list);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +23,11 @@
 </head>
 <body>
 <%@ include file="/back-end/header_sidebar.jsp" %>
+<%
+    RoomService roomSvc = context.getBean(RoomService.class);
+    List<RoomVO> list = roomSvc.getAllIncZ();
+    pageContext.setAttribute("list", list);
+%>
 <div class="tab-content" id="v-pills-tabContent" style="width: 100%; height: calc(100vh - 70px);">
     <!-- ============================================ 首頁 ============================================ -->
     <div class="tab-pane fade" id="v-pills-home" role="tabpanel"

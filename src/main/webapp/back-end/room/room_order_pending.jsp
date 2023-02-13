@@ -3,12 +3,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-    ApplicationContext context = ApplicationContextUtil.getContext();
-    RoomOrderService roomOrderService = context.getBean(RoomOrderService.class);
-    List<RoomOrderVO> list = roomOrderService.getPendingOrder();
-    pageContext.setAttribute("list", list);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -60,6 +54,11 @@
 </head>
 <body>
 <%@include file="../header_sidebar.jsp" %>
+<%
+    RoomOrderService roomOrderService = context.getBean(RoomOrderService.class);
+    List<RoomOrderVO> list = roomOrderService.getPendingOrder();
+    pageContext.setAttribute("list", list);
+%>
 <div class="tab-content" id="v-pills-tabContent" style="width: 100%; height: calc(100vh - 70px);">
     <!-- ============================================ 首頁 ============================================ -->
     <div class="tab-pane fade" id="v-pills-home" role="tabpanel"
