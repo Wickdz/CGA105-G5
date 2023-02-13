@@ -1,13 +1,11 @@
-<%@ page import="com.musclebeach.cart.entity.CartProduct" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.musclebeach.order.model.entity.OrderDetail" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.musclebeach.mem.model.MemVO" %>
+<%@ page import="com.musclebeach.order.model.entity.OrderMaster" %>
 
 <%
-    List<OrderDetail> detailList = (List<OrderDetail>) request.getAttribute("detailVO");
-    pageContext.setAttribute("detailList", detailList);
+    OrderMaster orderVO = (OrderMaster) request.getAttribute("orderVO");
+    pageContext.setAttribute("orderVO", orderVO);
     MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
