@@ -1,13 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.room.model.*"%>
+<%@ page import="com.musclebeach.room.model.RoomService" %>
+<%@ page import="com.musclebeach.room.model.RoomVO" %>
 
-<%
-RoomService roomSvc = new RoomService();
-List<RoomVO> list2 = roomSvc.getAll();
-pageContext.setAttribute("list2", list2);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +19,11 @@ pageContext.setAttribute("list2", list2);
 </head>
 <body>
 	<%@ include file="/back-end/header_sidebar.jsp"%>
+	<%
+		RoomService roomSvc = context.getBean(RoomService.class);
+		List<RoomVO> list2 = roomSvc.getAll();
+		pageContext.setAttribute("list2", list2);
+	%>
 	<div class="tab-content" id="v-pills-tabContent" style="width: 100%; height: calc(100vh - 70px);">
 		<!-- ============================================ 首頁 ============================================ -->
 		<div class="tab-pane fade" id="v-pills-home" role="tabpanel"

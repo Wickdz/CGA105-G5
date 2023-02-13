@@ -3,11 +3,7 @@
 <%@ page import="com.musclebeach.coachclassorder.model.CoachClassOrderService" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-	ApplicationContext context = ApplicationContextUtil.getContext();
-	CoachClassOrderService coachSvc = context.getBean(CoachClassOrderService.class);
-	pageContext.setAttribute("coachSvc", coachSvc);
-%>
+
 <html>
 <head>
 	<meta charset="utf-8"/>
@@ -65,6 +61,10 @@
 
 <body>
 <%@ include file="/back-end/header_sidebar.jsp" %>
+<%
+	CoachClassOrderService coachSvc = context.getBean(CoachClassOrderService.class);
+	pageContext.setAttribute("coachSvc", coachSvc);
+%>
 <div class="tab-content" id="v-pills-tabContent"
 	 style="width: 100%; height: calc(100vh - 70px);">
 	<!-- ============================================ ­º­¶ ============================================ -->
