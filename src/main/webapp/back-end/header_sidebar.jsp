@@ -103,7 +103,7 @@
                 <c:if test="${empAccessVO.fID ==3}">
                     <li>
                         <a
-                                href=""
+                                href="<%=request.getContextPath()%>/back-end/order/listAllOrder.jsp"
                                 class="nav-link text-white"
                                 type="button"
                                 role="tab"
@@ -131,7 +131,7 @@
                 <c:if test="${empAccessVO.fID ==5}">
                     <li>
                         <a
-                                href=""
+                                href="<%=request.getContextPath()%>/back-end/course/select_page.jsp"
                                 class="nav-link text-white"
                                 type="button"
                                 role="tab"

@@ -80,8 +80,7 @@ public class OrderServlet extends HttpServlet {
             /***************************1.接收請求參數****************************************/
             Integer orderID = Integer.valueOf(req.getParameter("orderID"));
             /***************************2.開始查詢資料****************************************/
-            MasterService orderSvc = new MasterService();
-            OrderMaster orderVO = orderSvc.getOneMaster(orderID);
+            OrderMaster orderVO = masterService.getOneMaster(orderID);
             /***************************3.查詢完成,準備轉交(Send the Success view)************/
             req.setAttribute("orderVO", orderVO);         // 資料庫取出的orderVO物件,存入req
 
