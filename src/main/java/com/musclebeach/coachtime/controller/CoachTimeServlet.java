@@ -11,13 +11,14 @@ import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
+@WebServlet("/back-end/coachtime/coach.do")
 public class CoachTimeServlet extends HttpServlet {
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final CoachTimeService coachTimeService = context.getBean(CoachTimeService.class);

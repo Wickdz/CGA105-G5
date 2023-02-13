@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet({"/back-end/order/", "front-end/order/"})
+@WebServlet({"/back-end/order/", "/front-end/order/"})
 public class OrderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();

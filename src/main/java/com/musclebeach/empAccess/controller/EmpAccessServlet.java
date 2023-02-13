@@ -8,13 +8,14 @@ import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-
+@WebServlet("/back-end/empAccess/empAccess.do")
 public class EmpAccessServlet extends HttpServlet {
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final EmpAccessService empAccessSvc = context.getBean(EmpAccessService.class);

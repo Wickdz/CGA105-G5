@@ -15,6 +15,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Part;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -77,6 +78,7 @@ class MailService {
 }
 
 @MultipartConfig
+@WebServlet("/back-end/emp/emp.do")
 public class EmpServlet extends HttpServlet {
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final EmpService empService = context.getBean(EmpService.class);
