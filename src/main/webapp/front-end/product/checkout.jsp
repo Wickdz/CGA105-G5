@@ -2,13 +2,6 @@
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.mem.model.MemService" %>
-<%@ page import="com.musclebeach.creditCard.model.CreditCardVO" %>
-<%@ page import="com.musclebeach.creditCard.model.CreditCardService" %>
-<%@ page import="com.musclebeach.cart.service.CartService" %>
-<%@ page import="com.musclebeach.cart.entity.CartItem" %>
-<%@ page import="com.musclebeach.cart.entity.CartProduct" %>
-<%@ page import="com.musclebeach.cart.service.CartProductService" %>
-<%@ page import="static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -16,14 +9,6 @@
     MemService memSvc = context.getBean(MemService.class);
     MemVO memVO = memSvc.getOneMem(1);
     pageContext.setAttribute("memVO", memVO);
-
-    CartProductService cartSvc = context.getBean(CartProductService.class);
-    List<CartProduct> cartList =cartSvc.getCartProduct(List<CartItem>);
-    pageContext.setAttribute("cartList", cartList);
-//    ApplicationContext context = ApplicationContextUtil.getContext();
-//    CreditCardService creSVC = context.getBean(CreditCardService.class);
-//    CreditCardVO creVO = creSVC.getOneCard(1);
-//    pageContext.setAttribute("creVO", creVO);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -331,17 +316,6 @@
                         </div>
                     </div>
                 </div>
-                <td>總金額:</td>
-                <td><input type="TEXT" name="totalPrice" size="45"
-                           value="${}"/></td>
-                <div class="back">
-                    <div class="stripe"></div>
-                    <div class="box">
-                        <span>ccvc</span>
-                        <div class="cvv-box"></div>
-                        <img src="image/visa.png" alt="">
-                    </div>
-                </div>
 
             </div>
 
@@ -375,7 +349,7 @@
                     <div class="inputBox">
                         <span>電話</span>
                         <input type="tel" type="tel" id="phone" name="orderRecPhone"
-                               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                               pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                                value="<%= (memVO == null) ? "" : memVO.getMemPhone()%>" required/><br><br>
                     </div>
                     <div class="inputBox">
@@ -387,7 +361,7 @@
 
                 <input type="hidden" name="action" value="insertOrder">
                 <input type="hidden" name="memID" value="${memVO.memID}">
-                <input type="submit" value="確認付款" class="submit-btn"></FORM>
+                <input type="submit" value="確認付款" class="submit-btn">
             </form>
 
         </div>
