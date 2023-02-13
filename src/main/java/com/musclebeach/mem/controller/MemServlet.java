@@ -93,18 +93,16 @@ public class MemServlet extends HttpServlet {
             MemVO memVO2 = memService.getAccount(account);
             session.setAttribute("memVO", memVO2);
 
-            String url = "/front-end/member/mem_info.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);
-            successView.forward(req, res);
+            String url = req.getContextPath() + "/front-end/index.html";
+            res.sendRedirect(url);
         }
 
         if ("logout".equals(action)) { // from 前台頁面
             HttpSession session = req.getSession();
             // 清除資料
             session.invalidate();
-            String url = "/front-end/member/front_index.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);
-            successView.forward(req, res);
+            String url = req.getContextPath() + "/front-end/index.html";
+            res.sendRedirect(url);
         }
 
         if ("forget_password".equals(action)) { // from forgetPassword.jsp
@@ -158,9 +156,8 @@ public class MemServlet extends HttpServlet {
             // 重設密碼
             memService.updatePassWord(memVO.getMemID(), passRandom);
 
-            String url = "/front-end/member/front_index.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);
-            successView.forward(req, res);
+            String url = req.getContextPath() + "/front-end/index.html";
+            res.sendRedirect(url);
         }
 
         if ("insert".equals(action)) { // from register.jsp
@@ -209,7 +206,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-            MemService memService = new MemService();
+
             memVO = memService.getAccount(account);
             if (memVO != null) {
                 errorMsgs.add("帳號已被註冊");
@@ -236,9 +233,8 @@ public class MemServlet extends HttpServlet {
             mailService.sendMail(to, subject, messageText);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-            String url = "/front-end/member/front_index.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);
-            successView.forward(req, res);
+            String url = req.getContextPath() + "/front-end/member/login.jsp";
+            res.sendRedirect(url);
         }
 
         if ("update".equals(action)) { // from mem_info_update.jsp

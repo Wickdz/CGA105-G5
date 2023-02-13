@@ -36,7 +36,7 @@
     <nav
             class="navbar navbar-expand-lg bg-none navbar-dark p-0 bg-secondary position-fixed justify-content-between"
             style="width: 100vw">
-        <a href="index.html" class="navbar-brand">
+        <a href="/front-end/index.html" class="navbar-brand">
             <h1 class="m-0 display-4 font-weight-bold text-uppercase text-white"
                 style="padding-left: 15px">Muscle beach</h1>
         </a>
@@ -77,7 +77,8 @@
                     <a href="#" class="nav-item nav-link dropdown-toggle"
                        data-toggle="dropdown">聯絡我們</a>
                     <div class="dropdown-menu text-capitalize">
-                        <a href="<%=request.getContextPath()%>/front-end/question/listAllQuestion.jsp" class="dropdown-item">常見問題</a>
+                        <a href="<%=request.getContextPath()%>/front-end/question/listAllQuestion.jsp"
+                           class="dropdown-item">常見問題</a>
                         <a href="<%=request.getContextPath()%>/front-end/news/listAllNews.jsp" class="dropdown-item">最新資訊</a>
                     </div>
                 </div>
