@@ -1,8 +1,12 @@
 package com.musclebeach.order.controller;
 
 
+import com.musclebeach.cart.entity.CartItem;
+import com.musclebeach.cart.entity.CartProduct;
 import com.musclebeach.cart.service.CartProductService;
+import com.musclebeach.cart.service.CartService;
 import com.musclebeach.common.util.ApplicationContextUtil;
+import com.musclebeach.mem.model.MemVO;
 import com.musclebeach.order.model.entity.OrderDetail;
 import com.musclebeach.order.model.entity.OrderMaster;
 import com.musclebeach.order.model.service.DetailService;
@@ -19,12 +23,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet({"/back-end/order/", "front-end/order/"})
+@WebServlet({"/back-end/order/", "/front-end/order/"})
 public class OrderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final DetailService detailService = context.getBean(DetailService.class);
     private final MasterService masterService = context.getBean(MasterService.class);
+    private final CartService cartService = context.getBean(CartService.class);
     private final CartProductService cartProductService = context.getBean(CartProductService.class);
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -39,7 +44,7 @@ public class OrderServlet extends HttpServlet {
         if ("insertOrder".equals(action)) { // 來自checkout.jsp的請求
 
             /*********************** 1.接收請求參數  *************************/
-            Integer memID = Integer.valueOf(req.getParameter("memID"));
+//            Integer memID = Integer.valueOf(req.getParameter("memID"));
 //            Integer totalPrice = Integer.valueOf(req.getParameter("totalPrice"));
             String orderRecName = req.getParameter("orderRecName");
             String orderRecPhone = req.getParameter("orderRecPhone");
@@ -47,13 +52,23 @@ public class OrderServlet extends HttpServlet {
 
 
             /*************************** 2.開始新增資料 ***************************************/
-
-//            MasterService orderSvc = new MasterService();
-//            List<CartProduct> cartProductList = cartProductService.getCartProduct(new ArrayList<>());
-//
-//            orderSvc.addOrderAndDetail(memID, totalPrice, orderRecName, orderRecPhone, orderAddress, orderID, proID, detQty, detPrice);
-
-
+            MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
+            Integer memID = memVO.getMemID();
+            List<CartItem> allInCartByMemID = cartService.getAllInCartByMemID(memID);
+            List<CartProduct> cartProductList = cartProductService.getCartProduct(allInCartByMemID);
+            int totalPrice = 0;
+            for (CartProduct cartProduct : cartProductList) {
+                totalPrice += (cartProduct.getProPrice() + cartProduct.getCount());
+            }
+            Integer orderID = masterService.addMaster(memID, totalPrice, orderRecName, orderRecPhone, orderAddress, 0);
+            for (CartProduct cartProduct : cartProductList) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setOrderID(orderID);
+                orderDetail.setProID(cartProduct.getProID());
+                orderDetail.setDetQty(cartProduct.getCount());
+                orderDetail.setDetPrice(cartProduct.getProPrice() * cartProduct.getCount());
+                detailService.add(orderDetail);
+            }
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
             String url = "/front-end/order/shop.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交shop.jsp
