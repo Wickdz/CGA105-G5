@@ -103,7 +103,7 @@
         <table id="table-1">
             <tr>
                 <td>
-                    <h3>教練新增</h3>
+                    <h3>教練時段新增</h3>
                     <h4>
                         <a href="selectCoachTimePage.jsp">回首頁</a>
                     </h4>

@@ -127,7 +127,7 @@
         <table id="table-1">
             <tr>
                 <td>
-                    <h3>教練資訊修改 - update_emp_input.jsp</h3>
+                    <h3>教練可預約時段修改</h3>
                     <h4>
                         <a href="selectCoachTimePage.jsp">回首頁</a>
                     </h4>
