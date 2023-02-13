@@ -13,6 +13,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <style type="text/css"></style>
+    <style>
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
 <%@ include file="/back-end/header_sidebar.jsp" %>
@@ -37,19 +44,21 @@
             </div>
         </div>
 
-        <table class="table table-striped table-bordered table-sm">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th scope="col">員工編號</th>
-                <th scope="col">員工姓名</th>
-                <th scope="col">員工密碼</th>
-                <th scope="col">雇用日期</th>
-                <th scope="col">員工生日</th>
-                <th scope="col">手機</th>
-                <th scope="col">信箱</th>
-                <th scope="col">員工狀態</th>
-                <th scope="col">教練價格</th>
-                <th scope="col">員工圖片</th>
+                <th scope="col" class="col-1">員工編號</th>
+                <th scope="col" class="col-1">員工姓名</th>
+                <th scope="col" class="col-1">員工密碼</th>
+                <th scope="col" class="col-1">雇用日期</th>
+                <th scope="col" class="col-1">員工生日</th>
+                <th scope="col" class="col-1">手機</th>
+                <th scope="col" class="col-1">信箱</th>
+                <th scope="col" class="col-1">員工狀態</th>
+                <th scope="col" class="col-2">教練價格</th>
+                <th scope="col" class="col-2">員工圖片</th>
+                <th scope="col" class="col-1">修改</th>
+                <th scope="col" class="col-1">刪除</th>
             </tr>
             </thead>
             <tbody>

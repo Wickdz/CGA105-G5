@@ -11,18 +11,60 @@
 	<link href="css/flaticon.css" rel="stylesheet"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-	<style type="text/css"></style>
+	<style type="text/css">
+		input[type=checkbox]{
 
-	<style>
-		label.spotlight {
-			background-color: gray;
-			padding: 2px 5px;
-			border-radius: 5px;
-			color: white;
+			cursor: pointer;
+
+			position: relative;
+
+			width: 15px;
+
+			height: 15px;
+
+			font-size: 14px;
+
 		}
+
+		input[type=checkbox]::after{
+
+			position: absolute;
+
+			top: 0;
+
+			background-color: white;
+
+			color: #000;
+
+			width: 15px;
+
+			height: 15px;
+
+			display: inline-block;
+
+			visibility: visible;
+
+			padding-left: 0px;
+
+			text-align: center;
+
+			content: ' ';
+
+			border-radius: 3px
+
+		}
+
+		input[type=checkbox]:checked::after{
+
+			content: "✓";
+
+			font-size: 12px;
+
+			font-weight: bold;
+
+		}
+
 	</style>
-
-
 </head>
 <body>
 <%@ include file="../header_sidebar.jsp" %>
@@ -52,7 +94,7 @@
 						${errorMsgs.Exception}
 
 
-						<table class="table table-striped">
+						<table class="table">
 							<thead>
 							<tr>
 								<th scope="col" class="col-2">編號</th>

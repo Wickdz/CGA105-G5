@@ -120,6 +120,8 @@
                 場地名稱：${roomVO.roomName}</div>
             <div style="font-size: 22px; color: #CC0000">場地位於：${roomVO.roomAddress}</div>
             <div style="font-size: 18px;">場地介紹：${roomVO.roomContent}</div>
+            <div style="font-size: 18px; color: #CC0000">場地價格：${roomVO.roomPrice} ( 單次 )</div>
+            <div style="font-size: 18px;">租借時段：上午 ( 10:00 ~ 11:30 ) / 下午 ( 14:00 ~ 15:30 ) / 晚上 ( 18:00 ~ 19:30 )</div>
             <hr>
             <div class="row">
                 <div class="col-lg-8"></div>

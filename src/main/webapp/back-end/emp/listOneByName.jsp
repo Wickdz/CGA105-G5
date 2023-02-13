@@ -34,19 +34,21 @@
         </div>
 
 
-        <table class="table table-striped table-bordered table-sm">
+        <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th scope="col">員工編號</th>
-                <th scope="col">員工姓名</th>
-                <th scope="col">員工密碼</th>
-                <th scope="col">雇用日期</th>
-                <th scope="col">員工生日</th>
-                <th scope="col">手機</th>
-                <th scope="col">信箱</th>
-                <th scope="col">員工狀態</th>
-                <th scope="col">教練價格</th>
-                <th scope="col">員工圖片</th>
+                <th scope="col" class="col-1">員工編號</th>
+                <th scope="col" class="col-1">員工姓名</th>
+                <th scope="col" class="col-1">員工密碼</th>
+                <th scope="col" class="col-1">雇用日期</th>
+                <th scope="col" class="col-1">員工生日</th>
+                <th scope="col" class="col-1">手機</th>
+                <th scope="col" class="col-1">信箱</th>
+                <th scope="col" class="col-1">員工狀態</th>
+                <th scope="col" class="col-2">教練價格</th>
+                <th scope="col" class="col-2">員工圖片</th>
+                <th scope="col" class="col-1">修改</th>
+                <th scope="col" class="col-1">刪除</th>
             </tr>
             </thead>
 

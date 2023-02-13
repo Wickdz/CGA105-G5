@@ -114,23 +114,23 @@ Integer roomID = roomVO.getRoomID();
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/js/bs-stepper.min.js"></script>
+			src="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/js/bs-stepper.min.js"></script>
 	<script
-		src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+			src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
 	<script
-		src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+			src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 	<script>
 		$("#inputBorrowDate").datetimepicker({
-			date : null, //一開始輸入框的日期為空 
-			format : "YYYY-MM-DD", //日期的顯示格式 
+			date : null, //一開始輸入框的日期為空
+			format : "YYYY-MM-DD", //日期的顯示格式
 			locale : moment.locale("zh-tw"), //國別
-			daysOfWeekDisabled : [], //隱藏的天數0為周日6為星期六 
-			minDate : moment().add(1, "days"), //顯示最小天數 
-			maxDate : moment().add(33, "days"),//顯示最大天數，30為最大的顯示範圍為一個月為限 
-			disabledDates : [ //隱藏的日期 
-			moment().add(1, "days"), //前一日 
-			moment().add(2, "days"), //前二日 
-			moment().add(3, "days"),//前三日 // "2023-10-10", //特別日期 // "2023-12-25", 
+			daysOfWeekDisabled : [], //隱藏的天數0為周日6為星期六
+			minDate : moment().add(1, "days"), //顯示最小天數
+			maxDate : moment().add(33, "days"),//顯示最大天數，30為最大的顯示範圍為一個月為限
+			disabledDates : [ //隱藏的日期
+				moment().add(1, "days"), //前一日
+				moment().add(2, "days"), //前二日
+				moment().add(3, "days"),//前三日 // "2023-10-10", //特別日期 // "2023-12-25",
 			]
 		});
 	</script>
