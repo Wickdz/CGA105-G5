@@ -44,7 +44,7 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <!-- ***** Logo Start ***** -->
-                    <a href="/front-end/index.html" class="logo"><em>Muscle </em>Beach</a>
+                    <a href="<%=request.getContextPath()%>/front-end/index.html" class="logo"><em>Muscle </em>Beach</a>
                     <!-- ***** Logo End ***** -->
                 </nav>
             </div>
