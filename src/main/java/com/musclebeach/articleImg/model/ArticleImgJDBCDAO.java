@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
+
     private static final String INSERT_STMT =
             "INSERT INTO gym.article_img (art_img,art_id) VALUES (?, ?)";
     private static final String GET_ALL_STMT =
@@ -18,11 +19,16 @@ public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
             "SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
     private static final String GET_ONE_STMT =
             "SELECT img_id,art_img,art_id FROM gym.article_img where img_id = ?";
+    private static final String GET_ONE_STMT_BY_ARTID =
+            "SELECT img_id,art_img,art_id FROM gym.article_img where art_id = ?";
     private static final String DELETE =
             "DELETE FROM gym.article_img where img_id = ?";
     private static final String UPDATE =
-            "UPDATE gym.article_img set art_img = ? where img_id = ?";
+            "UPDATE gym.article_img set art_img=? where img_id = ?";
     String driver = "com.mysql.cj.jdbc.Driver";
+    String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    String userid = "root";
+    String passwd = "password";
     @Resource
     private DataSource dataSource;
 
@@ -280,6 +286,7 @@ public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
         return list;
     }
 
+
     @Override
     public ArticleImgVO findByPrimaryKey(Integer imgID) {
 
@@ -342,6 +349,68 @@ public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
     }
 
     @Override
+    public ArticleImgVO findByArtID(Integer artID) {
+
+        ArticleImgVO articleImgVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT_BY_ARTID);
+
+            pstmt.setInt(1, artID);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // empVo 也稱為 Domain objects
+                articleImgVO = new ArticleImgVO();
+                articleImgVO.setImgID(rs.getInt("img_id"));
+                articleImgVO.setArtImg(rs.getBytes("art_img"));
+                articleImgVO.setArtID(rs.getInt("art_id"));
+            }
+
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return articleImgVO;
+    }
+
+
+    @Override
     public void insert2(ArticleImgVO articleImgVO, Connection con) {
 
         PreparedStatement pstmt = null;
@@ -386,17 +455,19 @@ public class ArticleImgJDBCDAO implements ArticleImgDAO_interface {
     }
 
     @Override
-    public Integer insertImagesBatch(List<ArticleImgVO> articleImgVOList) {
-        try (Connection connection = dataSource.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STMT)) {
+    public void insertImgBatch(List<ArticleImgVO> articleImgVOList) {
+        try (Connection connection = DriverManager.getConnection(url, userid, passwd);
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STMT)
+        ) {
             for (ArticleImgVO articleImgVO : articleImgVOList) {
                 preparedStatement.setBytes(1, articleImgVO.getArtImg());
                 preparedStatement.setInt(2, articleImgVO.getArtID());
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
-            return 1;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
 }

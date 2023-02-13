@@ -305,6 +305,7 @@ td {
                         role="tab"
                         aria-controls="v-pills-article"
                         aria-selected="false"
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
                 >
                     <i
                             class="bi bi-chat-right-text"

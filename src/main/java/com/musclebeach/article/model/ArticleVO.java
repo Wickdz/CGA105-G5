@@ -1,5 +1,7 @@
 package com.musclebeach.article.model;
 
+import com.musclebeach.articleImg.model.ArticleImgService;
+import com.musclebeach.articleLike.model.ArticleLikeService;
 import com.musclebeach.articleMessage.model.ArticleMessageService;
 import com.musclebeach.articleMessage.model.ArticleMessageVO;
 import com.musclebeach.articleType.model.ArticleTypeService;
@@ -14,6 +16,9 @@ public class ArticleVO implements java.io.Serializable {
     private final ApplicationContext ctx = ApplicationContextUtil.getContext();
     private final ArticleMessageService articleMessageService = ctx.getBean(ArticleMessageService.class);
     private final ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
+    private final ArticleImgService articleImgService = ctx.getBean(ArticleImgService.class);
+
+    private final ArticleLikeService articleLikeService = ctx.getBean(ArticleLikeService.class);
 
     private Integer artID;
     private Integer memID;
@@ -94,5 +99,17 @@ public class ArticleVO implements java.io.Serializable {
 
     public ArticleTypeVO getArticleTypeVO() {
         return articleTypeService.getOneArticleType(typeID);
+    }
+
+    public com.musclebeach.articleImg.model.ArticleImgVO getArticleImgVO() {     //取得單張文章圖片
+        return   articleImgService.getOneArticleImgByArtID(artID);}
+
+
+    public List<com.musclebeach.articleImg.model.ArticleImgVO> getArticleImgListVO() {     //取得多張文章圖片
+        return articleImgService.getAllByArtID(artID);
+    }
+    public List<com.musclebeach.articleLike.model.ArticleLikeVO> getArtLikeVO() {     //取得文章讚數
+        return articleLikeService.getAllArtLike(artID);
+
     }
 }

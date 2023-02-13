@@ -1,9 +1,8 @@
 package com.musclebeach.article.model;
 
-
 import com.musclebeach.articleImg.model.ArticleImgJDBCDAO;
 import com.musclebeach.articleImg.model.ArticleImgVO;
-import com.musclebeach.common.util.CompositeQuery.jdbcUtil_CompositeQuery_Article;
+import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Article;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -12,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 @Repository
 public class ArticleJDBCDAO implements ArticleDAO_interface {
@@ -22,6 +22,12 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
             "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article order by art_ltime desc";
     private static final String GET_ALL_STMT_BY_TYPE_ID =
             "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article where type_id = ? order by art_ltime desc";
+    private static final String GET_ALL_STMT_BY_ART_ID =
+            "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article where art_id = ? order by art_ltime desc";
+    private static final String GET_ALL_STMT_BY_MEM_ID =
+            "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article where mem_id = ? order by art_ltime desc";
+    private static final String GET_ALL_STMT_BY_ARTICLE_TITLE_OR_ARTICLE_CONTENT =
+            "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article where  art_title like ? or  art_content like ? order by art_ltime desc;";
     private static final String GET_ONE_STMT =
             "SELECT art_id,mem_id,type_id,art_title,art_content,art_stime,art_ltime,art_status FROM gym.article where art_id = ?";
     private static final String UPDATE =
@@ -258,7 +264,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
     }
 
     @Override
-    public List<ArticleVO> getAllByTypeID(Integer TypeID) {
+    public List<ArticleVO> getAllByTypeID(Integer typeID) {
         List<ArticleVO> list = new ArrayList<ArticleVO>();
         ArticleVO articleVO = null;
 
@@ -271,7 +277,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
             Class.forName(driver);
             con = dataSource.getConnection();
             pstmt = con.prepareStatement(GET_ALL_STMT_BY_TYPE_ID);
-            pstmt.setInt(1, TypeID);
+            pstmt.setInt(1, typeID);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -324,6 +330,206 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
     }
 
     @Override
+    public List<ArticleVO> getAllByArtID(Integer artID) {
+        List<ArticleVO> list = new ArrayList<ArticleVO>();
+        ArticleVO articleVO = null;
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT_BY_ART_ID);
+            pstmt.setInt(1, artID);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                articleVO = new ArticleVO();
+                articleVO.setArtID(rs.getInt("art_id"));
+                articleVO.setMemID(rs.getInt("mem_id"));
+                articleVO.setTypeID(rs.getInt("type_id"));
+                articleVO.setArtTitle(rs.getString("art_title"));
+                articleVO.setArtContent(rs.getString("art_content"));
+                articleVO.setArtStime(rs.getTimestamp("art_stime"));
+                articleVO.setArtLtime(rs.getTimestamp("art_ltime"));
+                articleVO.setArtStatus(rs.getInt("art_status"));
+                list.add(articleVO); // Store the row in the list
+            }
+
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<ArticleVO> getAllByMemID(Integer memID) {
+        List<ArticleVO> list = new ArrayList<ArticleVO>();
+        ArticleVO articleVO = null;
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT_BY_MEM_ID);
+            pstmt.setInt(1, memID);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                articleVO = new ArticleVO();
+                articleVO.setArtID(rs.getInt("art_id"));
+                articleVO.setMemID(rs.getInt("mem_id"));
+                articleVO.setTypeID(rs.getInt("type_id"));
+                articleVO.setArtTitle(rs.getString("art_title"));
+                articleVO.setArtContent(rs.getString("art_content"));
+                articleVO.setArtStime(rs.getTimestamp("art_stime"));
+                articleVO.setArtLtime(rs.getTimestamp("art_ltime"));
+                articleVO.setArtStatus(rs.getInt("art_status"));
+                list.add(articleVO); // Store the row in the list
+            }
+
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<ArticleVO> getAllByArticleTitleOrArticleContent(String artTitle, String artContent) {
+        List<ArticleVO> list = new ArrayList<ArticleVO>();
+        ArticleVO articleVO = null;
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(driver);
+            con = dataSource.getConnection();
+            pstmt = con.prepareStatement(GET_ALL_STMT_BY_ARTICLE_TITLE_OR_ARTICLE_CONTENT);
+            pstmt.setString(1, "%" + artTitle + "%");
+            pstmt.setString(2, "%" + artContent + "%");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // empVO 也稱為 Domain objects
+                articleVO = new ArticleVO();
+                articleVO.setArtID(rs.getInt("art_id"));
+                articleVO.setMemID(rs.getInt("mem_id"));
+                articleVO.setTypeID(rs.getInt("type_id"));
+                articleVO.setArtTitle(rs.getString("art_title"));
+                articleVO.setArtContent(rs.getString("art_content"));
+                articleVO.setArtStime(rs.getTimestamp("art_stime"));
+                articleVO.setArtLtime(rs.getTimestamp("art_ltime"));
+                articleVO.setArtStatus(rs.getInt("art_status"));
+                list.add(articleVO); // Store the row in the list
+            }
+
+            // Handle any driver errors
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. "
+                    + e.getMessage());
+            // Handle any SQL errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
+
+    //	複合查詢
+    @Override
     public List<ArticleVO> getAll(Map<String, String[]> map) {
         List<ArticleVO> list = new ArrayList<ArticleVO>();
         ArticleVO articleVO = null;
@@ -336,9 +542,10 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
 
             Class.forName(driver);
             con = dataSource.getConnection();
-            String finalSQL = "select * from gym.article "
+            String finalSQL = "SELECT * FROM gym.article a "
+                    + "JOIN gym.member m ON a.mem_id = m.mem_id "
                     + jdbcUtil_CompositeQuery_Article.get_WhereCondition(map)
-                    + "order by mem_id";
+                    + " order by art_ltime desc";
             pstmt = con.prepareStatement(finalSQL);
             System.out.println("●●finalSQL(by DAO) = " + finalSQL);
             rs = pstmt.executeQuery();
@@ -410,7 +617,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
             con.setAutoCommit(false);
 
             // 先新增文章
-            String cols[] = {"art_id"};
+            String[] cols = {"art_id"};
             pstmt = con.prepareStatement(INSERT_STMT, cols);
             pstmt.setInt(1, articleVO.getMemID());
             pstmt.setInt(2, articleVO.getTypeID());
@@ -432,7 +639,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface {
             ArticleImgJDBCDAO dao = new ArticleImgJDBCDAO();
             System.out.println("list.size()-A=" + list.size());
             for (ArticleImgVO aArticleImg : list) {
-                aArticleImg.setArtID(new Integer(next_art_id));
+                aArticleImg.setArtID(Integer.valueOf(next_art_id));
                 dao.insert2(aArticleImg, con);
             }
 

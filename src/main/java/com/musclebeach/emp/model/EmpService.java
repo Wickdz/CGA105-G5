@@ -10,9 +10,9 @@ public class EmpService {
     @Resource
     private EmpDAO_interface dao;
 
-
     public EmpVO addEmp(String password, String empName, java.sql.Date hiredate, java.sql.Date empBirthday,
-                        String empPhone, String empMail, Integer empStatus, Integer coachPrice, byte[] empImg, String coachContent) {
+                        String empPhone, String empMail, Integer empStatus, Integer coachPrice, byte[] empImg,
+                        String coachContent) {
 
         EmpVO empVO = new EmpVO();
 
@@ -31,8 +31,9 @@ public class EmpService {
         return empVO;
     }
 
-    public EmpVO updateEmp(Integer empID, String password, String empName, java.sql.Date hiredate, java.sql.Date empBirthday,
-                           String empPhone, String empMail, Integer empStatus, Integer coachPrice, byte[] empImg, String coachContent) {
+    public EmpVO updateEmp(Integer empID, String password, String empName, java.sql.Date hiredate,
+                           java.sql.Date empBirthday, String empPhone, String empMail, Integer empStatus, Integer coachPrice,
+                           byte[] empImg, String coachContent) {
 
         EmpVO empVO = new EmpVO();
 
@@ -78,5 +79,13 @@ public class EmpService {
 
     public List<EmpVO> getFunctionEmp(Integer fID) {
         return dao.getFunctionEmp(fID);
+    }
+
+    public List<EmpVO> getCoachByEmp() {
+        return dao.getCoachList();
+    }
+
+    public EmpVO getNameByEmpid(Integer empID) {
+        return dao.getNameByEmpid(empID);
     }
 }

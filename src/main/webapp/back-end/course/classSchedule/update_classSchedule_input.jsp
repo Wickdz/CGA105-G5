@@ -289,6 +289,7 @@
                         role="tab"
                         aria-controls="v-pills-article"
                         aria-selected="false"
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
                 >
                     <i
                             class="bi bi-chat-right-text"
@@ -372,12 +373,12 @@
                     </tr>
                     <tr>
                         <td>起始時間:</td>
-                        <td><input type="TEXT" name="startTime" size="45" value="<%=classScheduleVO.getStartTime()%>"/>
+                        <td><input type="TEXT" name="startTime" size="45" value="<%=classScheduleVO.getStartTime()%>" required/>
                         </td>
                     </tr>
                     <tr>
                         <td>結束時間:</td>
-                        <td><input type="TEXT" name="endTime" size="45" value="<%=classScheduleVO.getEndTime()%>"/></td>
+                        <td><input type="TEXT" name="endTime" size="45" value="<%=classScheduleVO.getEndTime()%>" required/></td>
                     </tr>
 
                 </table>

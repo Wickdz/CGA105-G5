@@ -24,7 +24,7 @@ public class Product implements Serializable {
     private String proName;
     @Column(name = "type_id")
     private Integer typeID;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "type_id", insertable = false, updatable = false)
     @JsonIgnore
     private ProductType productType;
@@ -43,7 +43,7 @@ public class Product implements Serializable {
     @Column(name = "createtime", insertable = false, updatable = false) // updatable = false ->更新時，跳過某欄位
     @JsonIgnore
     private Timestamp createTime;
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
     @JsonIgnore
     private List<ProductImg> productImgs;
     @Transient

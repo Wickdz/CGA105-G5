@@ -7,9 +7,14 @@ import java.util.List;
 
 @Service
 public class ArticleMessageService {
+
     @Resource
     private ArticleMessageDAO_interface dao;
-    
+
+    public ArticleMessageService() {
+        dao = new ArticleMessageJDBCDAO();
+    }
+
     public ArticleMessageVO addArticleMessage(Integer artID, Integer memID, String msgContent) {
 
         ArticleMessageVO articleMessageVO = new ArticleMessageVO();
@@ -23,7 +28,7 @@ public class ArticleMessageService {
         return articleMessageVO;
     }
 
-    public ArticleMessageVO updateArticleMessage(Integer msgID, String msgContent, Integer msgStatus) {
+    public ArticleMessageVO updateArticleMessage(Integer msgID,String msgContent, Integer msgStatus) {
 
         ArticleMessageVO articleMessageVO = new ArticleMessageVO();
 

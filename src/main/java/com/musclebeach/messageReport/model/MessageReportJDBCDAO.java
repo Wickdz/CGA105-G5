@@ -25,51 +25,6 @@ public class MessageReportJDBCDAO implements MessageReportDAO_interface {
     @Resource
     private DataSource dataSource;
 
-    public static void main(String[] args) {
-
-        MessageReportJDBCDAO dao = new MessageReportJDBCDAO();
-
-
-//		// 新增
-//		MessageReportVO messageReportVO1 = new MessageReportVO();
-//		messageReportVO1.setMemID(5);
-//		messageReportVO1.setMsgID(2);
-//		messageReportVO1.setReportContent("1很爛");
-//
-//		dao.insert(messageReportVO1);
-
-
-//		// 修改狀態
-//		MessageReportVO messageReportVO2 = new MessageReportVO();
-//		messageReportVO2.setReportID(4);
-//		messageReportVO2.setReportStatus(1);
-//		dao.update(messageReportVO2);
-
-
-//		// 查詢
-//		MessageReportVO messageReportVO3 = dao.findByPrimaryKey(4);
-//		System.out.print(messageReportVO3.getReportID() + ",");
-//		System.out.print(messageReportVO3.getMemID() + ",");
-//		System.out.print(messageReportVO3.getMsgID() + ",");
-//		System.out.print(messageReportVO3.getReportContent() + ",");
-//		System.out.print(messageReportVO3.getReportStime() + ",");
-//		System.out.print(messageReportVO3.getReportStatus());
-//		System.out.println("---------------------");
-
-
-//		// 查詢
-//		List<MessageReportVO> list = dao.getAll();
-//		for (MessageReportVO e : list) {
-//			System.out.print(e.getReportID() + ",");
-//			System.out.print(e.getMemID() + ",");
-//			System.out.print(e.getMsgID() + ",");
-//			System.out.print(e.getReportContent() + ",");
-//			System.out.print(e.getReportStime() + ",");
-//			System.out.print(e.getReportStatus());
-//			System.out.println();
-//		}
-    }
-
     @Override
     public void insert(MessageReportVO messageReportVO) {
 

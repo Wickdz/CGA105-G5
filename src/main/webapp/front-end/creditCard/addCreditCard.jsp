@@ -250,20 +250,20 @@
         </div>
         <div class="inputBox">
             <span>持卡人姓名</span>
-            <input type="text" name="ccName" class="card-holder-input pattern="[0-9]{4}"
+            <input type="text" name="ccName" class="card-holder-input "
                    value="<%= (creditCardVO==null)?  "" : creditCardVO.getCcName()%>" required/>
         </div>
         <div class="flexbox">
             <div class="inputBox">
                 <span>信用卡期限</span>
-                <input type="text" maxlength="4" name="ccTime" class="month-input pattern="[0-9]{3}s"
+                <input type="text" maxlength="4" name="ccTime" class="month-input pattern="[0-9]{4}"
                        value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcTime()%>" required/>
 
             </div>
 
             <div class="inputBox">
                 <span>驗證碼</span>
-                <input type="text" maxlength="3" name="ccvc" class="cvv-input"
+                <input type="text" maxlength="3" name="ccvc" class="cvv-input pattern="[0-9]{3}"
                        value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcvc()%>" required/>
             </div>
         </div>

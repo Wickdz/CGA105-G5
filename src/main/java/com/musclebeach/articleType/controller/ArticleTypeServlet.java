@@ -34,7 +34,7 @@ protected void doGet(HttpServletRequest req, HttpServletResponse res) throws Ser
 	req.setCharacterEncoding("UTF-8");
 	String action = req.getParameter("action");
 	
-	if ("insert".equals(action)) { // 來自listOneArticle.jsp的請求 新增檢舉
+	if ("insert".equals(action)) {
 		
 		List<String> errorMsgs1 = new LinkedList<String>();
 		// Store this set in the request scope, in case we need to

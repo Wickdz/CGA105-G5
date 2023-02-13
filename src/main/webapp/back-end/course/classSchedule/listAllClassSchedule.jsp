@@ -211,8 +211,11 @@
             <li><a class="nav-link text-white" id="v-pills-article-tab"
                    data-bs-toggle="pill" data-bs-target="#v-pills-article"
                    type="button" role="tab" aria-controls="v-pills-article"
-                   aria-selected="false"> <i
-                    class="bi bi-chat-right-text" style="color: white; margin: 5px"></i>
+                   aria-selected="false"
+                   onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';">
+                <i class="bi bi-chat-right-text" style="color: white; margin: 5px"
+
+            ></i>
                 論壇管理
             </a></li>
             <li><a class="nav-link text-white" id="v-pills-service-tab"
@@ -246,6 +249,7 @@
                     <th>開始時間</th>
                     <th>結束時間</th>
                     <th>修改</th>
+                    <th>刪除</th>
                     <th>單筆課程</th>
                 </tr>
                 </thead>
@@ -269,6 +273,15 @@
                                 <input type="hidden" name="action" value="getOne_For_Update"></FORM>
                             </FORM>
                         </td>
+
+                        <td>
+                            <FORM METHOD="post" ACTION="classSchedule.do" style="margin-bottom: 0px;">
+                                <input type="submit" value="刪除">
+                                <input type="hidden" name="timeID"      value="${classScheduleVO.timeID}">
+                                <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>">
+                                <input type="hidden" name="action"	    value="delete"></FORM>
+                        </td>
+                        </td>
                         <td class="show">
                             <FORM METHOD="post"
                                   ACTION="classSchedule.do"
@@ -276,7 +289,7 @@
                                 <input id="show2" type="submit" value="單筆課程時間表">
                                 <input type="hidden" name="timeID" value="${classScheduleVO.timeID}">
                                 <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>">
-                                <!--送出本網頁的路徑給Controller-->
+
 
                                 <input type="hidden" name="action" value="getOne_For_Display"></FORM>
                             </FORM>

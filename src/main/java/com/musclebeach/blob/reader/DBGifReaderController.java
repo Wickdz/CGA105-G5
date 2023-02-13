@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 
-@WebServlet("/emp/DBGifReader")
+@WebServlet("/front-end/article/DBGifReader")
 public class DBGifReaderController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext ctx = ApplicationContextUtil.getContext();
@@ -29,7 +29,7 @@ public class DBGifReaderController extends HttpServlet {
             Integer imgID = Integer.valueOf(req.getParameter("imgID"));
             out.write(articleImgService.getOneArticleImg(imgID).getArtImg());
         } catch (Exception e) {
-            InputStream in = getServletContext().getResourceAsStream("/resources/NoData/nopic.jpg");
+            InputStream in = getServletContext().getResourceAsStream("/front-end/article/resources/NoData/nopic.jpg");
             byte[] buf = new byte[in.available()];
             in.read(buf);
             out.write(buf);

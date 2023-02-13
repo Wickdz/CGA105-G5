@@ -1,5 +1,6 @@
 package com.musclebeach.common.config;
 
+import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -23,32 +24,11 @@ public class ServletContainerInitConfig extends AbstractAnnotationConfigDispatch
 
     @Override
     protected Filter[] getServletFilters() {
-        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
-        encodingFilter.setEncoding("UTF-8");
-        encodingFilter.setForceEncoding(true);
-        return new Filter[]{encodingFilter};
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        OpenSessionInViewFilter openSessionInViewFilter = new OpenSessionInViewFilter();
+        openSessionInViewFilter.setSessionFactoryBeanName("localSessionFactoryBean");
+        return new Filter[]{characterEncodingFilter, openSessionInViewFilter};
     }
 }
-//public class ServletContainerInitConfig extends AbstractDispatcherServletInitializer {
-//    // 載入SpringMVC容器
-//    @Override
-//    protected WebApplicationContext createServletApplicationContext() {
-//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-//        context.register(SpringMvcConfig.class);
-//        return context;
-//    }
-//
-//    // 設置有哪些請求回歸SpringMVC處理
-//    @Override
-//    protected String[] getServletMappings() {
-//        return new String[]{"/"};
-//    }
-//
-//    // 載入Spring容器設定
-//    @Override
-//    protected WebApplicationContext createRootApplicationContext() {
-//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-//        context.register(SpringConfig.class);
-//        return context;
-//    }
-//}

@@ -181,7 +181,9 @@
                 <li><a class="nav-link text-white" id="v-pills-article-tab"
                        data-bs-toggle="pill" data-bs-target="#v-pills-article"
                        type="button" role="tab" aria-controls="v-pills-article"
-                       aria-selected="false"> <i
+                       aria-selected="false"
+                       onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
+                > <i
                         class="bi bi-chat-right-text" style="color: white; margin: 5px"></i>
                     �׾º޲z
                 </a></li>

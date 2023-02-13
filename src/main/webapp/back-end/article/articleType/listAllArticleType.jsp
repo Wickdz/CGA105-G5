@@ -67,7 +67,8 @@ td {
 </style>
 <style>
         div#v-pills-article {
-
+			width:100%;
+			height:100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -194,7 +195,8 @@ td {
 					id="v-pills-class-tab" data-bs-toggle="pill"
 					data-bs-target="#v-pills-class" type="button" role="tab"
 					aria-controls="v-pills-class" aria-selected="false"
-					">
+					onclick="location.href='<%=request.getContextPath()%>/back-end/course/select_page.jsp';"
+					>
 						<i class="bi bi-calendar2-week" style="color: white; margin: 5px"></i>
 						課程管理
 				</a></li>
@@ -208,7 +210,7 @@ td {
 					data-bs-toggle="pill" data-bs-target="#v-pills-article"
 					type="button" role="tab" aria-controls="v-pills-article"
 					aria-selected="false"
-					onclick="location.href='<%=request.getContextPath()%>/back-end/articleType/articleReport/listAllArticleType.jsp';"
+					onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
 					> <i
 						class="bi bi-chat-right-text" style="color: white; margin: 5px"></i>
 						論壇管理
@@ -240,6 +242,7 @@ td {
           style="border: 2px solid rgb(253, 250, 66)"
         >
 
+			<ul>
 
 				<table id="table-2">
 					<thead>
@@ -260,9 +263,10 @@ td {
 					</tbody>
 				</table>
 
-								
+
 				<button onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleType/addArticleType.jsp';">新增文章類別</button></div>
 
+				</ul>
 				<script>
 					$(document).ready(function() {
 						$('#table-2').DataTable({

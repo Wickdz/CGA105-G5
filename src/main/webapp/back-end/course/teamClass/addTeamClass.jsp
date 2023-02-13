@@ -293,6 +293,7 @@
                         role="tab"
                         aria-controls="v-pills-article"
                         aria-selected="false"
+                        onclick="location.href='<%=request.getContextPath()%>/back-end/article/articleReport/listAllArticleReport.jsp';"
                 >
                     <i
                             class="bi bi-chat-right-text"
@@ -366,34 +367,34 @@
                     <tr>
                         <td>員工編號:</td>
                         <td><input type="TEXT" name="empID" size="45"
-                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getEmpID()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getEmpID()%>" required/></td>
                     </tr>
                     <tr>
                         <td>類別編號:</td>
                         <td><input type="TEXT" name="typeID" size="45"
-                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getTypeID()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getTypeID()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程名稱:</td>
                         <td><input type="TEXT" name="className" size="45"
-                                   value="<%= (teamClassVO==null)? "課程名稱1" : teamClassVO.getClassName()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "課程名稱1" : teamClassVO.getClassName()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程人數上限:</td>
                         <td><input type="TEXT" name="peopleMax" size="45"
-                                   value="<%= (teamClassVO==null)? "30" : teamClassVO.getPeopleMax()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "30" : teamClassVO.getPeopleMax()%>" required/></td>
                     </tr>
                     <tr>
                         <td>課程內容:</td>
                         <td><input type="TEXT" name="classContent" size="45"
-                                   value="<%= (teamClassVO==null)? "課程內容2" : teamClassVO.getClassContent()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "課程內容2" : teamClassVO.getClassContent()%>" required/></td>
                     </tr>
 
 
                     <tr>
                         <td>課程狀態:</td>
                         <td><input type="TEXT" name="classStatus" size="45"
-                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getClassStatus()%>"/></td>
+                                   value="<%= (teamClassVO==null)? "1" : teamClassVO.getClassStatus()%>" required/></td>
                     </tr>
 
                 </table>

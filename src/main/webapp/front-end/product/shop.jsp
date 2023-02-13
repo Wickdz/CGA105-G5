@@ -558,6 +558,10 @@
             proID: id,
             count: 1
         }]).then((res) => {
+            const resURL = res.request.responseURL;
+            if ('/login.jsp' === resURL.substring(resURL.lastIndexOf('/'))) {
+                window.location.href = resURL;
+            }
             if (res.data.data >= 0) {
                 document.querySelector('#cartCount').textContent = res.data.data;
                 alert("已加入購物車");
