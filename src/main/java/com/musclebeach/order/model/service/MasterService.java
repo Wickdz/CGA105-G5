@@ -58,4 +58,25 @@ public class MasterService {
         dao.updateStatus(orderMaster);
         return orderMaster;
     }
+
+    public OrderMaster addOrderAndDetail(Integer memID, Integer totalPrice, String orderRecName, String orderRecPhone,
+                                         String orderAddress, Integer orderID, Integer proID, Integer detQty, Integer detPrice) {
+
+        OrderMaster orderVO = new OrderMaster();
+        orderVO.setMemID(memID);
+        orderVO.setTotalPrice(totalPrice);
+        orderVO.setOrderRecName(orderRecName);
+        orderVO.setOrderRecPhone(orderRecPhone);
+        orderVO.setOrderAddress(orderAddress);
+
+        OrderDetail detailVO = new OrderDetail();
+        detailVO.setOrderID(orderID);
+        detailVO.setProID(proID);
+        detailVO.setDetQty(detQty);
+        detailVO.setDetPrice(detPrice);
+
+        dao.insertWithDetail(orderVO, detailVO);
+        return orderVO;
+
+    }
 }

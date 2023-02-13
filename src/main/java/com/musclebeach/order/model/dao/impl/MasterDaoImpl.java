@@ -1,15 +1,18 @@
 package com.musclebeach.order.model.dao.impl;
 
 import com.musclebeach.order.model.dao.MasterDao;
+import com.musclebeach.order.model.entity.OrderDetail;
 import com.musclebeach.order.model.entity.OrderMaster;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional("hibernate")
 public class MasterDaoImpl implements MasterDao {
     @PersistenceContext
     private Session session;
@@ -60,4 +63,9 @@ public class MasterDaoImpl implements MasterDao {
         return session.createQuery(hql, OrderMaster.class).list();
     }
 
+    @Override
+    public void insertWithDetail(OrderMaster orderMaster, OrderDetail orderDetail) {
+        session.save(orderMaster);
+        session.save(orderDetail);
+    }
 }

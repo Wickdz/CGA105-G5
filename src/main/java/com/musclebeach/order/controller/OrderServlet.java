@@ -1,6 +1,7 @@
 package com.musclebeach.order.controller;
 
 
+import com.musclebeach.cart.service.CartProductService;
 import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.order.model.entity.OrderDetail;
 import com.musclebeach.order.model.entity.OrderMaster;
@@ -18,12 +19,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet({"/back-end/order/"})
+@WebServlet({"/back-end/order/", "front-end/order/"})
 public class OrderServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final DetailService detailService = context.getBean(DetailService.class);
     private final MasterService masterService = context.getBean(MasterService.class);
+    private final CartProductService cartProductService = context.getBean(CartProductService.class);
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doPost(req, res);
@@ -33,30 +35,46 @@ public class OrderServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
 
+        // 結帳新增訂單及訂單明細
+        if ("insertOrder".equals(action)) { // 來自checkout.jsp的請求
 
-//		if ("listOrder_details_ByOrder".equals(action)) {
-//
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//				/*************************** 1.接收請求參數 ****************************************/
-//				Integer orderID = Integer.valueOf(req.getParameter("orderID"));
-//
-//				/*************************** 2.開始查詢資料 ****************************************/
-//				MasterService orderSvc = new MasterService();
-//				Set<OrderDetail> set = orderSvc.getOrder_detailsByOrder(orderID);
-//
-//				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-//				req.setAttribute("listOrder_details_ByOrder", set);    // 資料庫取出的list物件,存入request
-//
-//				String url = null;
-//				if ("listOrder_details_ByOrder".equals(action))
-//					url = "/back-end/order_detail/listOrder_details_ByOrder.jsp";
-//
-//				RequestDispatcher successView = req.getRequestDispatcher(url);
-//				successView.forward(req, res);
-//		}
+            /*********************** 1.接收請求參數  *************************/
+            Integer memID = Integer.valueOf(req.getParameter("memID"));
+//            Integer totalPrice = Integer.valueOf(req.getParameter("totalPrice"));
+            String orderRecName = req.getParameter("orderRecName");
+            String orderRecPhone = req.getParameter("orderRecPhone");
+            String orderAddress = req.getParameter("orderAddress");
 
+
+            /*************************** 2.開始新增資料 ***************************************/
+
+//            MasterService orderSvc = new MasterService();
+//            List<CartProduct> cartProductList = cartProductService.getCartProduct(new ArrayList<>());
+//
+//            orderSvc.addOrderAndDetail(memID, totalPrice, orderRecName, orderRecPhone, orderAddress, orderID, proID, detQty, detPrice);
+
+
+            /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+            String url = "/front-end/order/shop.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交shop.jsp
+            successView.forward(req, res);
+        }
+
+        if ("getOne_For_Update".equals(action)) {
+
+            /***************************1.接收請求參數****************************************/
+            Integer orderID = Integer.valueOf(req.getParameter("orderID"));
+            /***************************2.開始查詢資料****************************************/
+            MasterService orderSvc = new MasterService();
+            OrderMaster orderVO = orderSvc.getOneMaster(orderID);
+            /***************************3.查詢完成,準備轉交(Send the Success view)************/
+            req.setAttribute("orderVO", orderVO);         // 資料庫取出的orderVO物件,存入req
+
+            String url = "/back-end/order/updateOrderStatus.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 updateOrderStatus.jsp
+            successView.forward(req, res);
+            return;
+        }
         if ("getOne_For_Update".equals(action)) {
 
             /***************************1.接收請求參數****************************************/

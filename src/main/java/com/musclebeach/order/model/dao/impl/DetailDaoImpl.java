@@ -4,12 +4,14 @@ import com.musclebeach.order.model.dao.DetailDao;
 import com.musclebeach.order.model.entity.OrderDetail;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional("hibernate")
 public class DetailDaoImpl implements DetailDao {
     @PersistenceContext
     private Session session;

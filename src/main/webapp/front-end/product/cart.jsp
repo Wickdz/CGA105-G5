@@ -11,9 +11,6 @@
 <head>
     <meta charset="utf-8">
     <title>購物車</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free Website Template" name="keywords">
-    <meta content="Free Website Template" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -25,22 +22,6 @@
     <link href="<%=request.getContextPath()%>/front-end/product/resources/frontStage/css/style.min.css"
           rel="stylesheet">
 
-    <style>
-        .login {
-            display: inline;
-            position: relative;
-            Left: calc(100% - 150px);
-            top: 5px;
-        }
-
-        .register {
-            display: inline;
-            position: relative;
-            Left: calc(100% - 150px);
-            top: 5px;
-            color: white;
-        }
-    </style>
     <style>
         table {
             border-collapse: collapse;
@@ -128,8 +109,9 @@
     </c:forEach>
 </table>
 <p>總金額: $<span id="total">".total"</span></p>
-<button id="checkout">結帳</button>
-
+<a href="<%=request.getContextPath()%>/front-end/product/checkout.jsp">
+    <button id="checkout">結帳</button>
+</a>
 <script>
     getTotal();
     const quantity = document.querySelectorAll(".quantity");

@@ -18,6 +18,7 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name = "order_id", insertable = false, updatable = false)
     private OrderMaster orderMaster;
 
+    @Id
     @Column(name = "pro_id")
     private Integer proID;
 

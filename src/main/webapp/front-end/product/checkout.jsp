@@ -1,8 +1,29 @@
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemService" %>
 <%@ page import="com.musclebeach.creditCard.model.CreditCardVO" %>
+<%@ page import="com.musclebeach.creditCard.model.CreditCardService" %>
+<%@ page import="com.musclebeach.cart.service.CartService" %>
+<%@ page import="com.musclebeach.cart.entity.CartItem" %>
+<%@ page import="com.musclebeach.cart.entity.CartProduct" %>
+<%@ page import="com.musclebeach.cart.service.CartProductService" %>
+<%@ page import="static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    CreditCardVO creditCardVO = (CreditCardVO) request.getAttribute("creditCardVO");
+    ApplicationContext context = ApplicationContextUtil.getContext();
+    MemService memSvc = context.getBean(MemService.class);
+    MemVO memVO = memSvc.getOneMem(1);
+    pageContext.setAttribute("memVO", memVO);
+
+    CartProductService cartSvc = context.getBean(CartProductService.class);
+    List<CartProduct> cartList =cartSvc.getCartProduct(List<CartItem>);
+    pageContext.setAttribute("cartList", cartList);
+//    ApplicationContext context = ApplicationContextUtil.getContext();
+//    CreditCardService creSVC = context.getBean(CreditCardService.class);
+//    CreditCardVO creVO = creSVC.getOneCard(1);
+//    pageContext.setAttribute("creVO", creVO);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -310,7 +331,9 @@
                         </div>
                     </div>
                 </div>
-
+                <td>總金額:</td>
+                <td><input type="TEXT" name="totalPrice" size="45"
+                           value="${}"/></td>
                 <div class="back">
                     <div class="stripe"></div>
                     <div class="box">
@@ -322,48 +345,48 @@
 
             </div>
 
-            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/creditCard/creditCard.do" name="form1">
+            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/order/" name="form1">
 
                 <div class="inputBox">
-                    <!--                 <span>會員編號</span> -->
+                    <!--<span>會員編號</span> -->
                     <input type="hidden" name="memID" value="1"/>
                 </div>
                 <div class="inputBox">
                     <span>信用卡卡號</span>
-                    <input type="text" maxlength="16" name="ccNumber" class="card-number-input"
-                           value="<%= (creditCardVO==null)? "" :creditCardVO.getCcNumber()%>"/>
+                    <input type="text" maxlength="16" name="ccNumber" class="card-number-input"/>
+
                 </div>
                 <div class="inputBox">
                     <span>持卡人姓名</span>
-                    <input type="text" name="ccName" class="card-holder-input"
-                           value="<%= (creditCardVO==null)?  "" : creditCardVO.getCcName()%>"/>
+                    <input type="text" name="orderRecName" class="card-holder-input"
+                           value="<%= (memVO == null) ? "" : memVO.getMemName()%>" required/>
                 </div>
                 <div class="flexbox">
                     <div class="inputBox">
                         <span>信用卡期限</span>
-                        <input type="text" maxlength="4" name="ccTime" class="month-input"
-                               value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcTime()%>"/>
+                        <input type="text" maxlength="4" name="ccTime" class="month-input"/>
 
                     </div>
 
                     <div class="inputBox">
                         <span>驗證碼</span>
-                        <input type="text" maxlength="3" name="ccvc" class="cvv-input"
-                               value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcvc()%>"/>
+                        <input type="text" maxlength="3" name="ccvc" class="cvv-input"/>
                     </div>
                     <div class="inputBox">
                         <span>電話</span>
-                        <input type="tel" type="tel" id="phone" name="phone"
+                        <input type="tel" type="tel" id="phone" name="orderRecPhone"
                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                               required><br><br>
+                               value="<%= (memVO == null) ? "" : memVO.getMemPhone()%>" required/><br><br>
                     </div>
                     <div class="inputBox">
                         <span>地址</span>
-                        <input type="text" id="address" name="address" required><br><br>
+                        <input type="text" id="address" name="orderAddress"
+                               value="<%= (memVO == null) ? "" : memVO.getMemAddress()%>" required/><br><br>
                     </div>
                 </div>
 
-                <input type="hidden" name="action" value="insert">
+                <input type="hidden" name="action" value="insertOrder">
+                <input type="hidden" name="memID" value="${memVO.memID}">
                 <input type="submit" value="確認付款" class="submit-btn"></FORM>
             </form>
 
