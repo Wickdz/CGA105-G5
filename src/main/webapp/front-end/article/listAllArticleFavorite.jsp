@@ -13,10 +13,9 @@
 <%
     ApplicationContext ctx = ApplicationContextUtil.getContext();
     assert ctx != null;
-
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
     ArticleFavoriteService ArticleFavoriteSvc = ctx.getBean(ArticleFavoriteService.class);
-    Integer memID = 4;
-    List<ArticleFavoriteVO> list = ArticleFavoriteSvc.getAllByMemID(memID);
+    List<ArticleFavoriteVO> list = ArticleFavoriteSvc.getAllByMemID(memVO.getMemID());
 
     Iterator<ArticleFavoriteVO> iterator = list.iterator();
 while(iterator.hasNext()){
@@ -30,11 +29,11 @@ while(iterator.hasNext()){
 }
 
 pageContext.setAttribute("list",list);
-Integer SessionMemID = 4;
+
     ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
     List<ArticleTypeVO> typeList = articleTypeService.getAll();
     pageContext.setAttribute("typeList", typeList);
-    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+
 %>
 
 
@@ -106,7 +105,7 @@ Integer SessionMemID = 4;
                   </div>
                   <div class="row">
                     <div class="box text-white fs-3" style="display:flex; justify-content: center; align-items: center;">
-                      會員
+                      ${memVO.memName}
                     </div>
                   </div>
                 </div>
