@@ -306,16 +306,16 @@ public class RoomServlet extends HttpServlet {
         if ("booking".equals(action)) {
             Integer roomID = Integer.valueOf(req.getParameter("roomID"));
 
-            MemVO memVO = (MemVO) req.getAttribute("memVO");
+            MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
 
             if (memVO == null) { // 未登入
-                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/room/update_room_input.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/member/login.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
 
             if (memVO.getMemAccess() == 0) { // 一般會員
-                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/room/update_room_input.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/creditCard/creditCardByRoom.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
@@ -326,7 +326,7 @@ public class RoomServlet extends HttpServlet {
             RoomVO roomVO = roomSvc.getOneRoom(roomID);
 
             req.setAttribute("roomVO", roomVO);
-            String url = "/front-end/room/listOneRoom.jsp";
+            String url = "/front-end/room/room_order.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }

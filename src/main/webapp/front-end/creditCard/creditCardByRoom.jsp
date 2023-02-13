@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 <%@ page import="com.musclebeach.creditCard.model.*" %>
 <%
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
     CreditCardVO creditCardVO = (CreditCardVO) request.getAttribute("creditCardVO");
 %>
 
@@ -240,8 +242,7 @@
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/creditCard/creditCard.do" name="form1">
         <div class="inputBox">
             <span>會員編號</span>
-            <input type="text" maxlength="16" name="memID"
-                   value="<%= (creditCardVO==null)? "" : creditCardVO.getMemID()%>" required/>
+            <input type="text" name="memID" value="<%=memVO.getMemID()%>" readonly/>
         </div>
         <div class="inputBox">
             <span>信用卡卡號</span>
@@ -256,21 +257,22 @@
         <div class="flexbox">
             <div class="inputBox">
                 <span>信用卡期限</span>
-                <input type="text" maxlength="4" name="ccTime" class="month-input" pattern=" [0-9]{4}">
-                value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcTime()%>" required/>
+                <input type="text" maxlength="4" name="ccTime" class="month-input"
+                       value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcTime()%>" required/>
 
             </div>
 
             <div class="inputBox">
                 <span>驗證碼</span>
-                <input type="text" maxlength="3" name="ccvc" class="cvv-input" pattern=" [0-9]{3}">
-                value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcvc()%>" required/>
+                <input type="text" maxlength="3" name="ccvc" class="cvv-input"
+                       value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcvc()%>" required/>
             </div>
         </div>
         <input type="hidden" name="action1" value="updatememberaccessanddate">
-        <input type="hidden" name="action" value="insert">
+        <input type="hidden" name="action" value="upgradeByRoom">
         <input type="submit" value="確認升級" class="submit-btn">
     </FORM>
+
 </div>
 
 

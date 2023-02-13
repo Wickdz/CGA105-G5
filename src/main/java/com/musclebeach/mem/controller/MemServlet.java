@@ -52,6 +52,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
+
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -126,6 +127,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
+
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -207,6 +209,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
+            MemService memService = new MemService();
             memVO = memService.getAccount(account);
             if (memVO != null) {
                 errorMsgs.add("帳號已被註冊");
@@ -273,6 +276,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
+            MemService memService = new MemService();
             memVO = memService.getAccount(account);
             if (!password.equals(memVO.getPassword())) {
                 errorMsgs.add("密碼輸入錯誤");
@@ -307,6 +311,7 @@ public class MemServlet extends HttpServlet {
             Integer memID = Integer.valueOf(req.getParameter("memID"));
 
             /*************************** 2.開始新增資料 ***************************************/
+            MemService memService = new MemService();
             memService.deleteMem(memID);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -334,6 +339,7 @@ public class MemServlet extends HttpServlet {
 
             /*************************** 2.開始查詢資料 ***************************************/
             Integer memID = Integer.valueOf(str);
+            MemService memService = new MemService();
             MemVO MemVO = memService.getOneMem(memID);
             if (MemVO == null) {
                 errorID.add("查無此會員");
@@ -371,6 +377,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
+            MemService memService = new MemService();
             List<MemVO> MemVO = memService.getByName(memName);
             if (MemVO.isEmpty()) {
                 errorName.add("查無會員資料");
@@ -415,6 +422,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
+            MemService memService = new MemService();
             MemVO MemVO = memService.getByPhone(memPhone);
             if (MemVO == null) {
                 errorPhone.add("查無會員資料");
@@ -453,6 +461,7 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
+            MemService memService = new MemService();
             MemVO MemVO = memService.getByBirth(memBirth);
             if (MemVO == null) {
                 errorBirth.add("查無會員資料");
