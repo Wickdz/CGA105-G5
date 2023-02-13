@@ -14,7 +14,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean localSessionFactoryBean(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan("com.musclebeach.product.model.entity");
+        sessionFactory.setPackagesToScan("com.musclebeach.product.model.entity", "com.musclebeach.order.model.entity");
         sessionFactory.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
@@ -23,8 +23,8 @@ public class HibernateConfig {
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", MySQL8Dialect.class.getName());
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.format_sql", "true");
+//        hibernateProperties.setProperty("hibernate.show_sql", "true");
+//        hibernateProperties.setProperty("hibernate.format_sql", "true");
         hibernateProperties.setProperty("hibernate.highlight_sql", "true");
         hibernateProperties.setProperty("hibernate.current_session_context_class", SpringSessionContext.class.getName());
         return hibernateProperties;

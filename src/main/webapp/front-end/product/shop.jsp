@@ -95,14 +95,17 @@
             <div class="header-right header-links">
                 <!-- start account -->
                 <div id="header_ac" class="dropdown ">
-                    <a href="#" title="My Account"
+                    <a href="#" title="我的訂單"
                        class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-user"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
-                        <li><a href="#">會員註冊</a></li>
-                        <li><a href="#">會員登入</a></li>
-                    </ul>
+                    <form class='col-12' METHOD="post"
+                          ACTION="<%=request.getContextPath()%>/front-end/order/" name="form1">
+                        <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+                            <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a></li>
+                        </ul>
+                        <input type="hidden" name="memID" value="4">
+                    </form>
                 </div>
                 <!-- start cart -->
                 <div class="header_cart">
@@ -558,6 +561,10 @@
             proID: id,
             count: 1
         }]).then((res) => {
+            const resURL = res.request.responseURL;
+            if ('/login.jsp' === resURL.substring(resURL.lastIndexOf('/'))) {
+                window.location.href = resURL;
+            }
             if (res.data.data >= 0) {
                 document.querySelector('#cartCount').textContent = res.data.data;
                 alert("已加入購物車");

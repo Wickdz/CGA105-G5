@@ -9,55 +9,54 @@ import java.util.Set;
 
 @Service
 public class NewsService {
+    @Resource
+    private NewsDAO_interface dao;
 
-	@Resource
-	private NewsDAO_interface dao;
+    public NewsVO addNews(Integer empID, String newsTitle, String newsContent) {
 
+        NewsVO newsVO = new NewsVO();
 
+        newsVO.setEmpID(empID);
+        newsVO.setNewsTitle(newsTitle);
+        newsVO.setNewsContent(newsContent);
+        dao.insert(newsVO);
 
-	public NewsVO addNews(Integer empID, String newsTitle, String newsContent) {
+        return newsVO;
+    }
 
-		NewsVO newsVO = new NewsVO();
-		
-		newsVO.setEmpID(empID);
-		newsVO.setNewsTitle(newsTitle);
-		newsVO.setNewsContent(newsContent);
-		dao.insert(newsVO);
-		
-		return newsVO;
-	}
+    public NewsVO updateNews(Integer newsID, Integer empID, String newsTitle, String newsContent, Timestamp newsTime) {
+        NewsVO newsVO = new NewsVO();
 
-	public NewsVO updateNews(Integer newsID,Integer empID, String newsTitle, String newsContent, Timestamp newsTime) {
-		NewsVO newsVO = new NewsVO();
-		
-		newsVO.setNewsID(newsID);
-		newsVO.setEmpID(empID);
-		newsVO.setNewsTitle(newsTitle);
-		newsVO.setNewsContent(newsContent);
-		newsVO.setNewsTime(newsTime);
-		dao.update(newsVO);
-		
-		return newsVO;
-	}
+        newsVO.setNewsID(newsID);
+        newsVO.setEmpID(empID);
+        newsVO.setNewsTitle(newsTitle);
+        newsVO.setNewsContent(newsContent);
+        newsVO.setNewsTime(newsTime);
+        dao.update(newsVO);
 
-	public void deletNews(Integer newsID) {
-		dao.delete(newsID);
-	}
+        return newsVO;
+    }
 
-	public NewsVO getOneNews(Integer newsID) {
-		return dao.findByPrimaryKey(newsID);
+    public void deletNews(Integer newsID) {
+        dao.delete(newsID);
+    }
 
-	}
-	public Set<NewsVO> getNewsByempID(Integer empID) {
-		return dao.getNewsByempID(empID);
-		
-	}
-	public Set<NewsVO> getNewsByNewsTitle(String newsTitle) {
-		return dao.getNewsByNewsTitle(newsTitle);
-		
-	}
+    public NewsVO getOneNews(Integer newsID) {
+        return dao.findByPrimaryKey(newsID);
 
-	public List<NewsVO> getAll() {
-		return dao.getAll();
-	}
+    }
+
+    public Set<NewsVO> getNewsByempID(Integer empID) {
+        return dao.getNewsByempID(empID);
+
+    }
+
+    public Set<NewsVO> getNewsByNewsTitle(String newsTitle) {
+        return dao.getNewsByNewsTitle(newsTitle);
+
+    }
+
+    public List<NewsVO> getAll() {
+        return dao.getAll();
+    }
 }

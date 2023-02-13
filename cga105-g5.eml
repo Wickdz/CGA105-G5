@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component LANGUAGE_LEVEL="JDK_11" inheritJdk="true">
+<component LANGUAGE_LEVEL="JDK_11" jdk="temurin-11" jdk_type="JavaSDK">
 	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
 	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/src/test/resources"/>
+		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
 		<excludeFolder url="file://$MODULE_DIR$/target"/>
 	</contentEntry>
 	<lib name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.3.3" scope="PROVIDED"/>

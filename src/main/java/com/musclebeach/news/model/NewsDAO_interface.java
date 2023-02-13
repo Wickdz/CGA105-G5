@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.Set;
 
 
-
 public interface NewsDAO_interface {
-	public void insert(NewsVO newsVO);
-    public void update(NewsVO newsVO);
-    public void delete(Integer newsID);
-    public NewsVO findByPrimaryKey(Integer newsID );
+    void insert(NewsVO newsVO);
 
-    public List<NewsVO> getAll();
-	public Set<NewsVO> getNewsByempID(Integer empID);
-	public Set<NewsVO> getNewsByNewsTitle(String newsTitle);
+    void update(NewsVO newsVO);
+
+    void delete(Integer newsID);
+
+    NewsVO findByPrimaryKey(Integer newsID);
+
+    List<NewsVO> getAll();
+
+    Set<NewsVO> getNewsByempID(Integer empID);
+
+    Set<NewsVO> getNewsByNewsTitle(String newsTitle);
 }

@@ -246,33 +246,32 @@
         </div>
         <div class="inputBox">
             <span>信用卡卡號</span>
-            <input type="text" maxlength="16" name="ccNumber" class="card-number-input pattern="[0-9]{16}"
+            <input type="text" maxlength="16" name="ccNumber" class="card-number-input" pattern="[0-9]{16}"
                    value="<%= (creditCardVO==null)? "" :creditCardVO.getCcNumber()%>" required/>
         </div>
         <div class="inputBox">
             <span>持卡人姓名</span>
-            <input type="text" name="ccName" class="card-holder-input "
+            <input type="text" name="ccName" class="card-holder-input"
                    value="<%= (creditCardVO==null)?  "" : creditCardVO.getCcName()%>" required/>
         </div>
         <div class="flexbox">
             <div class="inputBox">
                 <span>信用卡期限</span>
-                <input type="text" maxlength="4" name="ccTime" class="month-input pattern="[0-9]{4}"
-                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcTime()%>" required/>
+                <input type="text" maxlength="4" name="ccTime" class="month-input" pattern=" [0-9]{4}">
+                value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcTime()%>" required/>
 
             </div>
 
             <div class="inputBox">
                 <span>驗證碼</span>
-                <input type="text" maxlength="3" name="ccvc" class="cvv-input pattern="[0-9]{3}"
-                       value="<%= (creditCardVO==null)?  "" :creditCardVO.getCcvc()%>" required/>
+                <input type="text" maxlength="3" name="ccvc" class="cvv-input" pattern=" [0-9]{3}">
+                value="<%= (creditCardVO == null) ? "" : creditCardVO.getCcvc()%>" required/>
             </div>
         </div>
         <input type="hidden" name="action1" value="updatememberaccessanddate">
         <input type="hidden" name="action" value="insert">
-        <input type="submit" value="確認升級" class="submit-btn"></FORM>
-    </form>
-
+        <input type="submit" value="確認升級" class="submit-btn">
+    </FORM>
 </div>
 
 

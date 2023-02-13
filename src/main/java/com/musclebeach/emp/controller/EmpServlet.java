@@ -1,6 +1,8 @@
 package com.musclebeach.emp.controller;
 
 
+import com.musclebeach.coachtime.model.CoachTimeService;
+import com.musclebeach.coachtime.model.CoachTimeVO;
 import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.emp.model.EmpService;
 import com.musclebeach.emp.model.EmpVO;
@@ -18,6 +20,7 @@ import javax.servlet.http.Part;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -109,7 +112,6 @@ public class EmpServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 *****************************************/
-
             List<EmpVO> list = empService.getEmpByName(empName);
             if (list.isEmpty()) {
                 errorName.add("查無資料");
@@ -161,7 +163,6 @@ public class EmpServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 *****************************************/
-
             EmpVO empVO = empService.getOneEmp(empID);
             if (empVO == null) {
                 errorID.add("查無資料");
@@ -191,7 +192,6 @@ public class EmpServlet extends HttpServlet {
             Integer empID = Integer.valueOf(req.getParameter("empID"));
 
             /*************************** 2.開始查詢資料 ****************************************/
-
             EmpVO empVO = empService.getOneEmp(empID);
 
             /*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
@@ -273,7 +273,6 @@ public class EmpServlet extends HttpServlet {
             InputStream in = part.getInputStream();
             byte[] b = new byte[in.available()];
             if (b.length == 0) {
-
                 EmpVO empVO = empService.getOneEmp(empID);
                 b = empVO.getEmpImg();
             } else {
@@ -306,7 +305,6 @@ public class EmpServlet extends HttpServlet {
             }
 
             /*************************** 2.開始修改資料 *****************************************/
-
             empVO = empService.updateEmp(empID, password, empName, hiredate, empBirthday, empPhone, empMail, empStatus,
                     coachPrice, b, coachContent);
 
@@ -419,7 +417,6 @@ public class EmpServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-
             empVO = empService.addEmp(password, empName, hiredate, empBirthday, empPhone, empMail, empStatus, coachPrice, b,
                     coachContent);
 
@@ -440,7 +437,6 @@ public class EmpServlet extends HttpServlet {
             Integer empID = Integer.valueOf(req.getParameter("empID"));
 
             /*************************** 2.開始刪除資料 ***************************************/
-
             empService.deleteEmp(empID);
 
             /*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
@@ -452,7 +448,6 @@ public class EmpServlet extends HttpServlet {
         if ("getImg".equals(action)) {
             ServletOutputStream out = res.getOutputStream();
             String empIDString = req.getParameter("empID");
-
             EmpVO empVO = empService.getOneEmp(Integer.parseInt(empIDString));
             res.setContentType("image/jpg");
             res.setContentLength(empVO.getEmpImg().length);
@@ -490,7 +485,6 @@ public class EmpServlet extends HttpServlet {
 
             String password = req.getParameter("password").trim();
 
-
             EmpVO empVO = empService.getOneEmp(empID);
             if (empVO == null) {
                 errorMsgs.add("查無資料");
@@ -509,7 +503,7 @@ public class EmpServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("empVO", empVO);
 
-            String url = "/back-end/emp/select_page.jsp";
+            String url = "/back-end/emp/back_index.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
             successView.forward(req, res);
 
@@ -553,13 +547,12 @@ public class EmpServlet extends HttpServlet {
                 req.setAttribute("old_password", oldPassword); // 含有輸入格式錯誤的empVO物件,也存入req
                 req.setAttribute("new_password", newPassword);
                 req.setAttribute("repeat_password", repeatPassword);
-                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp_input.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_password.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
 
             /*************************** 2.開始修改資料 *****************************************/
-
             EmpVO empVO = empService.getOneEmp(empID);
 
             if (!oldPassword.equals(empVO.getPassword())) {
@@ -570,7 +563,7 @@ public class EmpServlet extends HttpServlet {
                 req.setAttribute("old_password", oldPassword); // 含有輸入格式錯誤的empVO物件,也存入req
                 req.setAttribute("new_password", newPassword);
                 req.setAttribute("repeat_password", repeatPassword);
-                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp_input.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_password.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
@@ -598,11 +591,179 @@ public class EmpServlet extends HttpServlet {
             mailService.sendMail(to, subject, messageText);
         }
 
+        if ("UseCoachOrder_For_Display".equals(action)) { // 來自select_page.jsp的請求
+
+            List<String> errorID = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorID", errorID);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            String str = req.getParameter("empID");
+            if (str == null || (str.trim()).length() == 0) {
+                errorID.add("請輸入員工編號");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            Integer empID = null;
+            try {
+                empID = Integer.valueOf(str);
+            } catch (Exception e) {
+                errorID.add("員工編號格式不正確");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            /*************************** 2.開始查詢資料 *****************************************/
+            EmpVO empVO = empService.getOneEmp(empID);
+            if (empVO == null) {
+                errorID.add("查無資料");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
+            String url = "/front-end/emp/addemp.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+            successView.forward(req, res);
+        }
+
+        if ("getCoachData_For_Display".equals(action)) { // 來自select_page.jsp的請求
+
+            List<String> errorID = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorID", errorID);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            String str = req.getParameter("empID");
+            if (str == null || (str.trim()).length() == 0) {
+                errorID.add("請輸入員工編號");
+            }
+
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/coach/coachList.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            Integer empID = null;
+            try {
+                empID = Integer.valueOf(str);
+            } catch (Exception e) {
+                errorID.add("員工編號格式不正確");
+            }
+
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/coach/coachList.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+
+            /*************************** 2.開始查詢資料 *****************************************/
+            EmpVO empVO = empService.getOneEmp(empID);
+            CoachTimeService coachTimeService = new CoachTimeService();
+            CoachTimeVO coachTimeVO = coachTimeService.getCoachDate(empID);
+            CoachTimeVO coachTimeVO2 = coachTimeService.getCoachTime(empID);
+            List<CoachTimeVO> list = coachTimeService.getAllCoachDate(empID);
+            ArrayList te = new ArrayList();
+            for (CoachTimeVO ctime : list) {
+                te.add(ctime.getCoachDate());
+            }
+            if (empVO == null) {
+                errorID.add("查無資料");
+            }
+
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/front-end/coach/coachList.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
+            req.setAttribute("coachTimeVO", coachTimeVO);
+            req.setAttribute("coachTimeVO2", te);
+            String url = "/front-end/coach/coachListOne.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+            successView.forward(req, res);
+        }
+
+
+        if ("getCoach_For_Display".equals(action)) { // 來自select_page.jsp的請求
+
+            List<String> errorID = new LinkedList<String>();
+            // Store this set in the request scope, in case we need to
+            // send the ErrorPage view.
+            req.setAttribute("errorID", errorID);
+
+            /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+            String str = req.getParameter("empID");
+            if (str == null || (str.trim()).length() == 0) {
+                errorID.add("請輸入員工編號");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            Integer empID = null;
+            try {
+                empID = Integer.valueOf(str);
+            } catch (Exception e) {
+                errorID.add("員工編號格式不正確");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            /*************************** 2.開始查詢資料 *****************************************/
+            EmpVO empVO = empService.getOneEmp(empID);
+            if (empVO == null) {
+                errorID.add("查無資料");
+            }
+            // Send the use back to the form, if there were errors
+            if (!errorID.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/select_page.jsp");
+                failureView.forward(req, res);
+                return;// 程式中斷
+            }
+
+            /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+            req.setAttribute("empVO", empVO); // 資料庫取出的empVO物件,存入req
+            String url = "/back-end/emp/listOneEmp.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+            successView.forward(req, res);
+        }
+
 
 //		if("UpdateCoach".equals(action)) {
 //			Integer empID = Integer.valueOf(req.getParameter("empID").trim());
-//			
-//			empService.updateStatus(empID, 0);
+//			EmpService empSvc = new EmpService();
+//			empSvc.updateStatus(empID, 0);
 //			
 ////			String url = "/back-end/emp/listAllEmp.jsp";
 ////			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp

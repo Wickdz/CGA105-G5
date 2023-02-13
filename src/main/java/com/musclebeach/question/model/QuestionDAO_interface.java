@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.Set;
 
 
-
 public interface QuestionDAO_interface {
-	public void insert(QuestionVO questionVO);
-    public void update(QuestionVO questionVO);
-    public void delete(Integer questionID);
-    public QuestionVO findByPrimaryKey(Integer questionID );
-    
-    public List<QuestionVO> getAll();
-	public Set<QuestionVO> getQuestionByQuestionTitle(String questionTitle);
-	public Set<QuestionVO> getQuestionByQuestionContent(String questionContent);
+    void insert(QuestionVO questionVO);
+
+    void update(QuestionVO questionVO);
+
+    void delete(Integer questionID);
+
+    QuestionVO findByPrimaryKey(Integer questionID);
+
+    List<QuestionVO> getAll();
+
+    Set<QuestionVO> getQuestionByQuestionTitle(String questionTitle);
+
+    Set<QuestionVO> getQuestionByQuestionContent(String questionContent);
 }
