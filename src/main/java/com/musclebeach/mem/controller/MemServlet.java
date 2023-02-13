@@ -1,6 +1,5 @@
 package com.musclebeach.mem.controller;
 
-
 import com.musclebeach.common.util.ApplicationContextUtil;
 import com.musclebeach.mem.model.MemService;
 import com.musclebeach.mem.model.MemVO;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
+
 
 @WebServlet("/back-end/member/mem.do")
 public class MemServlet extends HttpServlet {
@@ -52,7 +52,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -127,7 +126,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-
             MemVO memVO = memService.getAccount(account);
             if (memVO == null) {
                 errorAccount.add("查無此帳號");
@@ -209,7 +207,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-
             memVO = memService.getAccount(account);
             if (memVO != null) {
                 errorMsgs.add("帳號已被註冊");
@@ -224,10 +221,14 @@ public class MemServlet extends HttpServlet {
             // 傳送註冊信
             String to = memMail;
             String subject = "歡迎加入 Muscle Beach！";
+//		    String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//			String passRandom = "";
+//			for (int i = 0; i < 8; i++) 
+//				passRandom += chars.charAt((int)(Math.random() * 62));
             String messageText = "Hello! " + memName + "，恭喜您成為 Muscle Beach 的一員！" + "\n"
                     + "我們會努力為您帶來更好的服務與商品。" + "\n" + "\n"
-                    + "升級健身會員，可享更多優惠哦！";
-            String info = "啟用信箱：<a href='http://127.0.0.1:8080/mailWeb1602/ActiveServlet?active=" + account + "'>點此啟用</a>";
+                    + "升級健身會員，可享更多優惠哦！" + "\n" + "\n";
+//		    String info = "啟用帳號：<a href='http://127.0.0.1:8080/mailWeb1602/ActiveServlet?active="+ account +"'>點此啟用</a>";
             MailService mailService = new MailService();
             mailService.sendMail(to, subject, messageText);
 
@@ -272,7 +273,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始新增資料 ***************************************/
-
             memVO = memService.getAccount(account);
             if (!password.equals(memVO.getPassword())) {
                 errorMsgs.add("密碼輸入錯誤");
@@ -307,7 +307,6 @@ public class MemServlet extends HttpServlet {
             Integer memID = Integer.valueOf(req.getParameter("memID"));
 
             /*************************** 2.開始新增資料 ***************************************/
-
             memService.deleteMem(memID);
 
             /*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -335,7 +334,6 @@ public class MemServlet extends HttpServlet {
 
             /*************************** 2.開始查詢資料 ***************************************/
             Integer memID = Integer.valueOf(str);
-
             MemVO MemVO = memService.getOneMem(memID);
             if (MemVO == null) {
                 errorID.add("查無此會員");
@@ -373,11 +371,16 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始比對資料 ***************************************/
-
             List<MemVO> MemVO = memService.getByName(memName);
+            if (MemVO.isEmpty()) {
+                errorName.add("查無會員資料");
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/member/memPage.jsp");
+                failureView.forward(req, res);
+                return;
+            }
             for (MemVO aMem : MemVO) {
 //				System.out.println(aMem.getPassword());
-                if (aMem == null || memName.trim().length() == 0) {
+                if (aMem == null || MemVO.isEmpty()) {
                     errorName.add("查無會員資料");
                 }
             }
@@ -412,7 +415,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
-
             MemVO MemVO = memService.getByPhone(memPhone);
             if (MemVO == null) {
                 errorPhone.add("查無會員資料");
@@ -451,7 +453,6 @@ public class MemServlet extends HttpServlet {
             }
 
             /*************************** 2.開始查詢資料 ***************************************/
-
             MemVO MemVO = memService.getByBirth(memBirth);
             if (MemVO == null) {
                 errorBirth.add("查無會員資料");
