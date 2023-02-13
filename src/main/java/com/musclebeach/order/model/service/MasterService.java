@@ -41,6 +41,10 @@ public class MasterService {
         return dao.getById(orderID);
     }
 
+    public OrderMaster getOneMasterByMem(Integer memID) {
+        return dao.getById(memID);
+    }
+
     public List<OrderDetail> getOneDetail(Integer orderID) {
         return dao1.findByOrderID(orderID);
     }
