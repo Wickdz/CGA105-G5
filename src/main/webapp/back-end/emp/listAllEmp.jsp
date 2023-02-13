@@ -17,7 +17,6 @@
 <body>
 <%@ include file="/back-end/header_sidebar.jsp" %>
 <%
-    EmpService empSvc = context.getBean(EmpService.class);
     List<EmpVO> list2 = empSvc.getAll();
     pageContext.setAttribute("list2", list2);
 %>
