@@ -142,6 +142,7 @@
         axios.delete('carts/' + id).then((res) => {
             if (res.data.data) {
                 alert("刪除成功");
+                getTotal();
             }
         });
         document.querySelector('#tr' + id).remove();
