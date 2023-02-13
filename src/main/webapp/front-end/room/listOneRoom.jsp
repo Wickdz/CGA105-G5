@@ -132,7 +132,7 @@
         <form method="post" action="<%=request.getContextPath()%>/front-end/room/room.do">
             <input type="hidden" name="action" value="booking"/> <input
                 type="hidden" name="roomID" value="${roomVO.roomID}"/> <input
-                type="submit" value="我要預約" onclick="myFunction()" class="btn btn-outline-danger btn-lg"
+                type="submit" value="我要預約" onclick="myFunction(event)" class="btn btn-outline-danger btn-lg"
         />
         </form>
     </div>
@@ -183,13 +183,17 @@
 <script src="<%=request.getContextPath()%>/front-end/room/js/main.js"></script>
 
 <script>
-    function myFunction() {
-        console.log(memVO.getMemID());
-        if (memVO == null) {
-            alert("請先登入會員");
-        } else if (memVO.getMemAccess() == 0) {
-            alert("請先升級健身會員");
+    function myFunction(e) {
+
+        <%if (memVO == null) {%>
+        if (!confirm('請先登入會員')) {
+            e.preventDefault();
         }
+        <%} else if (memVO.getMemAccess() == 0) {%>
+        if (!confirm('請先成為健身會員')) {
+            e.preventDefault();
+        }
+        <%}%>
     }
 </script>
 
