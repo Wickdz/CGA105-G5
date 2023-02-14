@@ -16,25 +16,25 @@
 			<div class="collapse navbar-collapse justify-content-between"
 				id="navbarCollapse">
 				<div class="navbar-nav ml-auto p-4 bg-secondary">
-					<a href="../product/shop.jsp" class="nav-item nav-link" id="toShop">線上商城</a>
-					<a href="../room/listAllRoom.jsp" class="nav-item nav-link" id="toRoom">找場地</a>
-					<a href="../coach/coachList.jsp" class="nav-item nav-link" id="toCoach">找教練</a>
-					<a href="../course/class.html" class="nav-item nav-link" id="toCourse">找課程</a>
+					<a href="<%=request.getContextPath() %>/front-end/product/shop.jsp" class="nav-item nav-link" id="toShop">線上商城</a>
+					<a href="<%=request.getContextPath() %>/front-end/room/listAllRoom.jsp" class="nav-item nav-link" id="toRoom">找場地</a>
+					<a href="<%=request.getContextPath() %>/front-end/coach/coachList.jsp" class="nav-item nav-link" id="toCoach">找教練</a>
+					<a href="<%=request.getContextPath() %>/front-end/course/class.html" class="nav-item nav-link" id="toCourse">找課程</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-item nav-link dropdown-toggle"
 							data-toggle="dropdown" id="toMem">會員專區</a>
 						<div class="dropdown-menu text-capitalize">
-							<a href="../member/login.jsp" class="dropdown-item" id="toLogin">會員登入</a>
-							<a href="../member/register.jsp" class="dropdown-item" id="toRegister">加入會員</a>
+							<a href="<%=request.getContextPath() %>/front-end/member/login.jsp" class="dropdown-item" id="toLogin">會員登入</a>
+							<a href="<%=request.getContextPath() %>/front-end/member/register.jsp" class="dropdown-item" id="toRegister">加入會員</a>
 						</div>
 					</div>
-					<a href="../article/listAllArticle.jsp" class="nav-link">會員交流區</a>
+					<a href="<%=request.getContextPath() %>/front-end/article/listAllArticle.jsp" class="nav-link">論壇</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-item nav-link dropdown-toggle"
 							data-toggle="dropdown">聯絡我們</a>
 						<div class="dropdown-menu text-capitalize">
-							<a href="../question/listAllQuestion.jsp" class="dropdown-item" id="toQA">常見問題</a> <a
-								href="../news/listAllNews.jsp" class="dropdown-item" id="toNews">最新資訊</a>
+							<a href="<%=request.getContextPath() %>/front-end/question/listAllQuestion.jsp" class="dropdown-item" id="toQA">常見問題</a> <a
+								href="<%=request.getContextPath() %>/front-end/news/listAllNews.jsp" class="dropdown-item" id="toNews">最新資訊</a>
 						</div>
 					</div>
 				</div>

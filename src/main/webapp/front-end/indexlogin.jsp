@@ -171,7 +171,7 @@
                 <div class="navbar-nav ml-auto p-4 bg-secondary">
                     <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp" class="nav-item nav-link">線上商城</a>
                     <a href="<%=request.getContextPath()%>/front-end/room/listAllRoom.jsp" class="nav-item nav-link">找場地</a>
-                    <a href="#" class="nav-item nav-link">找教練</a>
+                    <a href="<%=request.getContextPath()%>/front-end/coach/coachList.jsp" class="nav-item nav-link">找教練</a>
                     <a href="<%=request.getContextPath()%>/front-end/course/class.html" class="nav-item nav-link">找課程</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-item nav-link dropdown-toggle"

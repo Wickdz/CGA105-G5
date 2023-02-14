@@ -122,7 +122,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="articleReportVO" items="${list}">
+
                 <tr>
                     <td>${articleVO.artID}</td>
                     <td>${articleVO.memID}</td>
@@ -156,7 +156,7 @@
 
 
                 </tr>
-            </c:forEach>
+
             </tbody>
         </table>
 

@@ -192,7 +192,7 @@
                     <td>${TeamClassVO.classContent}</td>
                     <td>${TeamClassVO.classStatus==1?"上架":"下架"}</td>
                     <td class="show">
-                        <FORM METHOD="post" ACTION="teamClass.do"
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/course/teamClass/teamClass.do"
                               style="margin-bottom: 0px;">
                             <input id="show2" type="submit" value="修改"> <input
                                 type="hidden" name="classID" value="${TeamClassVO.classID}">
@@ -200,7 +200,7 @@
                         </FORM>
                     </td>
                     <td class="show">
-                        <FORM METHOD="post" ACTION="teamClass.do"
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/course/teamClass/teamClass.do"
                               style="margin-bottom: 0px;">
                             <input id="show2" type="submit" value="刪除"> <input
                                 type="hidden" name="classID" value="${TeamClassVO.classID}">

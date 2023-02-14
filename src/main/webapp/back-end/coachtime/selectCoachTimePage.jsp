@@ -98,7 +98,7 @@
 
     }
 
-    ul, nav{
+    ul, nav {
         list-style: none;
         padding: 0;
     }
@@ -126,11 +126,10 @@
     }
 
 
-
     a.btn {
         color: #fff;
         padding: 10px;
-        border: 1px solid rgba(255,255,255,0.5);
+        border: 1px solid rgba(255, 255, 255, 0.5);
         -webkit-transition: all 0.2s;
         -moz-transition: all 0.2s;
         transition: all 0.2s;
@@ -142,12 +141,12 @@
         color: #fff;
     }
 
-    .cover  {
+    .cover {
         height: 100vh;
         width: 100%;
-        background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.05)), to(rgba(0,0,0,0)));
-        background: -webkit-linear-gradient(top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
+        background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
         padding: 20px 50px;
         display: -webkit-box;
         display: flex;
@@ -208,7 +207,7 @@
         color: #fff;
     }
 
-    @media all and (max-width:800px) {
+    @media all and (max-width: 800px) {
         body {
             font-size: 0.9rem;
         }
@@ -226,7 +225,6 @@
         }
 
 
-
         h1 {
             font-size: 2rem;
         }
@@ -240,8 +238,8 @@
         }
     }
 
-    @media all and (max-width:360px) {
-        header nav li{
+    @media all and (max-width: 360px) {
+        header nav li {
             margin: 0 10px;
         }
 
@@ -264,7 +262,6 @@
 
 
 </style>
-
 
 
 <body>
@@ -303,19 +300,23 @@
          style="border: 2px solid rgb(214, 122, 122); height: 100%; width: 100%">
 
 
-
-
         <div class="container" style="position:relative">
-            <img src="images/coachs.jpg" alt="" style="width:100%;height:100%;object-fit:cover;background-color:transparent;opacity:0.9">
+            <img src="images/coachs.jpg" alt=""
+                 style="width:100%;height:100%;object-fit:cover;background-color:transparent;opacity:0.4;">
 
             <div class="cover" style="position:absolute;top:0;left:0">
+
                 <FORM METHOD="post" ACTION="coach.do" style="margin-bottom: 0px;">
                     <select size="0" name="empid" style="display: none;">
                         <option value="${userID}">
                     </select>
-                <td><p style="font-size: 25px;"><b>教練時段</b><input type="hidden" name="action" value="getOneEmpid">
-                    <input type="submit" value="新增" style="list-style: none; text-decoration: none; font-size: 16px;"></p></td>
+                    <td><p style="font-size: 25px;"><b>教練時段</b>
+                        <input type="hidden" name="action" value="getOneEmpid">
+                        <input type="submit" value="新增"
+                               style="list-style: none; text-decoration: none; font-size: 16px;"></p></td>
                 </FORM>
+
+
                 <FORM METHOD="post" ACTION="coach.do" class="flex-form">
                     <br> <b>輸入教練編號查詢所有時間 :</b>
                     <input type="text" name="empid">
@@ -324,13 +325,27 @@
                 </FORM>
 
 
-                <ul style="text-align: center; list-style-type: none;" >
-                    <li><a href="<%=request.getContextPath()%>/back-end/coachclassorder/selectCoachClassOrderPage.jsp"
-                           style="text-decoration: none; display: inline-block; position: relative;font-size:26px;color:white"><b>切換至教練課程訂單管理</b></a><li/>
-                </ul>
-                <ul style="text-align: center; list-style-type: none;" >
+                <FORM METHOD="post" ACTION="coach.do" style="margin-bottom: 0px;">
+                    <select size="0" name="empid" style="display: none;">
+                        <option value="${userID}">
+                    </select>
+                    <td><p style="font-size: 25px;"><b>查看自己所有可預約時段</b>
+                        <input type="hidden" name="action" value="getAll_For_DisplaybyEMP">
+                        <input type="submit" value="查詢"
+                               style="list-style: none; text-decoration: none; font-size: 16px;"></p></td>
+                </FORM>
 
-                    <li ><a href='listAllCoachTime.jsp'><br style="color:black">所有教練時段資料<br></a></li>
+
+                <ul style="text-align: center; list-style-type: none;">
+                    <li><a href="<%=request.getContextPath()%>/back-end/coachclassorder/selectCoachClassOrderPage.jsp"
+                           style="text-decoration: none; display: inline-block; position: relative;font-size:26px;color:white"><b
+                            style="color:red">切換至教練課程訂單管理</b></a>
+                    <li/>
+                </ul>
+                <ul style="text-align: center; list-style-type: none;">
+
+                    <li><a href='listAllCoachTime.jsp'><br style="color:black"><b
+                            style="color:black">所有教練時段資料</b><br></a></li>
                 </ul>
             </div>
         </div>
@@ -344,7 +359,6 @@
                 </c:forEach>
             </ul>
         </c:if>
-
 
 
     </div>

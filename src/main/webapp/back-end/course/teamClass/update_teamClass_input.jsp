@@ -130,7 +130,7 @@
                 <tr>
                     <td>員工編號:</td>
                     <td><input type="TEXT" name="empID" size="45"
-                               value="<%=teamClassVO.getEmpID()%>"/></td>
+                               value="<%=teamClassVO.getEmpID()%>" required/></td>
                 </tr>
                 <tr>
                     <td>課程類別:</td>

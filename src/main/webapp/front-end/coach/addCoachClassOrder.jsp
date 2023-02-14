@@ -306,9 +306,13 @@ for(let i =0;i<24;i++){
 			}
 		}
 	}
-
+const coach = document.getElementsByName("coachTime");
 	function ok(){
+		if(coach[0].checked===false && coach[1].checked===false && coach[2].checked===false && coach[3].checked===false && coach[4].checked===false && coach[5].checked===false && coach[6].checked===false && coach[7].checked===false && coach[8].checked===false && coach[9].checked===false && coach[10].checked===false && coach[11].checked===false && coach[12].checked===false && coach[13].checked===false && coach[14].checked===false && coach[15].checked===false && coach[16].checked===false && coach[17].checked===false && coach[18].checked===false && coach[19].checked===false && coach[20].checked===false && coach[21].checked===false && coach[22].checked===false && coach[23].checked===false ){
+			alert("預約失敗,請填寫時段");
+		}else{
 		alert("預約成功");
+		}
 	}
 	
 	
@@ -401,5 +405,11 @@ try {
 	//              }
 	//              return [true, ""];
 	//      }});
+</script>
+<script>
+	$(function () {
+		$("#toCoach").addClass("active");
+		$("#toCoach").attr("aria-selected", "true");
+	})
 </script>
 </html>

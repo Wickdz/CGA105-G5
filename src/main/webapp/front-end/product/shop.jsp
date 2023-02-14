@@ -97,19 +97,21 @@
             </div>
             <div class="header-right header-links">
                 <!-- start account -->
-                <div id="header_ac" class="dropdown ">
-                    <a title="我的訂單"
-                       class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-user"></i>
-                    </a>
-                    <form class='col-12' METHOD="post"
-                          ACTION="<%=request.getContextPath()%>/front-end/order/" name="form1">
-                        <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
-                            <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a></li>
-                        </ul>
-                        <input type="hidden" name="memID" value="${memVO.memID}">
-                    </form>
-                </div>
+                <c:if test="${memVO != null}">
+                    <div id="header_ac" class="dropdown ">
+                        <a title="我的訂單"
+                           class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                        </a>
+                        <form class='col-12' METHOD="post"
+                              ACTION="<%=request.getContextPath()%>/front-end/order/" name="form1">
+                            <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
+                                <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a></li>
+                            </ul>
+                            <input type="hidden" name="memID" value="${memVO.memID}">
+                        </form>
+                    </div>
+                </c:if>
                 <!-- start cart -->
                 <div class="header_cart">
                     <div id="cart" class="btn-group btn-block">

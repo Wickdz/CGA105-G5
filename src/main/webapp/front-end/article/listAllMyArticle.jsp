@@ -96,7 +96,7 @@
                   </div>
                   <div class="row">
                     <div class="box text-white fs-3" style="display:flex; justify-content: center; align-items: center;">
-                      會員
+                        ${memVO.memName}
                     </div>
                   </div>
                 </div>

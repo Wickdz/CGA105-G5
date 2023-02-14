@@ -170,7 +170,7 @@
             </ul>
         </c:if>
 
-        <FORM METHOD="post" ACTION="teamClass.do" name="form1">
+        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/course/teamClass/teamClass.do" name="form1">
             <table id="table-2">
                 <tr>
                     <td>­û¤u½s¸¹:</td>

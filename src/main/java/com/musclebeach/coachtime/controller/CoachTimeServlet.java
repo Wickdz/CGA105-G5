@@ -426,7 +426,13 @@ public class CoachTimeServlet extends HttpServlet {
             coachTimeVO.setCoachTime(newCoathTime);
             coachTimeVO.setCoachDate(coachDate);
             // Send the use back to the form, if there were errors
-
+            if (!errorMsgs.isEmpty()) {
+                req.setAttribute("coachTimeVO", coachTimeVO); // 含有輸入格式錯誤的empVO物件,也存入req
+                RequestDispatcher failureView = req
+                        .getRequestDispatcher("/back-end/coachtime/coachAddTime.jsp");
+                failureView.forward(req, res);
+                return;
+            }
             /*************************** 2.開始修改資料 ***************************************/
             List<CoachTimeVO> list = coachTimeService.getAllCoachDate(empid);
 //				System.out.println(ctime.getCoachDate());

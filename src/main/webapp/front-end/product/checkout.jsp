@@ -34,7 +34,8 @@
 <body class="bg-white">
 
 <!-- header -->
-<%@include file="/front-end/common/header.jsp" %>
+ <%@ include file="/front-end/common/header.jsp" %>
+
 
 <!-- Checkout Start -->
 <h1><i class="fa-solid fa-truck-fast"></i>訂單資訊</h1>
@@ -49,7 +50,7 @@
 </c:if>
 <table>
 
-    <div class="container">
+    <div class="container" style="padding-top: 100px;">
         <div class="memData-container">
 
             <div class="card-container">
@@ -172,7 +173,12 @@
 
 </script>
 <script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
-
+<script>
+    $(function () {
+        $("#toShop").addClass("active");
+        $("#toShop").attr("aria-selected", "true");
+    })
+</script>
 </body>
 
 </html>

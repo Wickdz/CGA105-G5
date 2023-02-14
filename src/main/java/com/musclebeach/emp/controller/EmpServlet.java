@@ -300,7 +300,7 @@ public class EmpServlet extends HttpServlet {
             // Send the use back to the form, if there were errors
             if (!errorMsgs.isEmpty()) {
                 req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
-                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp_input2	.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/back-end/emp/update_emp_input2.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
@@ -493,6 +493,10 @@ public class EmpServlet extends HttpServlet {
 
             if (!password.equals(empVO.getPassword())) {
                 errorMsgs.add("密碼錯誤");
+            }
+
+            if(empVO.getEmpStatus() == 0){
+                errorMsgs.add("此員工已離職");
             }
 
             if (!errorMsgs.isEmpty()) {

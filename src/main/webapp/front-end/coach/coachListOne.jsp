@@ -267,4 +267,10 @@ try {
 	//              return [true, ""];
 	//      }});
 </script>
+ <script>
+     $(function () {
+         $("#toCoach").addClass("active");
+         $("#toCoach").attr("aria-selected", "true");
+     })
+ </script>
 </html>

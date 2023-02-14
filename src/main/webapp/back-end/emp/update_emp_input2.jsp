@@ -40,55 +40,81 @@
               enctype="multipart/form-data">
             <div class="container" style="width: 1000px">
                 <div class="row">
-                    <div class="col-md-2">
-                        <label for="inputId" class="form-label">員工編號</label> <input
-                            type="text" class="form-control" id="inputId"
-                            value="<%=empVO.getEmpID()%>" disabled readonly/>
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">員工姓名</span> <input
+                            type="text" class="form-control" name="empName"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "XDD" : empVO.getEmpName()%>">
                     </div>
-                    <div class="col-md-3">
-                        <label for="inputName" class="form-label">員工姓名</label> <input
-                            type="text" class="form-control" id="inputName" name="empName"
-                            value="<%=empVO.getEmpName()%>"/>
+
+                    <%--                    <div class="col-md-3">--%>
+                    <%--                        <label for="inputName" class="form-label">員工姓名</label> <input--%>
+                    <%--                            type="text" class="form-control" id="inputName" name="empName"--%>
+                    <%--                            value="<%=(empVO == null) ? "XDD" : empVO.getEmpName()%>"/>--%>
+                    <%--                    </div>--%>
+
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">員工信箱</span> <input
+                            type="text" class="form-control" name="empMail"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "123@gmail.com" : empVO.getEmpMail()%>">
                     </div>
-                    <div class="col-md-4">
-                        <label for="inputEmail" class="form-label">信箱</label> <input
-                            type="email" class="form-control" id="inputEmail" name="empMail"
-                            value="<%=empVO.getEmpMail()%>"/>
-                    </div>
+                    <%--                    <div class="col-md-3">--%>
+                    <%--                        <label for="inputEmail" class="form-label">信箱</label> <input--%>
+                    <%--                            type="email" class="form-control" id="inputEmail" name="empMail"--%>
+                    <%--                            value="<%=(empVO == null) ? "123@gmail.com" : empVO.getEmpMail()%>"/>--%>
+                    <%--                    </div>--%>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <label for="inputPassword" class="form-label">密碼</label> <input
-                            type="password" class="form-control" id="inputPassword"
-                            name="password" value="<%=empVO.getPassword()%>"/>
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">員工密碼</span> <input
+                            type="text" class="form-control" name="password"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>">
                     </div>
-                    <div class="col-6 col-md-3">
-                        <label for="inputTel" class="form-label">電話</label> <input
-                            type="text" class="form-control" id="inputTel" name="empPhone"
-                            value="<%=empVO.getEmpPhone()%>"/>
+                    <%--                    <div class="col-md-3">--%>
+                    <%--                        <label for="inputPassword" class="form-label">密碼</label> <input--%>
+                    <%--                            type="password" class="form-control" id="inputPassword"--%>
+                    <%--                            name="password"--%>
+                    <%--                            value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>"/>--%>
+                    <%--                    </div>--%>
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">員工電話</span> <input
+                            type="text" class="form-control" name="empPhone"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "0900000000" : empVO.getEmpPhone()%>">
                     </div>
+                    <%--                    <div class="col-6 col-md-3">--%>
+                    <%--                        <label for="inputTel" class="form-label">電話</label> <input--%>
+                    <%--                            type="text" class="form-control" id="inputTel" name="empPhone"--%>
+                    <%--                            value="<%=(empVO == null) ? "0900000000" : empVO.getEmpPhone()%>"/>--%>
+                    <%--                    </div>--%>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
-                        <label for="inputHiredate" class="form-label">雇用日期</label> <input
-                            type="text" class="form-control" id="inputHiredate"
-                            value="<%=empVO.getHiredate()%>" disabled readonly/>
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">教練獎金</span> <input
+                            type="text" class="form-control" name="coachPrice"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "0" : empVO.getCoachPrice()%>">
                     </div>
-                    <div class="col-6 col-md-3">
-                        <label for="inputBirth" class="form-label">員工生日</label> <input
-                            type="text" class="form-control" id="inputBirth"
-                            value="<%=empVO.getEmpBirthday()%>" disabled readonly/>
+                    <%--                    <div class="col-md-2">--%>
+                    <%--                        <label for="inputPrice" class="form-label">教練獎金</label> <input--%>
+                    <%--                            type="text" class="form-control" id="inputPrice"--%>
+                    <%--                            name="coachPrice"--%>
+                    <%--                            value="<%=(empVO == null) ? "0" : empVO.getCoachPrice()%>"/>--%>
+                    <%--                    </div>--%>
+                    <div class="input-group flex-nowrap col-md-3">
+                        <span class="input-group-text" id="addon-wrapping">教練介紹</span> <input
+                            type="text" class="form-control" name="coachContent"
+                            aria-label="Username" aria-describedby="addon-wrapping"
+                            value="<%=(empVO == null) ? "無" : empVO.getCoachContent()%>">
                     </div>
-                    <div class="col-md-3">
-                        <label for="inputPrice" class="form-label">教練獎金</label> <input
-                            type="text" class="form-control" id="inputPrice"
-                            name="coachPrice" value="<%=empVO.getCoachPrice()%>"/>
-                    </div>
-                    <div class="col-12 col-md-8">
-                        <label for="inputContent" class="form-label">教練介紹</label> <input
-                            type="text" class="form-control" id="inputContent"
-                            name="coachContent" value="<%=empVO.getCoachPrice()%>"/>
-                    </div>
+                    <%--                    <div class="col-12 col-md-6">--%>
+                    <%--                        <label for="inputContent" class="form-label">教練介紹</label> <input--%>
+                    <%--                            type="text" class="form-control" id="inputContent"--%>
+                    <%--                            name="coachContent"--%>
+                    <%--                            value="<%=(empVO == null) ? "無" : empVO.getCoachContent()%>"/>--%>
+                    <%--                    </div>--%>
                 </div>
                 <div class="row">
                     <div class="col-md-3 mt-1">
@@ -123,7 +149,7 @@
                             </c:forEach>
                         </c:if>
                         <input type="hidden" name="action" value="update"/> <input
-                            type="submit" class="btn btn-primary" value="Submit"
+                            type="submit" class="btn btn-primary" value="送出"
                             style="margin-top: 10px"/>
                     </div>
                 </div>
