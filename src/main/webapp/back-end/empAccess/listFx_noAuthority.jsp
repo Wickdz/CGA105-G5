@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <style type="text/css">
-        input[type=checkbox]{
+        input[type=checkbox] {
 
             cursor: pointer;
 
@@ -25,15 +25,15 @@
 
         }
 
-        input[type=checkbox]::after{
+        input[type=checkbox]::after {
 
             position: absolute;
 
             top: 0;
 
-            background-color: white;
+            background-color: black;
 
-            color: #000;
+            color: white;
 
             width: 15px;
 
@@ -53,7 +53,7 @@
 
         }
 
-        input[type=checkbox]:checked::after{
+        input[type=checkbox]:checked::after {
 
             content: "✓";
 
@@ -90,7 +90,7 @@
                     </h2>
                     <hr>
                     <h3>${accessFunctionSvc.getOneFunction(param.fID).fName}</h3>
-                    <table class="table">
+                    <table class="table table-dark table-hover">
                         <thead>
                         <tr>
                             <th scope="col" class="col-1">編號</th>

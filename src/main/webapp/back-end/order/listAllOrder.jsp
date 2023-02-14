@@ -25,11 +25,16 @@
             rel="canonical"
             href="https://getbootstrap.com/docs/5.3/examples/sidebars/"
     />
-    <link href="<%=request.getContextPath()%>/back-end/resources/assets/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
     <style type="text/css"></style>
-    <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css" rel="stylesheet"/>
-    <!-- Flaticon Font -->
-    <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+    <link href="css/flaticon.css" rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+            rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"/>
     <link href="<%=request.getContextPath()%>/back-end/resources/css/listAll_dataTable.css" rel="stylesheet">
     <link href="https://kit.fontawesome.com/db0445c7fa.css" rel="stylesheet" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -416,7 +421,7 @@
 <script src="<%=request.getContextPath()%>/back-end/resources/js/popper.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/back-end/resources/assets/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<%=request.getContextPath()%>/back-end/resources/index/sidebars.js"></script>
+<script src="js/sidebars.js"></script>
 <script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
 <script>
     $(function () {
