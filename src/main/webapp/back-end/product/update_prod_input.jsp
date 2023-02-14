@@ -30,6 +30,12 @@
     <link href="<%=request.getContextPath()%>/back-end/resources/index/index.css" rel="stylesheet"/>
     <!-- Flaticon Font -->
     <link href="<%=request.getContextPath()%>/back-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+            rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"/>
 </head>
 <body>
 <%@ include file="../header_sidebar.jsp" %>

@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>場地管理</title>
+    <title>員工權限管理</title>
     <link href="css/index.css" rel="stylesheet"/>
     <link href="css/flaticon.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet"/>
@@ -41,7 +41,7 @@
 
                         </h2>
                         <hr>
-                        <table class="table table-striped">
+                        <table class="table table-dark table-hover">
                             <thead>
                             <tr>
                                 <th scope="col" class="col-2">編號</th>
