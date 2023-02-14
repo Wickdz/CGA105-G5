@@ -11,7 +11,7 @@
         <A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>" ><p style=" float: right;">至最後一頁</p></A>&nbsp;
     	<A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>"><p style=" float: right;position: relative; right:20px;">下一頁</p></A>&nbsp;
     <%}%>
-  <%}%>  
+  <%}%>
 
 <br><br>
 

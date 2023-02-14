@@ -108,7 +108,7 @@
         <table id="table-1">
             <tr>
                 <td>
-                    <h3>員工資料 - ListOneEmp.jsp</h3>
+                    <h3>教練訂單資料</h3>
                     <h4>
                         <a href="selectCoachClassOrderPage.jsp">回首頁</a>
                     </h4>

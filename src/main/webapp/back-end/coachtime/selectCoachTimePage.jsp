@@ -58,6 +58,214 @@
     }
 </style>
 
+<style>
+
+    @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+    *, *:before, *:after {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #56585b;
+    }
+
+    ::-moz-placeholder {
+        color: #56585b;
+    }
+
+    :-moz-placeholder {
+        color: #56585b;
+    }
+
+    html {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        margin: 0;
+        /*background: url('images/coachs.jpg') no-repeat center center fixed ;*/
+        /*-webkit-background-size: cover;*/
+        /*-moz-background-size: cover;*/
+        /*background-size: cover;*/
+        color: #0a0a0b;
+        overflow: hidden;
+
+    }
+
+    ul, nav{
+        list-style: none;
+        padding: 0;
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+    a:hover {
+        opacity: 1;
+    }
+
+    h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 0 1.5rem;
+    }
+
+    i {
+        font-size: 1.3rem;
+    }
+
+
+
+    a.btn {
+        color: #fff;
+        padding: 10px;
+        border: 1px solid rgba(255,255,255,0.5);
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    a.btn:hover {
+        background: #d73851;
+        border: 1px solid #d73851;
+        color: #fff;
+    }
+
+    .cover  {
+        height: 100vh;
+        width: 100%;
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.05)), to(rgba(0,0,0,0)));
+        background: -webkit-linear-gradient(top, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+        padding: 20px 50px;
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        align-items: center;
+    }
+
+    .flex-form input[type="submit"] {
+        background: #ef3f5a;
+        border: 1px solid #ef3f5a;
+        color: #fff;
+        padding: 0 30px;
+        cursor: pointer;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    .flex-form input[type="submit"]:hover {
+        background: #d73851;
+        border: 1px solid #d73851;
+    }
+
+    .flex-form {
+        display: -webkit-box;
+        display: flex;
+        z-index: 10;
+        position: relative;
+        width: 500px;
+        box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .flex-form > * {
+        border: 0;
+        padding: 0 0 0 10px;
+        background: #fff;
+        line-height: 50px;
+        font-size: 1rem;
+        border-radius: 0;
+        outline: 0;
+        -webkit-appearance: none;
+    }
+
+    input[type="search"] {
+        flex-basis: 500px;
+    }
+
+    #madeby {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 25px 100px;
+        color: #fff;
+    }
+
+    @media all and (max-width:800px) {
+        body {
+            font-size: 0.9rem;
+        }
+
+        .flex-form {
+            width: 100%;
+        }
+
+        input[type="search"] {
+            flex-basis: 100%;
+        }
+
+        .flex-form > * {
+            font-size: 0.9rem;
+        }
+
+
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .cover {
+            padding: 20px;
+        }
+
+        #madeby {
+            padding: 30px 20px;
+        }
+    }
+
+    @media all and (max-width:360px) {
+        header nav li{
+            margin: 0 10px;
+        }
+
+        .flex-form {
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            flex-direction: column;
+        }
+
+        input[type="search"] {
+            flex-basis: 0;
+        }
+
+        label {
+            display: none;
+        }
+    }
+
+
+</style>
+
+
 
 <body>
 <%@ include file="/back-end/header_sidebar.jsp" %>
@@ -71,7 +279,7 @@
     <div class="tab-pane fade " id="v-pills-home" role="tabpanel"
          aria-labelledby="v-pills-home-tab" tabindex="0">
         <img
-                src="<%=request.getContextPath()%>/back-end/allcss/image/welcome.gif"
+                src="<%=request.getContextPath()%>/back-end/coachtime/allcss/image/welcome.gif"
                 style="width: 96%" alt=""/>
     </div>
     <!-- ========================================= 員工管理 ========================================= -->
@@ -95,20 +303,37 @@
          style="border: 2px solid rgb(214, 122, 122); height: 100%; width: 100%">
 
 
-        <table id="table-1">
-            <!-- 					<tr> -->
-            <%-- 						<td> <a href="<%=request.getContextPath()%>/back-end/coachclassorder/selectCoachClassOrderPage.jsp"  style="float: right;text-decoration: none"><br>切換至教練課程訂單管理<br></a></td>  --%>
-            <!-- 					</tr> -->
-            <tr>
-                <td><h3 style="position: relative; left: 13%;">
-                    教練個人時段管理:<a
-                        href="<%=request.getContextPath()%>/back-end/coachclassorder/selectCoachClassOrderPage.jsp"
-                        style="text-decoration: none; display: inline-block; position: relative; left: 13%"><br>切換至教練課程訂單管理<br></a>
-                </h3></td>
-            </tr>
 
-        </table>
 
+        <div class="container" style="position:relative">
+            <img src="images/coachs.jpg" alt="" style="width:100%;height:100%;object-fit:cover;background-color:transparent;opacity:0.9">
+
+            <div class="cover" style="position:absolute;top:0;left:0">
+                <FORM METHOD="post" ACTION="coach.do" style="margin-bottom: 0px;">
+                    <select size="0" name="empid" style="display: none;">
+                        <option value="${userID}">
+                    </select>
+                <td><p style="font-size: 25px;"><b>教練時段</b><input type="hidden" name="action" value="getOneEmpid">
+                    <input type="submit" value="新增" style="list-style: none; text-decoration: none; font-size: 16px;"></p></td>
+                </FORM>
+                <FORM METHOD="post" ACTION="coach.do" class="flex-form">
+                    <br> <b>輸入教練編號查詢所有時間 :</b>
+                    <input type="text" name="empid">
+                    <input type="hidden" name="action" value="getAll_For_DisplaybyEMP">
+                    <input type="submit" value="送出">
+                </FORM>
+
+
+                <ul style="text-align: center; list-style-type: none;" >
+                    <li><a href="<%=request.getContextPath()%>/back-end/coachclassorder/selectCoachClassOrderPage.jsp"
+                           style="text-decoration: none; display: inline-block; position: relative;font-size:26px;color:white"><b>切換至教練課程訂單管理</b></a><li/>
+                </ul>
+                <ul style="text-align: center; list-style-type: none;" >
+
+                    <li ><a href='listAllCoachTime.jsp'><br style="color:black">所有教練時段資料<br></a></li>
+                </ul>
+            </div>
+        </div>
 
         <%-- 錯誤表列 --%>
         <c:if test="${not empty errorMsgs}">
@@ -120,57 +345,6 @@
             </ul>
         </c:if>
 
-        <ul style="text-align: center; list-style-type: none;">
-
-
-            <li>
-                <FORM METHOD="post" ACTION="coach.do" style="margin-bottom: 0px;">
-
-                    <select size="0" name="empid" style="display: none;">
-                        <option value="7">
-                    </select>
-
-                    <table style="position: relative; Left: 43%;">
-                        <tr>
-                            <td style="font-size: 25px;">教練時段 <input type="hidden"
-                                                                         name="action" value="getOneEmpid"> <input
-                                    type="submit"
-                                    value="新增"
-                                    style="list-style: none; text-decoration: none; font-size: 16px;">
-                                <!-- 			    	 <a style="list-style: none; text-decoration: none; position: relative; right: 88%; font-size: 25px;" href="#"><b>返回</b></a>  -->
-                            </td>
-
-                        </tr>
-                    </table>
-
-                </FORM>
-
-                <ul style="text-align: center; list-style-type: none;">
-
-                    <li>
-                        <FORM METHOD="post" ACTION="coach.do">
-                            <br> <b>輸入教練編號查詢教練所有可預約時段資料 :</b> <input type="text"
-                                                                                        name="empid"> <input
-                                type="hidden" name="action"
-                                value="getAll_For_DisplaybyEMP"> <input type="submit"
-                                                                        value="送出">
-                        </FORM>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-        <table id="table-1">
-            <tr>
-                <td><h3>時間管理</h3></td>
-            </tr>
-        </table>
-
-        <ul style="text-align: center; list-style-type: none;">
-
-            <li><a href='listAllCoachTime.jsp'><br>所有教練時段資料<br></a></li>
-
-        </ul>
 
 
     </div>

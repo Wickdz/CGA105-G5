@@ -17,6 +17,18 @@
 
 <html>
 <head>
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css2/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css2/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css2/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="css2/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css2/barfiller.css" type="text/css">
+    <link rel="stylesheet" href="css2/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css2/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css2/style.css" type="text/css">
+
+
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>教練管理</title>
@@ -38,14 +50,13 @@
 <style>
     table#table-1 {
         background-color: #CCCCFF;
-        border: 2px solid black;
         text-align: center;
         width: 100%;
     }
 
     table#table-2 {
         background-color: cyan;
-        border: 3px solid black;
+        border: 1px solid black;
         text-align: center;
         width: 100%;
     }
@@ -107,17 +118,36 @@
          role="tabpanel" aria-labelledby="v-pills-coach-tab" tabindex="0"
          style="border: 2px solid rgb(214, 122, 122); height: 100%; width: 100%">
 
+        <div class="gettouch-section" style="text-align:center ;background-color:darkcyan">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="gt-text">
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gt-text">
+                            <ul >
+                                <li><b style="font-size:25px">所有教練課程訂單資料</b></li>
+                                <li style="text-decoration:none;"><a href="selectCoachClassOrderPage.jsp"><b style="color:black">回首頁</b></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gt-text email">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End -->
+
+
+
         <div id="middlee" style="display: block; text-align: center;">
-            <table id="table-1">
-                <tr>
-                    <td>
-                        <h3>所有教練課程訂單資料</h3>
-                        <h4>
-                            <a href="selectCoachClassOrderPage.jsp">回首頁</a>
-                        </h4>
-                    </td>
-                </tr>
-            </table>
+
             <table id="table-2">
                 <tr>
                     <th>教練訂單編號</th>

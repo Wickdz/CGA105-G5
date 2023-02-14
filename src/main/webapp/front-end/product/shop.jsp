@@ -91,7 +91,7 @@
         <div class="header-top">
             <!-- start logo -->
             <div id="logo">
-                <a href="#"><img
+                <a href="<%=request.getContextPath()%>/front-end/indexlogin.jsp"><img
                         src="<%=request.getContextPath()%>/front-end/product/resources/shop/picture/logo.jpg"
                         title="Store" alt="Store" class="img-responsive"></a>
             </div>

@@ -87,7 +87,7 @@
 <div class="all-title-box">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12" style="padding-top: 100px;">
                 <a href="<%=request.getContextPath()%>/front-end/product/shop.jsp"
                    class="btn btn-info mb-3">返回商城</a>
                 <ul class="breadcrumb">

@@ -93,7 +93,7 @@ public class MemServlet extends HttpServlet {
             MemVO memVO2 = memService.getAccount(account);
             session.setAttribute("memVO", memVO2);
 
-            String url = req.getContextPath() + "/front-end/index.html";
+            String url = req.getContextPath() + "/front-end/indexlogin.jsp";
             res.sendRedirect(url);
         }
 
