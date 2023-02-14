@@ -1,8 +1,12 @@
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
+<%
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+%>
 <head>
 <meta charset="utf-8">
 <title>最新消息查詢</title>
@@ -51,7 +55,12 @@ h1 {
 <body class="bg-white">
 
 	<!-- header -->
-	<%@include file="/front-end/common/header.jsp"%>
+	<c:if test="${ memVO.memID == null}">
+		<%@ include file="/front-end/common/header.jsp" %>
+	</c:if>
+	<c:if test="${ memVO.memID!=null}">
+		<%@ include file="/front-end/common/headerlogin.jsp" %>
+	</c:if>
 <head>
 
 
@@ -62,7 +71,7 @@ h1 {
 </head>
 <body bgcolor='white'>
 
-	<table id="table-1">
+	<table id="table-1" >
 		<tr>
 			<td>
 				<h3>查無資料</h3>
@@ -70,7 +79,7 @@ h1 {
 		</tr>
 	</table>
 	<h1>五秒後自動回上一頁</h1>
-	<div style="text-align:center">
+	<div style="text-align:center;margin-top:150px" >
 	<a id=a-1
 		href="<%=request.getContextPath()%>/front-end/question/listAllQuestion.jsp"
 		style="font-size: 64px; color: blue;"> 或是點擊此處跳轉</a>

@@ -217,9 +217,16 @@ public class QuestionServlet extends HttpServlet {
 
             Set<QuestionVO> set = questionSvc.getQuestionByQuestionContent(QuestionContent);
             if (set.size() == 0) {
-                RequestDispatcher successView = req.getRequestDispatcher("/back-end/question/nodata.jsp");
-                successView.forward(req, res);
-                return;
+                if ("listQuestionByQuestionContentB".equals(action)) {
+                    RequestDispatcher successView = req.getRequestDispatcher("/back-end/question/nodata.jsp");
+                    successView.forward(req, res);
+                    return;
+                } else {
+                    RequestDispatcher successView = req.getRequestDispatcher("/front-end/question/nodata.jsp");
+                    successView.forward(req, res);
+                    return;
+
+                }
             }
             /*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
             if ("listQuestionByQuestionContentB".equals(action)) {
@@ -230,7 +237,7 @@ public class QuestionServlet extends HttpServlet {
             } else {
                 req.setAttribute("listQuestionByQuestionContent", set); // 資料庫取出的set物件,存入request
                 RequestDispatcher successView = req
-                        .getRequestDispatcher("/fornt-end/question/listQuestionByQuestionContent.jsp");
+                        .getRequestDispatcher("/front-end/question/listQuestionByQuestionContent.jsp");
                 successView.forward(req, res);
 
             }

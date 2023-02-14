@@ -2,7 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.musclebeach.news.model.*"%>
-
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
+<%
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +64,12 @@
 <body class="bg-white">
 
     <!-- header -->
-    <%@include file="/front-end/common/header.jsp"%>
+	<c:if test="${ memVO.memID == null}">
+		<%@ include file="/front-end/common/header.jsp" %>
+	</c:if>
+	<c:if test="${ memVO.memID!=null}">
+		<%@ include file="/front-end/common/headerlogin.jsp" %>
+	</c:if>
 
 
 <jsp:useBean id="listNewsByNewsTitle" scope="request" type="java.util.Set<NewsVO>" />
@@ -71,7 +79,7 @@
 
 
 <head>
-<title>搜尋結果 - listNewsByNewsTitle.jsp</title>
+<title >搜尋結果 - listNewsByNewsTitle.jsp</title>
 
 <style>
   table#table-1 {
@@ -110,12 +118,12 @@
 <body bgcolor='white'>
 
 
-<table id="table-1">
+<table  id="table-1">
 	<tr><td>
 		 <h3>相關最新消息</h3>
 	</td></tr>
 </table>
-<table id ="table-2">
+<table style="margin-top:80px" id ="table-2">
 	<tr>
 		<th>消息標題</th>
 		<th>消息內容</th>

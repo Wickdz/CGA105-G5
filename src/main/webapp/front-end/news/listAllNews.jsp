@@ -4,6 +4,7 @@
 <%@ page import="com.musclebeach.news.model.*"%>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +24,7 @@
     <link href="<%=request.getContextPath()%>/front-end/resources/frontStage/css/style.min.css" rel="stylesheet">
 <style>
   table#table-1 {
+
 	background-color: #CEFFCE;
     border: 2px solid black;
     text-align: center;
@@ -59,8 +61,12 @@
 
 <body class="bg-white">
 
-    <!-- header -->
-    <%@include file="/front-end/common/header.jsp"%>
+<c:if test="${ memVO.memID == null}">
+    <%@ include file="/front-end/common/header.jsp" %>
+</c:if>
+<c:if test="${ memVO.memID!=null}">
+    <%@ include file="/front-end/common/headerlogin.jsp" %>
+</c:if>
 
 
 
@@ -70,6 +76,7 @@
     NewsService newsSvc = ctx.getBean(NewsService.class) ;
     List<NewsVO> list = newsSvc.getAll();
     pageContext.setAttribute("list",list);
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <head>
@@ -89,9 +96,9 @@
 	</td></tr>
 </table>
 
-<ul>
+<ul style="margin-top:80px;">
   
-    <FORM METHOD="post" ACTION="news.do" >
+    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/news/news.do" >
         <b>輸入最新消息標題 (如:會員):</b>
         <input type="text" name="newsTitle">
         <input type="hidden" name="action" value="listNewsByNewsTitle">
@@ -131,6 +138,12 @@
     <script src="<%=request.getContextPath()%>/front-end/resources/frontStage/mail/jqBootstrapValidation.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/resources/frontStage/mail/contact.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/resources/frontStage/js/main.js"></script>
+<script>
+    $(function () {
+        $("#toNews").addClass("active");
+        $("#toNews").attr("aria-selected", "true");
+    })
+</script>
 </body>
 
 </html>

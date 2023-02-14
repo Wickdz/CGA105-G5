@@ -2,6 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.musclebeach.question.model.*"%>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
+
+<%
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +48,12 @@ table, th, td {
 <body class="bg-white">
 
     <!-- header -->
-    <%@include file="/front-end/common/header.jsp"%>
+	<c:if test="${ memVO.memID == null}">
+		<%@ include file="/front-end/common/header.jsp" %>
+	</c:if>
+	<c:if test="${ memVO.memID!=null}">
+		<%@ include file="/front-end/common/headerlogin.jsp" %>
+	</c:if>
 
 				<jsp:useBean id="listQuestionByQuestionContent" scope="request"
 					type="java.util.Set<QuestionVO>" />
@@ -59,7 +69,7 @@ table, th, td {
 					</tr>
 				</table>
 
-				<table>
+				<table style="margin-top:80px">
 					<tr>
 						<th>常見問題</th>
 						<th>內容</th>

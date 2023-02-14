@@ -1,14 +1,14 @@
-<%@page import="com.coachtime.model.CoachTimeVO"%>
+<%@page import="com.musclebeach.coachtime.model.CoachTimeVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
-<%@ page import="com.emp.model.*"%>
+<%@ page import="com.musclebeach.emp.model.*"%>
 <%@ page import="java.util.*"%>
-<%@page import="com.coachtime.model.*"%>
+<%@page import="com.musclebeach.coachtime.model.*"%>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
-
 <%
-  EmpVO empVO = (EmpVO) request.getAttribute("empVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+  EmpVO empVO = (EmpVO) request.getAttribute("empVO");
+    MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <%
@@ -23,19 +23,15 @@
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+ <link href="<%=request.getContextPath()%>/front-end/resources/img/" rel="icon">
+ <link
+         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+         rel="stylesheet">
+ <script src="https://kit.fontawesome.com/64c29c5210.js"
+         crossorigin="anonymous"></script>
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-
-    <script src="https://kit.fontawesome.com/64c29c5210.js" crossorigin="anonymous"></script>
-
-    <!-- Flaticon Font -->
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="../cssall/css/style.min.css" rel="stylesheet">
+ <link href="<%=request.getContextPath()%>/front-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet">
+ <link href="<%=request.getContextPath()%>/front-end/resources/css/style.min.css" rel="stylesheet">
 
     <style>
         .login {
@@ -57,9 +53,12 @@
 </head>
 
 <body class="bg-white">
-    <!-- Navbar Start -->
-	 <%@include file="/front-end/common/header.jsp"%>
-	<!-- Navbar End -->
+<c:if test="${ memVO.memID == null}">
+    <%@ include file="/front-end/common/header.jsp" %>
+</c:if>
+<c:if test="${ memVO.memID!=null}">
+    <%@ include file="/front-end/common/headerlogin.jsp" %>
+</c:if>
     
 
 <!-- Team Start -->
@@ -82,52 +81,31 @@
                 </div>
             </div>
             <section style="width:70%">
-            <ul style="color: white;" >
+            <ul style="color: white; list-style:none " >
                 <h2 style="color: gray;">專長  <span style="color: red;">Specialty Expertise</span> </h2>
-               
-                <li >
-                    <%=empVO.getCoachContent()%>	
+                <li class ="coachcontent">
+                    <%=empVO.getCoachContent()%>
                 </li>
-                <li>
-                    
-                </li>
-                <li>
-                    
-                </li>
-                <li>
-                    
-                </li>
-                <li>
-                    
-                </li>
-                <li>
-                    
-                </li>
-                <li>
-                    
-                </li>
+
             </ul >
             <hr style="background-color: darkgray; position: relative; left: 20px;">
-            <ul style="color: white;">
+            <ul style="color: white; list-style:none">
                 <h2 style="color: gray;">證照  <span style="color: red;">Certifications</span> </h2>
-               
+
                 <li>
-                   
+                    RTS美國國際阻力專業學院
                 </li>
                 <li>
-                   
+                    ViPR
                 </li>
                 <li>
-                    
+                    Purmotion AIR Fit
                 </li>
                 <li>
-                   
+                    AASFP拳擊
                 </li>
                 <li>
-                   
-                </li>
-                <li>
-                    
+                    軟式藥球訓練
                 </li>
                 
                 <li style="list-style: none;">
@@ -138,7 +116,7 @@
 					
 					
             <!--      	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/coachtime/coach.do" style="margin-bottom: 0px;"> -->
-                	<FORM METHOD="post" ACTION="coach.do" style="margin-bottom: 0px;">
+                	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/coachtime/coach.do" style="margin-bottom: 0px;">
 			    	 
 			    	 <select size="0" name="empID"  style="display: none;" >				
 										<option value="${empVO.empID}">${empVO.empID}								
@@ -181,15 +159,15 @@
 
   <%@include file="/front-end/common/footer.jsp"%>
 
-    
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/resources/lib/easing/easing.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/resources/lib/waypoints/waypoints.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/resources/mail/jqBootstrapValidation.min.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/resources/mail/contact.js"></script>
-	<script src="<%=request.getContextPath()%>/front-end/resources/js/main.js"></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/lib/easing/easing.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/lib/waypoints/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/mail/jqBootstrapValidation.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/mail/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/js/main.js"></script>
 
 </body>
 
@@ -201,9 +179,9 @@ try {
 	hiredate = new java.sql.Date(System.currentTimeMillis());
 }
 %>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.js"></script>
+<script src="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
   .xdsoft_datetimepicker .xdsoft_datepicker {
@@ -214,6 +192,19 @@ try {
   }
 </style>
 
+ <script>
+
+
+
+     const a = document.getElementsByClassName("coachcontent");
+
+
+     const br = document.createElement("span");
+     br.innerHTML = "<br/>";
+     a[0].innerText = a[0].innerText.replaceAll(',','<br>');
+     a[0].innerHTML=a[0].innerText;
+
+ </script>
 <script>
 
 		

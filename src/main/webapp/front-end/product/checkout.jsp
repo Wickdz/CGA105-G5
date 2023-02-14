@@ -34,7 +34,12 @@
 <body class="bg-white">
 
 <!-- header -->
-<%@include file="/front-end/common/header.jsp" %>
+<c:if test="${ memVO.memID == null}">
+    <%@ include file="/front-end/common/header.jsp" %>
+</c:if>
+<c:if test="${ memVO.memID!=null}">
+    <%@ include file="/front-end/common/headerlogin.jsp" %>
+</c:if>
 
 <!-- Checkout Start -->
 <h1><i class="fa-solid fa-truck-fast"></i>訂單資訊</h1>
@@ -172,7 +177,12 @@
 
 </script>
 <script src="https://kit.fontawesome.com/db0445c7fa.js" crossorigin="anonymous"></script>
-
+<script>
+    $(function () {
+        $("#toShop").addClass("active");
+        $("#toShop").attr("aria-selected", "true");
+    })
+</script>
 </body>
 
 </html>

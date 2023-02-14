@@ -1,14 +1,17 @@
-<%@page import="com.coachtime.model.CoachTimeVO"%>
+<%@page import="com.musclebeach.coachtime.model.CoachTimeVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.coachclassorder.model.*"%>
+<%@ page import="com.musclebeach.coachclassorder.model.*"%>
 <%@ page import="java.sql.Timestamp"%>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 <%
 CoachClassOrderVO coachClassOrderVO = (CoachClassOrderVO) request.getAttribute("coachClassOrderVO");
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <%
 CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO");
+
 %>
 
 
@@ -145,10 +148,12 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-
-	<!-- Navbar Start -->
-	 <%@include file="/front-end/common/header.jsp"%>
-	<!-- Navbar End -->
+<c:if test="${ memVO.memID == null}">
+	<%@ include file="/front-end/common/header.jsp" %>
+</c:if>
+<c:if test="${ memVO.memID!=null}">
+	<%@ include file="/front-end/common/headerlogin.jsp" %>
+</c:if>
 	<br>
 	<br>
 	<br>
@@ -175,7 +180,7 @@ h4 {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="/CGA105G5/front-end/coach/coachclassorder.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath() %>/back-end/coachclassorder/coach.do" name="form1">
 		<table id="table-2">
 			<tr>
 				<td>±Ð½m½s¸¹:</td>
@@ -322,10 +327,10 @@ try {
 %>
 
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
+	href="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.datetimepicker.css" />
+<script src="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.js"></script>
 <script
-	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
+	src="<%=request.getContextPath()%>/front-end/coach/datetimepicker/jquery.datetimepicker.full.js"></script>
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {

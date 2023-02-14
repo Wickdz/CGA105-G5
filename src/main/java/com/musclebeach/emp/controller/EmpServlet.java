@@ -83,6 +83,7 @@ public class EmpServlet extends HttpServlet {
     private final ApplicationContext context = ApplicationContextUtil.getContext();
     private final EmpService empService = context.getBean(EmpService.class);
 
+    private final CoachTimeService coachTimeService = context.getBean(CoachTimeService.class);
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         doPost(req, res);
     }
@@ -679,7 +680,7 @@ public class EmpServlet extends HttpServlet {
 
             /*************************** 2.開始查詢資料 *****************************************/
             EmpVO empVO = empService.getOneEmp(empID);
-            CoachTimeService coachTimeService = new CoachTimeService();
+
             CoachTimeVO coachTimeVO = coachTimeService.getCoachDate(empID);
             CoachTimeVO coachTimeVO2 = coachTimeService.getCoachTime(empID);
             List<CoachTimeVO> list = coachTimeService.getAllCoachDate(empID);

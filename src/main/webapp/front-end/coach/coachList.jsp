@@ -1,31 +1,34 @@
-<%@page import="com.coachtime.model.CoachTimeService"%>
+<%@page import="com.musclebeach.coachtime.model.CoachTimeService"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.emp.model.*"%>
-<%@page import="com.coachtime.model.CoachTimeVO"%>
+<%@ page import="com.musclebeach.emp.model.*"%>
+<%@page import="com.musclebeach.coachtime.model.CoachTimeVO"%>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
 
 <%
-EmpService empSvc = new EmpService();
-List<EmpVO> list = empSvc.getCoachByEmp();
-pageContext.setAttribute("list", list);
-%>
-
-<%
-CoachTimeService coachTimeSvc = new CoachTimeService();
-List<CoachTimeVO> list2 = coachTimeSvc.getAll();
-pageContext.setAttribute("list2", list2);
+	ApplicationContext ctx = ApplicationContextUtil.getContext();
+	assert ctx !=null;
+	EmpService empService = ctx.getBean(EmpService.class);
+	List<EmpVO> list = empService.getCoachByEmp();
+	pageContext.setAttribute("list", list);
+	CoachTimeService coachTimeService = ctx.getBean(CoachTimeService.class);
+	List<CoachTimeVO> list2 = coachTimeService.getAll();
+	pageContext.setAttribute("list2", list2);
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
 %>
 
 <%
 CoachTimeVO coachTimeVO = (CoachTimeVO) request.getAttribute("coachTimeVO");
 %>
-<jsp:useBean id="EmpSvc" scope="page" class="com.emp.model.EmpService" />
+
 <html>
 <head>
 <title>教練清單</title>
 
-<link href="<%=request.getContextPath()%>/front-end/resources/img/favicon.ico" rel="icon">
+<link href="<%=request.getContextPath()%>/front-end/resources/img/" rel="icon">
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
 	rel="stylesheet">
@@ -156,9 +159,12 @@ h4 {
 
 <body bgcolor='white'>
 
-	<!-- Navbar Start -->
-	 <%@include file="/front-end/common/header.jsp"%>
-	<!-- Navbar End -->
+<c:if test="${ memVO.memID == null}">
+	<%@ include file="/front-end/common/header.jsp" %>
+</c:if>
+<c:if test="${ memVO.memID!=null}">
+	<%@ include file="/front-end/common/headerlogin.jsp" %>
+</c:if>
 
 
 
@@ -173,14 +179,14 @@ h4 {
 			<c:forEach var="empVO" items="${list}" begin="0">
 				<div class="col-lg-3 col-md-6 mb-5">
 					<div class="card border-0 bg-secondary text-center text-white">
-						<img src="${pageContext.request.contextPath}/back-end/emp/emp.do?action=getImg&empID=${empVO.empID}">
+						<img src="<%=request.getContextPath()%>/back-end/emp/emp.do?action=getImg&empID=${empVO.empID}">
 						<div
 							class="card-social d-flex align-items-center justify-content-center">
 							<!--               <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0"  
                             style="width: 40px; height: 40px;"  href="/CGA105G5/back-end/coachclass/coachdata.html"><i class="fa-solid fa-money-check"></i></a>
                             
            -->
-							<FORM METHOD="post" ACTION="/CGA105G5/front-end/coach/coachdata.do">
+							<FORM METHOD="post" ACTION="<%= request.getContextPath()%>/back-end/emp/emp.do">
 								<select size="0" name="empID" style="display: none;">
 									
 										<option value="${empVO.empID}">${empVO.empID}
@@ -216,7 +222,12 @@ h4 {
 	<script src="<%=request.getContextPath()%>/front-end/resources/mail/jqBootstrapValidation.min.js"></script>
 	<script src="<%=request.getContextPath()%>/front-end/resources/mail/contact.js"></script>
 	<script src="<%=request.getContextPath()%>/front-end/resources/js/main.js"></script>
-
+<script>
+	$(function () {
+		$("#toCoach").addClass("active");
+		$("#toCoach").attr("aria-selected", "true");
+	})
+</script>
 
 
 </body>

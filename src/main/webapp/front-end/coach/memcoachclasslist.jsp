@@ -5,7 +5,7 @@
 <%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-  CoachClassOrderVO coachClassOrderVO = (CoachClassOrderVO) request.getAttribute("coachClassOrderVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+  CoachClassOrderVO coachClassOrderVO = (CoachClassOrderVO) request.getAttribute("coachClassOrderVO");
  
 %>
 
@@ -39,16 +39,16 @@
 
 
 <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="<%=request.getContextPath()%>/front-end/resources/img/favicon.ico" rel="icon">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Flaticon Font -->
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/front-end/resources/lib/flaticon/font/flaticon.css" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/front-end/resources/css/style.min.css" rel="stylesheet">
     
     <style>
 		
@@ -102,7 +102,7 @@
 <table id="table-1">
 	<tr><td>
 		 <h3>訂單明細</h3>
-		 <h4><a href="selectCoachClassOrderPage.jsp">回首頁</a></h4>
+		 <h4><a href="../indexlogin.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -139,15 +139,15 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/lib/easing/easing.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/lib/waypoints/waypoints.min.js"></script>
 
     <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/mail/jqBootstrapValidation.min.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/mail/contact.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="<%=request.getContextPath()%>/front-end/resources/js/main.js"></script>
 
 </body>
 

@@ -4,6 +4,10 @@
 <%@ page import="com.musclebeach.question.model.*"%>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
+<%@ page import="com.musclebeach.mem.model.MemVO" %>
+<%
+	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +19,12 @@
 <meta content="Free Website Template" name="description">
 
 <!-- Favicon -->
-<link href="img/favicon.ico" rel="icon">
+	<c:if test="${ memVO.memID == null}">
+		<%@ include file="/front-end/common/header.jsp" %>
+	</c:if>
+	<c:if test="${ memVO.memID!=null}">
+		<%@ include file="/front-end/common/headerlogin.jsp" %>
+	</c:if>
 
 <!-- all css -->
 <link
@@ -69,7 +78,12 @@ th, td {
 <body class="bg-white">
 
 	<!-- header -->
-	<%@include file="/front-end/common/header.jsp"%>
+	<c:if test="${ memVO.memID == null}">
+		<%@ include file="/front-end/common/header.jsp" %>
+	</c:if>
+	<c:if test="${ memVO.memID!=null}">
+		<%@ include file="/front-end/common/headerlogin.jsp" %>
+	</c:if>
 
 
 
@@ -100,9 +114,9 @@ th, td {
 			</tr>
 		</table>
 
-		<ul>
+		<ul style="margin-top:80px">
 			<li>
-				<FORM METHOD="post" ACTION="question.do">
+				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/question/question.do">
 					<b>輸入欲查詢內容 (如:1月):</b> <input type="text" name="questionContent">
 					<input type="hidden" name="action"
 						value="listQuestionByQuestionContent"> <input type="submit"
@@ -149,6 +163,7 @@ th, td {
 		src="<%=request.getContextPath()%>/front-end/resources/frontStage/mail/contact.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/front-end/resources/frontStage/js/main.js"></script>
+
 </body>
 
 </html>
