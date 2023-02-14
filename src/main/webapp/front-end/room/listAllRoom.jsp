@@ -130,10 +130,10 @@
                                             style="display: flex; justify-content: space-between; padding: 5px; margin-top: 10px">
                                         <h5 style="color: #AA0000;">
                                             <span
-                                                style="color: black; font-size: 12px;">上午/下午/晚上</span>
+                                                    style="color: black; font-size: 12px;">上午/下午/晚上</span>
                                         </h5>
-                                        <form action="room.do" method="post" >
-                                            <input type="submit" class="btn btn-outline-warning"
+                                        <form action="room.do" method="post">
+                                            <input type="submit" class="btn btn-outline-secondary"
                                                    value="查看場地詳情">
                                             <input type="hidden" name="roomID"
                                                    value="${roomVO.roomID }"> <input type="hidden"

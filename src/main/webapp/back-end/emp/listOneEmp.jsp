@@ -72,7 +72,7 @@
                     <FORM id="form" METHOD="post"
                           ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
                           style="margin-bottom: 0px;">
-                        <input type="submit" value="修改" class="submitBtn"> <input
+                        <input type="submit" value="修改" class="btn btn-outline-success"> <input
                             type="hidden" name="empID" value="${empVO.empID}"> <input
                             type="hidden" name="action" value="getOne_For_Update">
                     </FORM>
@@ -81,7 +81,7 @@
                     <FORM METHOD="post"
                           ACTION="<%=request.getContextPath()%>/back-end/emp/emp.do"
                           style="margin-bottom: 0px;">
-                        <input type="submit" value="刪除" class="submitBtn"> <input
+                        <input type="submit" value="刪除" class="btn btn-outline-danger"> <input
                             type="hidden" name="empID" value="${empVO.empID}"> <input
                             type="hidden" name="action" value="delete">
                     </FORM>
