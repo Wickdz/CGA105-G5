@@ -57,7 +57,7 @@ public class OrderServlet extends HttpServlet {
             List<CartProduct> cartProductList = cartProductService.getCartProduct(allInCartByMemID);
             int totalPrice = 0;
             for (CartProduct cartProduct : cartProductList) {
-                totalPrice += (cartProduct.getProPrice() + cartProduct.getCount());
+                totalPrice += (cartProduct.getProPrice() * cartProduct.getCount());
             }
             Integer orderID = masterService.addMaster(memID, totalPrice, orderRecName, orderRecPhone, orderAddress, 0);
             for (CartProduct cartProduct : cartProductList) {
