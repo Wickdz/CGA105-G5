@@ -189,7 +189,7 @@
                             </div>
                         </form>
                     </div>
-                    <a href="<%=request.getContextPath()%>/front-end/article/listAllArticle.jsp" class="nav-link">會員交流區</a>
+                    <a href="<%=request.getContextPath()%>/front-end/article/listAllArticle.jsp" class="nav-link">論壇</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-item nav-link dropdown-toggle"
                            data-toggle="dropdown">聯絡我們</a>

@@ -111,10 +111,6 @@ public class ArticleServlet extends HttpServlet {
 
         if ("getOne_For_Display".equals(action)) { // 來自文章列表 list.jsp的請求
 
-            List<String> errorMsgs = new LinkedList<String>();
-            // Store this set in the request scope, in case we need to
-            // send the ErrorPage view.
-            req.setAttribute("errorMsgs", errorMsgs);
 
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
             Integer artID = Integer.valueOf(req.getParameter("artID").trim());
@@ -123,18 +119,6 @@ public class ArticleServlet extends HttpServlet {
             /*************************** 2.開始查詢資料 *****************************************/
 
             ArticleVO articleVO = articleService.getOneArticleVO(artID);
-
-            // 傳遞按讚資訊
-
-            ArticleLikeVO artLikeVO = artLikeService.getOneArticleLike(artID, memID);
-            req.setAttribute("artLikeVO", artLikeVO);
-            // 傳遞按讚資訊
-
-            // 傳遞收藏資訊
-
-            ArticleFavoriteVO articleFavoriteVO = articleFavoriteService.getOneArticleFavorite(artID, memID);
-            req.setAttribute("articleFavoriteVO", articleFavoriteVO);
-            // 傳遞收藏資訊
 
 
             List<ArticleMessageVO> articleMessageVO = articleMessageSvc.getAllByArtID(artID);

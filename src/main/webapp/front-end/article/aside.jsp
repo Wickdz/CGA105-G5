@@ -8,7 +8,7 @@
       <ul class="nav nav-pills flex-column mb-auto" id="v-pills-tab" role="tablist" aria-orientation="vertical"
         style="text-align: center">
         <li class="nav-item">
-          <a class="nav-link text-white"type="button" style="background-color:Dimgray;font-size: 1.5rem" href="listAllArticle.jsp">
+          <a class="nav-link text-white"type="button" style="background-color:Dimgray;font-size: 1.5rem" href="<%=request.getContextPath()%>/front-end/indexlogin.jsp">
             <i class="bi bi-house-door" style="margin-right: 8px"></i>
             首頁
           </a>

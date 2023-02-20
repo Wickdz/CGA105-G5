@@ -8,17 +8,37 @@
 <%@ page import="com.musclebeach.articleType.model.ArticleTypeVO" %>
 <%@ page import="com.musclebeach.common.util.ApplicationContextUtil" %>
 <%@ page import="com.musclebeach.mem.model.MemVO" %>
+<%@ page import="com.musclebeach.articleLike.model.ArticleLikeVO" %>
+<%@ page import="com.musclebeach.articleFavorite.model.ArticleFavoriteVO" %>
+<%@ page import="com.musclebeach.articleFavorite.model.ArticleFavoriteService" %>
+<%@ page import="com.musclebeach.articleLike.model.ArticleLikeService" %>
 
 <%
+
 	ApplicationContext ctx = ApplicationContextUtil.getContext();
 	assert ctx != null;
 	ArticleTypeService articleTypeService = ctx.getBean(ArticleTypeService.class);
+	ArticleLikeService artLikeService = ctx.getBean(ArticleLikeService.class);
+	ArticleFavoriteService articleFavoriteService = ctx.getBean(ArticleFavoriteService.class);
 	List<ArticleTypeVO> typeList = articleTypeService.getAll();
 	pageContext.setAttribute("typeList", typeList);
 	ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 	List<ArticleMessageVO> articleMessageVO = (List<ArticleMessageVO>) request.getAttribute("articleMessageVO");
 	pageContext.setAttribute("articleMessageVO",articleMessageVO);
 	MemVO memVO = (MemVO) request.getSession().getAttribute("memVO");
+
+
+if (memVO!=null){
+	ArticleLikeVO artLikeVO = artLikeService.getOneArticleLike(articleVO.getArtID(), memVO.getMemID());
+	pageContext.setAttribute("artLikeVO", artLikeVO);
+	// 傳遞按讚資訊
+
+	// 傳遞收藏資訊
+
+	ArticleFavoriteVO articleFavoriteVO = articleFavoriteService.getOneArticleFavorite(articleVO.getArtID(),memVO.getMemID());
+	pageContext.setAttribute("articleFavoriteVO", articleFavoriteVO);
+	// 傳遞收藏資訊
+}
 %>
 
 <html>
@@ -144,7 +164,7 @@
 
 <c:if test="${memVO != null}">
         <!-- 按讚按鈕 -->
-	<c:if test="${artLikeVO.artID == null}">
+	<c:if test="${artLikeVO.memID != memVO.memID}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
 		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="insert">
@@ -154,7 +174,7 @@
             </svg>
         </button>
 	</c:if>
-	<c:if test="${artLikeVO.artID != null}">
+	<c:if test="${artLikeVO.memID == memVO.memID}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
 		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="delete">
@@ -167,7 +187,7 @@
          <!-- 按讚按鈕 -->
 
         <!-- 收藏按鈕 -->
-	<c:if test="${articleFavoriteVO.artID == null}">
+	<c:if test="${articleFavoriteVO.memID != memVO.memID}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
 		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="insert">        
@@ -177,7 +197,7 @@
             </svg>
         </button>
 	</c:if>      
-	<c:if test="${articleFavoriteVO.artID != null}">
+	<c:if test="${articleFavoriteVO.memID == memVO.memID}">
 		<input type="hidden" name="artID" id="artID" value="${articleVO.artID}">
 		<input type="hidden" name="memID" id="memID" value="${memVO.memID}">
         <input type="hidden" name="action" value="delete">        
@@ -303,7 +323,7 @@
 		<div class="grid" style="--bs-columns: 18; --bs-gap: .5rem; display: flex;">
 		  <div style="grid-column: span 14;">
 	  	    <div class="mb-3 mt-3" style="margin-left: 10px; margin-right: 10px; width: 551.2;">
-		      <textarea  maxlength="200" required name="msgContent" class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="敘述" aria-label=".form-control-lg example"></textarea>
+		      <textarea  maxlength="200" name="msgContent" class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="敘述" aria-label=".form-control-lg example"></textarea>
 		    </div>
 		  </div>
 		  <div class="g-col-4">
