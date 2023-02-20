@@ -106,7 +106,8 @@
                         <form class='col-12' METHOD="post"
                               ACTION="<%=request.getContextPath()%>/front-end/order/" name="form1">
                             <ul class="dropdown-menu dropdown-menu-right account-link-toggle">
-                                <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a></li>
+                                <li><a href="<%=request.getContextPath()%>/front-end/product/memOrder.jsp">我的訂單</a>
+                                </li>
                             </ul>
                             <input type="hidden" name="memID" value="${memVO.memID}">
                         </form>
@@ -472,7 +473,7 @@
                     dots: true,
                     items: items,
                     autoplay: true,
-                    autoplayTimeout: 3000,
+                    autoplayTimeout: 5000,
                     responsiveRefreshRate: 200,
                     responsive: {
                         0: {
