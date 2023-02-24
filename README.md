@@ -1,8 +1,30 @@
 # Muscle Beach
-## 緣起
-近兩年來隨著疫情肆虐，國人健康意識日漸抬頭，健身在後疫情時代下蔚為風潮，Muscle Beach 因此應運而生，
-完善的會員制度讓使用者只需動動手指就能享有專屬的客製化服務；
-便捷的場地預約系統讓健身愛好者能自由安排時間，初學者也能按照專業教練的規劃輕鬆上手!
+## 負責項目
+商城首頁設計、瀏覽商品、查看單一商品資訊、
 
-Muscle Beach 同時也蒐羅健身相關產品，不論是營養品、健身器材都應有盡有，且配送方式多元，讓使用者健身路上事半功倍，
-此外會員交流區能讓使用者能與其他健身愛好者交流心得，社交健身兩不誤！。
+個人訂單/明細查看、商品管理、訂單管理
+## 前台
+* 商城首頁(`java/com.musclebeach/product`,`webapp/front-end/product/shop.jsp`、`shopSearch.jsp`、`shopType.jsp`)
+* 查看單一商品資訊(`java/com.musclebeach/product`,`webapp/front-end/product/shopDetail.jsp`)
+* 結帳(`webapp/front-end/product/checkout.jsp`)
+* 我的訂單查詢(`java/com.musclebeach/order`,`webapp/front-end/product/memOrder.jsp`、`memOrderDetail.jsp`)
+
+## 後台
+* 商品管理
+(`java/com.musclebeach/product`,`webapp/back-end/product`)
+* 訂單管理
+(`java/com.musclebeach/order`,`webapp/back-end/order`)
+
+## 使用技術
+* HTML / CSS
+* JavaScript/jQuery
+* Java / Servlet / Jsp
+* MySQL
+* Hibernate/Spring
+
+## 作品介紹PDF & 影片介紹
+[專題作品PDF](https://drive.google.com/file/d/127tIgFWhcdJ1cuWVImRspXj2tQP-D9Tr/view?usp=share_link)
+
+[專題影片介紹](https://youtu.be/A82iNCpAunQ)
+
+
